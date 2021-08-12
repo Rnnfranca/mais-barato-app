@@ -1,26 +1,21 @@
 package com.example.maisbarato.viewmodel
 
-import android.app.Application
-import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.maisbarato.database.MaisBaratoDatabase
 import com.example.maisbarato.model.Oferta
 import com.example.maisbarato.repository.OfertaRepository
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CrudOfertaViewModel(application: Application) : AndroidViewModel(application) {
-
-    private var repository: OfertaRepository
-
-    init {
-        val ofertaDAO = MaisBaratoDatabase.getDatabase(application).ofertaDAO()
-        repository = OfertaRepository(ofertaDAO)
-    }
+@HiltViewModel
+class CrudOfertaViewModel @Inject constructor(val ofertaRepository: OfertaRepository) :
+    ViewModel() {
 
     fun adicionaOferta(oferta: Oferta) {
         viewModelScope.launch(Dispatchers.IO) {
-            repository.adicionaOferta(oferta)
+            ofertaRepository.adicionaOferta(oferta)
         }
     }
 }

@@ -9,18 +9,20 @@ import androidx.activity.result.ActivityResultLauncher
 import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import com.bumptech.glide.Glide
 import com.example.maisbarato.databinding.FragmentCrudOfertaBinding
 import com.example.maisbarato.model.Oferta
 import com.example.maisbarato.viewmodel.CrudOfertaViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
+@AndroidEntryPoint
 class CrudOfertaFragment : Fragment() {
 
     private var _binding: FragmentCrudOfertaBinding? = null
     private val binding get() = _binding!!
 
-    private lateinit var crudViewModel: CrudOfertaViewModel
+    private val crudViewModel: CrudOfertaViewModel by viewModels()
     private lateinit var launcher: ActivityResultLauncher<String>
 
     private lateinit var contentResolver: ContentResolver
@@ -38,7 +40,6 @@ class CrudOfertaFragment : Fragment() {
             }
         }
 
-        crudViewModel = ViewModelProvider(this).get(CrudOfertaViewModel::class.java)
     }
 
     override fun onCreateView(

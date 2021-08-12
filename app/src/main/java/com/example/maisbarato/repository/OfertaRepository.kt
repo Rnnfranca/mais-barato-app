@@ -2,14 +2,12 @@ package com.example.maisbarato.repository
 
 import com.example.maisbarato.database.OfertaDAO
 import com.example.maisbarato.model.Oferta
+import javax.inject.Inject
 
-class OfertaRepository(private val ofertaDAO: OfertaDAO) {
+class OfertaRepository @Inject constructor(val ofertaDAO: OfertaDAO) {
 
-    suspend fun lerTodasOfertas(): List<Oferta> {
-        return ofertaDAO.lerTodasOfertas()
-    }
+    suspend fun lerTodasOfertas(): List<Oferta> = ofertaDAO.lerTodasOfertas()
 
-    suspend fun adicionaOferta(oferta: Oferta) {
-        return ofertaDAO.adicionaOferta(oferta)
-    }
+    suspend fun adicionaOferta(oferta: Oferta) = ofertaDAO.adicionaOferta(oferta)
+
 }

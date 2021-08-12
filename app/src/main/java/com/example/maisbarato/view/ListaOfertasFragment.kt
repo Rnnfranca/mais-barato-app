@@ -5,22 +5,23 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
-import androidx.lifecycle.ViewModelProvider
+import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.maisbarato.databinding.FragmentListaOfertasBinding
 import com.example.maisbarato.view.adapter.ListaOfertaAdapter
 import com.example.maisbarato.viewmodel.ListaOfertasViewModel
+import dagger.hilt.android.AndroidEntryPoint
 
-
+@AndroidEntryPoint
 class ListaOfertasFragment : Fragment() {
 
     private var _binding: FragmentListaOfertasBinding? = null
     private val binding get() = _binding!!
+    private val listaOfertasViewModel: ListaOfertasViewModel by viewModels()
 
     private lateinit var recyclerView: RecyclerView
-    private lateinit var listaOfertasViewModel: ListaOfertasViewModel
     private lateinit var listaOfertasAdapter: ListaOfertaAdapter
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -47,7 +48,6 @@ class ListaOfertasFragment : Fragment() {
             LinearLayoutManager.VERTICAL,
             false
         )
-        listaOfertasViewModel = ViewModelProvider(this).get(ListaOfertasViewModel::class.java)
         listaOfertasAdapter = ListaOfertaAdapter(listOf())
         recyclerView.adapter = listaOfertasAdapter
 
