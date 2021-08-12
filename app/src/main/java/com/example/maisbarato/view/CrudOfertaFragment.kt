@@ -1,13 +1,16 @@
 package com.example.maisbarato.view
 
+import android.content.ContentResolver
 import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
+import androidx.activity.result.ActivityResultLauncher
+import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.graphics.drawable.toBitmap
 import androidx.fragment.app.Fragment
 import androidx.lifecycle.ViewModelProvider
-import com.example.maisbarato.R
+import com.bumptech.glide.Glide
 import com.example.maisbarato.databinding.FragmentCrudOfertaBinding
 import com.example.maisbarato.model.Oferta
 import com.example.maisbarato.viewmodel.CrudOfertaViewModel
@@ -18,9 +21,22 @@ class CrudOfertaFragment : Fragment() {
     private val binding get() = _binding!!
 
     private lateinit var crudViewModel: CrudOfertaViewModel
+    private lateinit var launcher: ActivityResultLauncher<String>
+
+    private lateinit var contentResolver: ContentResolver
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
+
+        contentResolver = requireContext().contentResolver
+
+        launcher = registerForActivityResult(ActivityResultContracts.GetContent()) { uri ->
+            uri?.also {
+                Glide.with(binding.imagemOferta)
+                    .load(uri)
+                    .into(binding.imagemOferta)
+            }
+        }
 
         crudViewModel = ViewModelProvider(this).get(CrudOfertaViewModel::class.java)
     }
@@ -38,17 +54,24 @@ class CrudOfertaFragment : Fragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.imagemOferta.setOnClickListener {
+            launcher.launch("image/*")
+        }
+
         binding.btnSalvar.setOnClickListener {
             salvaOferta()
         }
+
     }
+
+
 
     private fun salvaOferta() {
         Oferta(
             imagem = binding.imagemOferta.drawable.toBitmap(),
             titulo = binding.editTextTitulo.text.toString(),
             nomeLoja = binding.editTextEstabelecimento.text.toString(),
-            fotoLoja = resources.getDrawable(R.drawable.air_fryer).toBitmap(),
+            fotoLoja = binding.imagemOferta.drawable.toBitmap(),
             valorAntigo = 199.0,
             valorNovo = 99.9,
             dataInclusao = "09/08/2021",

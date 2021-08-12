@@ -15,10 +15,10 @@
             android:id="@+id/imagem_oferta"
             android:layout_width="match_parent"
             android:layout_height="215dp"
-            android:src="@drawable/air_fryer"
+            android:src="@drawable/add_image_grey_2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:srcCompat="@tools:sample/backgrounds/scenic"/>
+            tools:srcCompat="@drawable/add_image_grey_2"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/crud_titulo"

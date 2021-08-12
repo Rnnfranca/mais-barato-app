@@ -15,8 +15,6 @@ class ListaOfertaAdapter(private var listaOferta: List<Oferta>) :
 
         fun bind(oferta: Oferta) {
 
-            binding.tituloPromocao.text = oferta.titulo
-
             oferta.apply {
 
                 Glide.with(binding.imagemOferta)
