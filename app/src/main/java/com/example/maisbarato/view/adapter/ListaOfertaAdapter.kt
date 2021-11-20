@@ -18,12 +18,12 @@ class ListaOfertaAdapter(private var listaOferta: List<Oferta>) :
             oferta.apply {
 
                 Glide.with(binding.imagemOferta)
-                    .load(imagem)
+                    .load(listaUrlImagem)
                     .into(binding.imagemOferta)
 
                 binding.tituloPromocao.text = titulo
                 binding.nomeLoja.text = nomeLoja
-                binding.dataInclusao.text = dataInclusao
+                binding.dataInclusao.text = ""
                 binding.precoAntigo.text = valorAntigo.toString()
                 binding.precoNovo.text = valorNovo.toString()
 

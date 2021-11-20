@@ -18,7 +18,16 @@
             android:src="@drawable/add_image_grey_2"
             app:layout_constraintTop_toTopOf="parent"
             app:layout_constraintStart_toStartOf="parent"
-            tools:srcCompat="@drawable/add_image_grey_2"/>
+            tools:srcCompat="@drawable/add_image_grey_2" />
+        
+        <androidx.recyclerview.widget.RecyclerView
+            android:id="@+id/recycler_view_imagens"
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintBottom_toTopOf="@id/crud_titulo"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <com.google.android.material.textfield.TextInputLayout
             android:id="@+id/crud_titulo"
@@ -26,6 +35,9 @@
             android:layout_height="wrap_content"
             android:hint="Titulo"
             android:layout_marginTop="30dp"
+            app:errorEnabled="true"
+            app:helperTextEnabled="true"
+            app:helperText="*Obrigatório"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imagem_oferta">
 
@@ -42,14 +54,22 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Estabelecimento"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
+            app:helperTextEnabled="true"
+            app:helperText="*Obrigatório"
+            app:endIconMode="custom"
+            app:endIconDrawable="@drawable/ic_arrow_drop_down"
             app:layout_constraintTop_toBottomOf="@id/crud_titulo">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_estabelecimento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:inputType="text"
+                android:clickable="false"
+                android:cursorVisible="false"
+                android:focusable="false"
+                android:focusableInTouchMode="false" />
 
         </com.google.android.material.textfield.TextInputLayout>
 
@@ -58,7 +78,7 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Preco antigo"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginEnd="10dp"
             app:layout_constraintTop_toBottomOf="@id/crud_estabelecimento"
             app:layout_constraintStart_toStartOf="parent"
@@ -77,8 +97,10 @@
             android:layout_width="0dp"
             android:layout_height="wrap_content"
             android:hint="Preco novo"
-            android:layout_marginTop="20dp"
+            android:layout_marginTop="10dp"
             android:layout_marginStart="10dp"
+            app:helperTextEnabled="true"
+            app:helperText="*Obrigatório"
             app:layout_constraintTop_toBottomOf="@id/crud_estabelecimento"
             app:layout_constraintStart_toEndOf="@id/crud_preco_antigo"
             app:layout_constraintEnd_toEndOf="parent">
@@ -96,15 +118,17 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:hint="Informacoes adicionais"
-            android:layout_marginTop="20dp"
-            app:layout_constraintTop_toBottomOf="@id/crud_preco_novo"
-            >
+            android:layout_marginTop="10dp"
+            app:helperTextEnabled="true"
+            app:helperText="*Obrigatório"
+            app:errorEnabled="true"
+            app:layout_constraintTop_toBottomOf="@id/crud_preco_novo">
 
             <com.google.android.material.textfield.TextInputEditText
                 android:id="@+id/edit_text_info_adicionais"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:inputType="text"/>
+                android:inputType="textMultiLine"/>
 
         </com.google.android.material.textfield.TextInputLayout>
 

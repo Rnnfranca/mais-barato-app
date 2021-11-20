@@ -9,8 +9,7 @@
     <androidx.constraintlayout.widget.ConstraintLayout
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:paddingBottom="18dp"
-        android:background="@color/green_200">
+        android:paddingBottom="18dp">
 
         <ImageView
             android:id="@+id/imagem_estabelecimento"

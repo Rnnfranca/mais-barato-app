@@ -8,9 +8,9 @@
     <color name="black">#FF000000</color>
     <color name="white">#FFFFFFFF</color>
     <!-- CUSTOMIZED -->
-    <color name="green_200">#9FFFE0</color>
-    <color name="green_500">#69F0AE</color>
-    <color name="green_700">#2BBD7E</color>
+    <color name="green_200">#b2fab4</color>
+    <color name="green_500">#81c784</color>
+    <color name="green_700">#519657</color>
     <color name="blue_200">#9BFFFF</color>
     <color name="blue_500">#61ECF7</color>
     <color name="blue_700">#08B9C4</color>
