@@ -38,7 +38,7 @@ class CrudOfertaFragment : Fragment() {
 
     private lateinit var contentResolver: ContentResolver
 
-    private var listaImagens = listOf<String?>(null)
+    private var listaImagens = listOf<String?>()
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -67,8 +67,17 @@ class CrudOfertaFragment : Fragment() {
             uri?.also { listUri ->
 
                 listaImagemAdapter.atualizaListaImagens(listUri)
-                binding.imagemOferta.visibility = View.INVISIBLE
+
                 listaImagens = listUri.mapNotNull { it.toString() }
+
+
+                if (listUri.isNotEmpty()) {
+                    binding.imagemOferta.visibility = View.INVISIBLE
+                    binding.botaoTrocarImagens.visibility = View.VISIBLE
+                } else {
+                    binding.imagemOferta.visibility = View.VISIBLE
+                    binding.botaoTrocarImagens.visibility = View.INVISIBLE
+                }
             }
         }
     }
@@ -88,18 +97,21 @@ class CrudOfertaFragment : Fragment() {
 
     private fun listeners() {
         binding.imagemOferta.setOnClickListener {
-            launcher.launch("image/*")
+            abrirSelecaoImagem()
         }
 
         binding.btnSalvar.setOnClickListener {
 
 
             if (validaCampos()) {
-                //            salvaOferta()
                 salvaOferta()
             } else {
                 dialogValidaCampos()
             }
+        }
+
+        binding.botaoTrocarImagens.setOnClickListener {
+            abrirSelecaoImagem()
         }
 
         var checkedItem = 0
@@ -157,8 +169,6 @@ class CrudOfertaFragment : Fragment() {
         })
 
         binding.editTextTitulo.doAfterTextChanged {
-            Log.d("CrudFragment", it.toString())
-
             it?.toString()?.also { texto ->
                 binding.crudTitulo.error = if(texto.length < 10 ) {
                     "Mínimo 10 caracteres"
@@ -180,6 +190,10 @@ class CrudOfertaFragment : Fragment() {
         }
     }
 
+    private fun abrirSelecaoImagem() {
+        launcher.launch("image/*")
+    }
+
     private fun dialogValidaCampos() {
         MaterialAlertDialogBuilder(requireContext())
             .setMessage("Preencha os campos obrigatórios")
@@ -191,9 +205,10 @@ class CrudOfertaFragment : Fragment() {
 
     private fun validaCampos(): Boolean {
 
-        return binding.editTextTitulo.text?.isNotEmpty() == true ||
-                binding.editTextEstabelecimento.text?.isNotEmpty() == true ||
-                binding.editTextPrecoNovo.text?.isNotEmpty() == true ||
+        return listaImagens.isNotEmpty() &&
+                binding.editTextTitulo.text?.isNotEmpty() == true &&
+                binding.editTextEstabelecimento.text?.isNotEmpty() == true &&
+                binding.editTextPrecoNovo.text?.isNotEmpty() == true &&
                 binding.editTextInfoAdicionais.text?.isNotEmpty() == true
     }
 
@@ -223,7 +238,11 @@ class CrudOfertaFragment : Fragment() {
     }
 
     private fun formatarPrecoParaSalvar(preco: String?): Double? {
-        return preco?.replace("R$ ", "")?.toDouble()
+
+        return preco?.replace("\\s".toRegex(),"")
+            ?.replace("R$","")
+            ?.replace(",", ".")
+            ?.toDoubleOrNull()
     }
 
     override fun onDestroy() {
