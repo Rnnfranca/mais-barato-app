@@ -18,7 +18,7 @@ class ListaOfertaAdapter(private var listaOferta: List<Oferta>) :
             oferta.apply {
 
                 Glide.with(binding.imagemOferta)
-                    .load(listaUrlImagem)
+                    .load(oferta.listaUrlImagem.firstOrNull())
                     .into(binding.imagemOferta)
 
                 binding.tituloPromocao.text = titulo
