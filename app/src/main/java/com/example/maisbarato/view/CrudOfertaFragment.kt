@@ -13,10 +13,13 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.maisbarato.R
 import com.example.maisbarato.databinding.FragmentCrudOfertaBinding
 import com.example.maisbarato.model.Oferta
+import com.example.maisbarato.util.StateViewResult
 import com.example.maisbarato.util.getCurrentTime
 import com.example.maisbarato.view.adapter.ListaImagemAdapter
 import com.example.maisbarato.viewmodel.CrudOfertaViewModel
@@ -38,11 +41,7 @@ class CrudOfertaFragment : Fragment() {
 
     private lateinit var contentResolver: ContentResolver
 
-    private var listaImagens = listOf<String?>()
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-    }
+    private var listaImagens = listOf<String>()
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -60,13 +59,30 @@ class CrudOfertaFragment : Fragment() {
         configuracaoView()
         configuracaoSelecaoImagem()
         listeners()
+        crudViewModel.ofertaStateView.observe(viewLifecycleOwner, { singleLiveEvent ->
+
+            singleLiveEvent.getContentIfNotHandled()?.also { stateView ->
+                when (stateView) {
+                    is StateViewResult.Loading -> {
+
+                    }
+                    is StateViewResult.Success -> {
+                        findNavController().navigate(R.id.listaOfertasFragment)
+                    }
+                    is StateViewResult.Error -> {
+
+                    }
+                }
+            }
+
+        })
     }
 
     private fun configuracaoSelecaoImagem() {
         launcher = registerForActivityResult(ActivityResultContracts.GetMultipleContents()) { uri ->
             uri?.also { listUri ->
 
-                listaImagemAdapter.atualizaListaImagens(listUri)
+                listaImagemAdapter.atualizaListaImagens(listUri.map { it.toString() })
 
                 listaImagens = listUri.mapNotNull { it.toString() }
 

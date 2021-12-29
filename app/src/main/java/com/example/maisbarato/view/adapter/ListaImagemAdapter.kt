@@ -1,19 +1,18 @@
 package com.example.maisbarato.view.adapter
 
-import android.net.Uri
 import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.maisbarato.databinding.ImagemItemBinding
 
-class ListaImagemAdapter(private var listaUriImagens: List<Uri>) :
+class ListaImagemAdapter(private var listaUriImagens: List<String>) :
  RecyclerView.Adapter<ListaImagemAdapter.ImagemViewHolder>() {
 
      inner class ImagemViewHolder(private val binding: ImagemItemBinding) :
          RecyclerView.ViewHolder(binding.root) {
 
-         fun bind(imagemUri: Uri) {
+         fun bind(imagemUri: String) {
              Glide.with(binding.imagemProduto)
                  .load(imagemUri)
                  .into(binding.imagemProduto)
@@ -21,7 +20,7 @@ class ListaImagemAdapter(private var listaUriImagens: List<Uri>) :
 
      }
 
-    fun atualizaListaImagens(listaUriImagens: List<Uri>) {
+    fun atualizaListaImagens(listaUriImagens: List<String>) {
         this.listaUriImagens = listaUriImagens
         notifyDataSetChanged()
     }

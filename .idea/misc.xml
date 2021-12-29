@@ -7,10 +7,12 @@
     <option name="filePathToZoomLevelMap">
       <map>
         <entry key="..\:/Users/renan.franca/AndroidStudioProjects/MaisBarato/app/src/main/res/layout/activity_main.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_crud_oferta.xml" value="0.18" />
+        <entry key="app/src/main/res/layout/comentario_item.xml" value="0.25" />
+        <entry key="app/src/main/res/layout/fragment_crud_oferta.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_detalhes_oferta.xml" value="0.307504873294347" />
         <entry key="app/src/main/res/layout/fragment_lista_ofertas.xml" value="0.1" />
         <entry key="app/src/main/res/layout/imagem_item.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/oferta_item.xml" value="0.1" />
+        <entry key="app/src/main/res/layout/oferta_item.xml" value="0.33" />
       </map>
     </option>
   </component>

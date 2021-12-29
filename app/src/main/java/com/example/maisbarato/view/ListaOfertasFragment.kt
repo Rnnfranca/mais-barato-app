@@ -7,6 +7,7 @@ import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.findNavController
+import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
 import com.example.maisbarato.databinding.FragmentListaOfertasBinding
@@ -48,13 +49,18 @@ class ListaOfertasFragment : Fragment() {
             LinearLayoutManager.VERTICAL,
             false
         )
-        listaOfertasAdapter = ListaOfertaAdapter(listOf())
+        listaOfertasAdapter = ListaOfertaAdapter(listOf()) { oferta ->
+            val action = ListaOfertasFragmentDirections.actionListaOfertasFragmentToDetalhesOfertaFragment(
+                oferta
+            )
+            findNavController().navigate(action)
+        }
         recyclerView.adapter = listaOfertasAdapter
 
         listaOfertasViewModel.lerTodasOfertas()
 
         binding.fabAddOferta.setOnClickListener {
-            val action = ListaOfertasFragmentDirections.actionListaOfertasFragmentToCrudOfertaFragment(null)
+            val action = ListaOfertasFragmentDirections.actionListaOfertasFragmentToCrudOfertaFragment()
             binding.fabAddOferta.findNavController().navigate(action)
         }
 

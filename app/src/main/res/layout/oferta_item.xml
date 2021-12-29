@@ -66,35 +66,6 @@
             app:layout_constraintTop_toBottomOf="@id/imagem_estabelecimento"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
 
-        <ImageView
-            android:id="@+id/icone_termometro"
-            android:layout_width="45dp"
-            android:layout_height="45dp"
-            android:layout_marginStart="12dp"
-            android:layout_marginTop="18dp"
-            android:src="@drawable/temperature"
-            app:layout_constraintTop_toBottomOf="@id/imagem_oferta"
-            app:layout_constraintStart_toStartOf="parent"/>
-
-        <TextView
-            android:id="@+id/graus"
-            android:layout_width="wrap_content"
-            android:layout_height="wrap_content"
-            android:textSize="23sp"
-            android:layout_marginStart="12dp"
-            app:layout_constraintTop_toTopOf="@id/icone_termometro"
-            app:layout_constraintStart_toEndOf="@id/icone_termometro"
-            tools:text="30º"/>
-
-        <View
-            android:layout_width="70dp"
-            android:layout_height="3dp"
-            android:background="#FF0000"
-            android:layout_marginTop="8dp"
-            android:layout_marginStart="12dp"
-            app:layout_constraintTop_toBottomOf="@id/graus"
-            app:layout_constraintStart_toEndOf="@id/icone_termometro"/>
-
         <TextView
             android:id="@+id/preco_antigo"
             android:layout_width="wrap_content"
@@ -118,44 +89,35 @@
             tools:text="R$ 99,99"/>
 
         <ImageView
-            android:id="@+id/icone_fogo"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginTop="25dp"
-            android:src="@drawable/fire_color"
-            app:layout_constraintTop_toBottomOf="@id/icone_termometro"
-            app:layout_constraintStart_toStartOf="@id/icone_termometro"
-            app:layout_constraintEnd_toEndOf="@id/icone_termometro"/>
-
-        <ImageView
-            android:id="@+id/icone_gelo"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginStart="25dp"
-            android:src="@drawable/ice_crystal_color"
-            app:layout_constraintStart_toEndOf="@id/icone_fogo"
-            app:layout_constraintTop_toTopOf="@id/icone_fogo"
-            app:layout_constraintBottom_toBottomOf="@+id/icone_fogo"/>
-
-        <ImageView
             android:id="@+id/icone_favorito"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginEnd="25dp"
+            android:layout_marginEnd="15dp"
+            android:layout_marginTop="15dp"
             android:src="@drawable/favorite_color"
-            app:layout_constraintEnd_toStartOf="@id/icone_comentario"
-            app:layout_constraintTop_toTopOf="@id/icone_gelo"
-            app:layout_constraintBottom_toBottomOf="@id/icone_gelo"/>
+            app:layout_constraintTop_toTopOf="@id/imagem_oferta"
+            app:layout_constraintEnd_toEndOf="parent"/>
 
         <ImageView
             android:id="@+id/icone_comentario"
             android:layout_width="30dp"
             android:layout_height="30dp"
-            android:layout_marginEnd="18dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="12dp"
             android:src="@drawable/comments_color"
-            app:layout_constraintEnd_toEndOf="parent"
-            app:layout_constraintTop_toTopOf="@id/icone_favorito"
-            app:layout_constraintBottom_toBottomOf="@id/icone_favorito"/>
+            app:layout_constraintTop_toBottomOf="@id/imagem_oferta"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/numero_comentario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:layout_marginStart="8dp"
+            tools:text="2"
+            app:layout_constraintTop_toTopOf="@id/icone_comentario"
+            app:layout_constraintBottom_toBottomOf="@id/icone_comentario"
+            app:layout_constraintStart_toEndOf="@id/icone_comentario"/>
 
     </androidx.constraintlayout.widget.ConstraintLayout>
 

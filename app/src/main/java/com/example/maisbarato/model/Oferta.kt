@@ -12,7 +12,7 @@ data class Oferta (
     var idRoom: Int = 0,
     var id: String = "",
     var titulo: String = "",
-    var listaUrlImagem: List<String?> = listOf(),
+    var listaUrlImagem: List<String> = listOf(),
     var dataInclusao: Long = 0,
     var fotoLoja: String = "",
     var nomeLoja: String = "",
