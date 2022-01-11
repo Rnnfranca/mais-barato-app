@@ -31,6 +31,17 @@
             android:layout_height="wrap_content"
             android:padding="20dp">
 
+            <TextView
+                android:id="@+id/data_inclusao"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_marginEnd="12dp"
+                android:textSize="12sp"
+                android:layout_marginStart="12dp"
+                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintStart_toStartOf="parent"
+                tools:text="31/12/2021" />
+
             <ImageView
                 android:id="@+id/imagem_estabelecimento"
                 android:layout_width="50dp"
@@ -38,7 +49,7 @@
                 android:layout_marginStart="12dp"
                 android:layout_marginTop="18dp"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/data_inclusao"
                 tools:src="@tools:sample/backgrounds/scenic"
                 tools:srcCompat="@tools:sample/avatars" />
 
@@ -46,36 +57,27 @@
                 android:id="@+id/titulo_promocao"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="18dp"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="18dp"
                 android:textSize="18sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="parent"
+                app:layout_constraintEnd_toStartOf="@+id/preco_novo"
                 app:layout_constraintStart_toEndOf="@id/imagem_estabelecimento"
-                app:layout_constraintEnd_toStartOf="@id/data_inclusao"
+
+                app:layout_constraintTop_toBottomOf="@id/data_inclusao"
                 tools:text="Titulo da promocao" />
 
             <TextView
                 android:id="@+id/nome_loja"
-                android:layout_width="wrap_content"
+                android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="8dp"
                 android:layout_marginStart="12dp"
+                android:layout_marginTop="8dp"
                 android:textSize="12sp"
-                app:layout_constraintTop_toBottomOf="@id/titulo_promocao"
+                app:layout_constraintEnd_toStartOf="@+id/preco_novo"
                 app:layout_constraintStart_toEndOf="@id/imagem_estabelecimento"
+                app:layout_constraintTop_toBottomOf="@id/titulo_promocao"
                 tools:text="Nome da loja" />
-
-            <TextView
-                android:id="@+id/data_inclusao"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginEnd="12dp"
-                android:textSize="12sp"
-                app:layout_constraintTop_toTopOf="@id/titulo_promocao"
-                app:layout_constraintBottom_toBottomOf="@id/titulo_promocao"
-                app:layout_constraintEnd_toEndOf="parent"
-                tools:text="31/12/2021" />
 
             <TextView
                 android:id="@+id/preco_antigo"
@@ -84,8 +86,8 @@
                 android:layout_marginEnd="18dp"
                 android:layout_marginTop="15dp"
                 android:textSize="14sp"
-                app:layout_constraintTop_toBottomOf="@id/nome_loja"
-                app:layout_constraintBottom_toTopOf="@id/preco_novo"
+                app:layout_constraintTop_toBottomOf="@id/data_inclusao"
+
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="R$ 199,99" />
 
@@ -96,63 +98,20 @@
                 android:layout_marginEnd="18dp"
                 android:textSize="20sp"
                 android:textStyle="bold"
-                app:layout_constraintTop_toTopOf="@id/text_down_vote"
-                app:layout_constraintBottom_toBottomOf="@id/text_down_vote"
                 app:layout_constraintEnd_toEndOf="parent"
+                app:layout_constraintTop_toBottomOf="@id/preco_antigo"
                 tools:text="R$ 99,99" />
-
-            <ImageView
-                android:id="@+id/icone_up_vote_oferta"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginTop="25dp"
-                android:src="@drawable/arrow_up_outline_green"
-                app:layout_constraintTop_toBottomOf="@id/imagem_estabelecimento"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/text_up_vote"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:layout_marginStart="5dp"
-                tools:text="18"
-                app:layout_constraintTop_toTopOf="@id/icone_up_vote_oferta"
-                app:layout_constraintStart_toEndOf="@id/icone_up_vote_oferta"
-                app:layout_constraintBottom_toBottomOf="@id/icone_up_vote_oferta"/>
-
-            <ImageView
-                android:id="@+id/icone_down_vote_oferta"
-                android:layout_width="30dp"
-                android:layout_height="30dp"
-                android:layout_marginStart="10dp"
-                android:src="@drawable/arrow_down_outline_red"
-                app:layout_constraintStart_toEndOf="@id/text_up_vote"
-                app:layout_constraintTop_toTopOf="@id/text_up_vote"
-                app:layout_constraintBottom_toBottomOf="@+id/text_up_vote" />
-
-            <TextView
-                android:id="@+id/text_down_vote"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:textSize="22sp"
-                android:layout_marginStart="5dp"
-                tools:text="3"
-                app:layout_constraintTop_toTopOf="@id/icone_down_vote_oferta"
-                app:layout_constraintStart_toEndOf="@id/icone_down_vote_oferta"
-                app:layout_constraintBottom_toBottomOf="@id/icone_down_vote_oferta"/>
 
             <com.google.android.material.button.MaterialButton
                 android:id="@+id/botao_adicionar_favoritos"
+                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:layout_marginTop="20dp"
                 android:text="Adicionar aos favoritos"
                 app:icon="@drawable/ic_favorite"
-                style="@style/Widget.MaterialComponents.Button.TextButton.Icon"
-                app:layout_constraintTop_toBottomOf="@id/icone_up_vote_oferta"
+                app:layout_constraintEnd_toEndOf="parent"
                 app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintEnd_toEndOf="parent"/>
+                app:layout_constraintTop_toBottomOf="@+id/nome_loja" />
 
             <View
                 android:id="@+id/divisao_estabelecimento"
