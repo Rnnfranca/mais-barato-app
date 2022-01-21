@@ -3,7 +3,7 @@
     xmlns:app="http://schemas.android.com/apk/res-auto"
     xmlns:tools="http://schemas.android.com/tools"
     android:id="@+id/nav_graph"
-    app:startDestination="@id/listaOfertasFragment">
+    app:startDestination="@id/loginFragment">
     <fragment
         android:id="@+id/listaOfertasFragment"
         android:name="com.example.maisbarato.view.ListaOfertasFragment"
@@ -31,4 +31,21 @@
             app:argType="com.example.maisbarato.model.Oferta"
             app:nullable="true"/>
     </fragment>
+    <fragment
+        android:id="@+id/loginFragment"
+        android:name="com.example.maisbarato.view.LoginFragment"
+        android:label="fragment_login"
+        tools:layout="@layout/fragment_login" >
+        <action
+            android:id="@+id/action_loginFragment_to_listaOfertasFragment"
+            app:destination="@id/listaOfertasFragment" />
+        <action
+            android:id="@+id/action_loginFragment_to_cadastroFragment"
+            app:destination="@id/cadastroFragment" />
+    </fragment>
+    <fragment
+        android:id="@+id/cadastroFragment"
+        android:name="com.example.maisbarato.view.CadastroFragment"
+        android:label="fragment_cadastro"
+        tools:layout="@layout/fragment_cadastro" />
 </navigation>
