@@ -14,7 +14,7 @@
         <entry key="app/src/main/res/layout/fragment_crud_oferta.xml" value="0.33" />
         <entry key="app/src/main/res/layout/fragment_detalhes_oferta.xml" value="0.307504873294347" />
         <entry key="app/src/main/res/layout/fragment_lista_ofertas.xml" value="0.1" />
-        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.33" />
+        <entry key="app/src/main/res/layout/fragment_login.xml" value="0.2" />
         <entry key="app/src/main/res/layout/imagem_item.xml" value="0.1" />
         <entry key="app/src/main/res/layout/oferta_item.xml" value="0.33" />
       </map>
@@ -25,5 +25,12 @@
   </component>
   <component name="ProjectType">
     <option name="id" value="Android" />
+  </component>
+  <component name="VisualizationToolProject">
+    <option name="state">
+      <ProjectState>
+        <option name="scale" value="0.2" />
+      </ProjectState>
+    </option>
   </component>
 </project>

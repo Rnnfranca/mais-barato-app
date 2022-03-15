@@ -55,6 +55,13 @@ class MainActivity : AppCompatActivity() {
         navController.addOnDestinationChangedListener(destinationListener)
     }
 
+    override fun onBackPressed() {
+        val fragmentAtual = navController.currentDestination?.id
+        if(fragmentAtual != R.id.listaOfertasFragment) {
+            super.onBackPressed()
+        }
+    }
+
     override fun onSupportNavigateUp(): Boolean {
         val navController = findNavController(R.id.nav_host_fragment)
         return navController.navigateUp() || super.onSupportNavigateUp()

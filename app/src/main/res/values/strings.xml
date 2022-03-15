@@ -1,4 +1,9 @@
 <resources>
-    <string name="app_name">Mais Barato</string>
-    <!-- TODO: Remove or change this placeholder text -->
+    <string name="app_name" translatable="false">Mais Barato</string>
+    <string name="e_mail">E-mail</string>
+    <string name="senha">Senha</string>
+    <string name="lembrar_login">Lembrar usuário e senha?</string>
+    <string name="entrar">ENTRAR</string>
+    <string name="esqueci_a_senha">Esqueci a senha</string>
+    <string name="criar_conta">Criar conta</string>
 </resources>

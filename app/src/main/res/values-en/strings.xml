@@ -1,0 +1,9 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+    <string name="e_mail">E-mail</string>
+    <string name="senha">Password</string>
+    <string name="lembrar_login">Remember e-mail and password</string>
+    <string name="entrar">LOGIN</string>
+    <string name="esqueci_a_senha">Forgot password</string>
+    <string name="criar_conta">Create account</string>
+</resources>
