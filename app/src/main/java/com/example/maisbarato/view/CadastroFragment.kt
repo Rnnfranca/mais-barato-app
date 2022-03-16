@@ -8,8 +8,13 @@ import android.view.ViewGroup
 import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.maisbarato.R
 import com.example.maisbarato.databinding.FragmentCadastroBinding
+import com.example.maisbarato.viewmodel.CadastroViewModel
+import com.google.android.gms.tasks.Task
+import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 import java.util.regex.Pattern
 
@@ -17,6 +22,8 @@ class CadastroFragment : Fragment() {
 
     private var _binding: FragmentCadastroBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: CadastroViewModel by viewModels()
 
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
@@ -43,18 +50,7 @@ class CadastroFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         binding.btnCadastrar.setOnClickListener {
-            auth.createUserWithEmailAndPassword(
-                binding.editTextEmailCadastro.text.toString(),
-                binding.editTextSenhaCadastro.text.toString()
-            ).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
-                    Log.d(TAG, "createUserWithEmail:success")
-                } else {
-                    Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                    Toast.makeText(requireContext(), "Authentication failed.",
-                        Toast.LENGTH_SHORT).show()
-                }
-            }
+            cadastrarUsuario()
         }
 
         binding.textEntrar.setOnClickListener {
@@ -90,6 +86,52 @@ class CadastroFragment : Fragment() {
                 }
             }
         }
+    }
+
+    private fun cadastrarUsuario() {
+        auth.createUserWithEmailAndPassword(
+            binding.editTextEmailCadastro.text.toString(),
+            binding.editTextSenhaCadastro.text.toString()
+        ).addOnCompleteListener { task ->
+            if (task.isSuccessful) {
+                Log.d(TAG, "createUserWithEmail:success")
+
+                findNavController().navigate(R.id.action_cadastroFragment_to_listaOfertasFragment)
+
+                enviaEmailVerificacao(task)
+            } else {
+                Log.w(TAG, "createUserWithEmail:failure", task.exception)
+                Toast.makeText(
+                    requireContext(), "Authentication failed.",
+                    Toast.LENGTH_SHORT
+                ).show()
+            }
+        }
+    }
+
+    private fun enviaEmailVerificacao(task: Task<AuthResult>) {
+        val user = task.result?.user
+
+        user?.sendEmailVerification()
+            ?.addOnCompleteListener { taskEmailVerification ->
+                if (taskEmailVerification.isSuccessful) {
+                    Toast.makeText(
+                        requireContext(),
+                        "Verification email sent to " + user.email,
+                        Toast.LENGTH_SHORT
+                    ).show()
+
+                    viewModel.salvaUIDUsuario(user.uid)
+
+                } else {
+                    Log.e(TAG, "sendEmailVerification", taskEmailVerification.exception);
+                    Toast.makeText(
+                        requireContext(),
+                        "Failed to send verification email.",
+                        Toast.LENGTH_SHORT
+                    ).show()
+                }
+            }
     }
 
     private fun validaEmail(email: String): Boolean {

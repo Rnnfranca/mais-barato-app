@@ -6,9 +6,10 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.maisbarato.model.LoginUsuario
-import com.example.maisbarato.util.PREFERENCE_EMAIL_KEY
-import com.example.maisbarato.util.PREFERENCE_SENHA_KEY
-import com.example.maisbarato.util.PREFERENCE_SWITCH_STATUS_KEY
+import com.example.maisbarato.util.PREFERENCE_EMAIL
+import com.example.maisbarato.util.PREFERENCE_SENHA
+import com.example.maisbarato.util.PREFERENCE_SWITCH_STATUS
+import com.example.maisbarato.util.PREFERENCE_USER_UID
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -23,32 +24,32 @@ class DataStoreRepository(private val context: Context) {
             RepositoryResult.Error(
                 it.message.toString()
             )
-        }.map { settings ->
+        }.map { preferences ->
             RepositoryResult.Success(
                 LoginUsuario(
-                    settings[PREFERENCE_EMAIL_KEY],
-                    settings[PREFERENCE_SENHA_KEY]
+                    preferences[PREFERENCE_EMAIL],
+                    preferences[PREFERENCE_SENHA]
                 )
             )
         }
 
     suspend fun salvaLoginUsuario(email: String, senha: String) {
-        context.dataStore.edit { settings ->
-            settings[PREFERENCE_EMAIL_KEY] = email
-            settings[PREFERENCE_SENHA_KEY] = senha
+        context.dataStore.edit { preferences ->
+            preferences[PREFERENCE_EMAIL] = email
+            preferences[PREFERENCE_SENHA] = senha
         }
     }
 
     suspend fun limpaLoginSalvo() {
-        context.dataStore.edit { settings ->
-            settings[PREFERENCE_EMAIL_KEY] = ""
-            settings[PREFERENCE_SENHA_KEY] = ""
+        context.dataStore.edit { preferences ->
+            preferences[PREFERENCE_EMAIL] = ""
+            preferences[PREFERENCE_SENHA] = ""
         }
     }
 
     suspend fun salvaSwitchLoginStatus(status: Boolean) {
-        context.dataStore.edit { settings ->
-            settings[PREFERENCE_SWITCH_STATUS_KEY] = status
+        context.dataStore.edit { preferences ->
+            preferences[PREFERENCE_SWITCH_STATUS] = status
         }
     }
 
@@ -57,9 +58,26 @@ class DataStoreRepository(private val context: Context) {
             RepositoryResult.Error(
                 it.message.toString()
             )
-        }.map { settings ->
+        }.map { preferences ->
             RepositoryResult.Success(
-                settings[PREFERENCE_SWITCH_STATUS_KEY] ?: false
+                preferences[PREFERENCE_SWITCH_STATUS] ?: false
+            )
+        }
+
+    suspend fun salvaUIDUsuario(uid: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PREFERENCE_USER_UID] = uid
+        }
+    }
+
+    fun getUIDUsuario(): Flow<RepositoryResult<String>> =
+        context.dataStore.data.catch {
+            RepositoryResult.Error(
+                it.message.toString()
+            )
+        }.map { preferences ->
+            RepositoryResult.Success(
+                preferences[PREFERENCE_USER_UID] ?: ""
             )
         }
 }

@@ -47,5 +47,9 @@
         android:id="@+id/cadastroFragment"
         android:name="com.example.maisbarato.view.CadastroFragment"
         android:label="fragment_cadastro"
-        tools:layout="@layout/fragment_cadastro" />
+        tools:layout="@layout/fragment_cadastro" >
+        <action
+            android:id="@+id/action_cadastroFragment_to_listaOfertasFragment"
+            app:destination="@id/listaOfertasFragment" />
+    </fragment>
 </navigation>

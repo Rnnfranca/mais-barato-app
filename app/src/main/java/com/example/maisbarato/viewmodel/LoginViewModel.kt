@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class LoginViewModel(application: Application) : AndroidViewModel(application), LifecycleObserver {
 
-    private val TAG = "LoginViewModel"
+    private val TAG = LoginViewModel::class.java.name
 
     private val dataStore = DataStoreRepository(application)
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
@@ -68,12 +68,12 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
             try {
                 dataStore.salvaLoginUsuario(email, senha)
             } catch (e: Exception) {
-                Log.d(TAG, e.message ?: "Erro ao salvar login usuário")
+                Log.e(TAG, e.message ?: "Erro ao salvar login usuário")
             }
         }
     }
 
-    fun getLogin(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+    fun getDadosLogin(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         viewModelScope.launch(dispatcher) {
             dataStore.getLoginUsuario().collect { repositoryResult ->
                 when(repositoryResult) {

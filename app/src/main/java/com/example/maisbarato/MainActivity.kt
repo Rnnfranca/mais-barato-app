@@ -19,7 +19,6 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var destinationListener: NavController.OnDestinationChangedListener
 
-
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         _binding = ActivityMainBinding.inflate(layoutInflater)
@@ -32,12 +31,10 @@ class MainActivity : AppCompatActivity() {
         binding.myToolbar.setupWithNavController(navController)
 //        setupActionBarWithNavController(navController)
 
-
-
         destinationListener =
             NavController.OnDestinationChangedListener { _, destination, arguments ->
 
-                binding.myToolbar.visibility = if (destination.id == R.id.loginFragment) {
+                binding.myToolbar.visibility = if (destination.id == R.id.loginFragment || destination.id == R.id.cadastroFragment) {
                     View.GONE
                 } else {
                     View.VISIBLE

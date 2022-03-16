@@ -15,7 +15,6 @@ import com.example.maisbarato.databinding.FragmentLoginBinding
 import com.example.maisbarato.util.StateViewResult
 import com.example.maisbarato.viewmodel.LoginViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
-import com.google.firebase.auth.FirebaseAuth
 
 class LoginFragment : Fragment() {
 
@@ -24,16 +23,14 @@ class LoginFragment : Fragment() {
 
     private val viewModel: LoginViewModel by viewModels()
 
-    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val TAG = "CadastroFragment"
+    private val TAG = LoginFragment::class.java.name
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
     ): View {
-        // Inflate the layout for this fragment
         _binding = FragmentLoginBinding.inflate(inflater, container, false)
-        viewModel.getLogin()
+        viewModel.getDadosLogin()
         viewModel.getSwitchLoginStatus()
 
         observers()
@@ -69,12 +66,8 @@ class LoginFragment : Fragment() {
             }
 
             if (!email.isNullOrEmpty() && !senha.isNullOrEmpty()) {
-
                 viewModel.login(email.toString(), senha.toString())
-
             }
-
-
         }
 
         binding.textCriarConta.setOnClickListener {
