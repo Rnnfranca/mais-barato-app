@@ -6,4 +6,9 @@
     <string name="entrar">ENTRA</string>
     <string name="esqueci_a_senha">Olvidé la contraseña</string>
     <string name="criar_conta">Crea una cuenta</string>
+    <string name="favoritos">Favoritos</string>
+    <string name="notifica_es">Notificaciones</string>
+    <string name="hist_rico">Historial</string>
+    <string name="fale_conosco">Contacto</string>
+    <string name="sair">Cerrar sesión</string>
 </resources>

@@ -5,9 +5,11 @@ import android.view.View
 import androidx.appcompat.app.AppCompatActivity
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
-import androidx.navigation.fragment.NavHostFragment
+import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
 import com.example.maisbarato.databinding.ActivityMainBinding
+import com.example.maisbarato.util.telasComIconeMenuHamburguer
+import com.example.maisbarato.util.telasSemToolbar
 import dagger.hilt.android.AndroidEntryPoint
 
 @AndroidEntryPoint
@@ -17,6 +19,7 @@ class MainActivity : AppCompatActivity() {
     private val binding get() = _binding!!
 
     private lateinit var navController: NavController
+    private lateinit var appBarConfig: AppBarConfiguration
     private lateinit var destinationListener: NavController.OnDestinationChangedListener
 
     override fun onCreate(savedInstanceState: Bundle?) {
@@ -24,27 +27,28 @@ class MainActivity : AppCompatActivity() {
         _binding = ActivityMainBinding.inflate(layoutInflater)
         setContentView(binding.root)
 
-        val navHostFragment =
-            supportFragmentManager.findFragmentById(R.id.nav_host_fragment) as NavHostFragment
-        navController = navHostFragment.navController
+        navController = findNavController(R.id.nav_host_fragment)
+        appBarConfig = AppBarConfiguration(telasComIconeMenuHamburguer, binding.drawerLayout)
 
-        binding.myToolbar.setupWithNavController(navController)
-//        setupActionBarWithNavController(navController)
+        binding.navigationView.setupWithNavController(navController)
+        binding.toolbar.setupWithNavController(navController, appBarConfig)
 
+        configDestinationListener()
+    }
+
+    private fun configDestinationListener() {
         destinationListener =
             NavController.OnDestinationChangedListener { _, destination, arguments ->
-
-                binding.myToolbar.visibility = if (destination.id == R.id.loginFragment || destination.id == R.id.cadastroFragment) {
-                    View.GONE
-                } else {
-                    View.VISIBLE
-                }
-
-                if (destination.id == R.id.listaOfertasFragment) {
-                    binding.myToolbar.navigationIcon = null
-                }
-
+                visibilidadeToolbar(destination.id)
             }
+    }
+
+    private fun visibilidadeToolbar(destinationId: Int) {
+        binding.toolbar.visibility = if (destinationId in telasSemToolbar) {
+            View.GONE
+        } else {
+            View.VISIBLE
+        }
     }
 
     override fun onResume() {

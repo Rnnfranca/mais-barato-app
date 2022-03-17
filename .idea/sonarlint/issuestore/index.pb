@@ -3,8 +3,6 @@
 build.gradle,f\0\f07866736216be0ee2aba49e392191aeae700a35
 @
 app/build.gradle,f\4\f4a01d6a4fcb971362ec00a83903fd3902f52164
-j
-:app/src/main/java/com/example/maisbarato/util/Constants.kt,4\9\4984a7c959e9a24d1598e3fb0525ffb2e8194e51
 o
 ?app/src/main/java/com/example/maisbarato/database/Converters.kt,d\c\dcabd9cd224d5c7d82e4d79f97163526079545be
 w
@@ -25,17 +23,21 @@ Gapp/src/main/java/com/example/maisbarato/repository/OfertaRepository.kt,d\3\d3
 Kapp/src/main/java/com/example/maisbarato/view/adapter/ListaOfertaAdapter.kt,3\b\3b8233dd1b7d9477556f39fb897040d4f8217c74
 s
 Capp/src/main/java/com/example/maisbarato/view/CrudOfertaFragment.kt,9\0\90da3a1513b5032fc83f5517e551103255bd57ca
-u
-Eapp/src/main/java/com/example/maisbarato/view/ListaOfertasFragment.kt,a\3\a330005ce4bde530d34b5d715f5a345e384df85a
 {
 Kapp/src/main/java/com/example/maisbarato/viewmodel/ListaOfertasViewModel.kt,4\0\40e75c2c79d529432ca6a3821db4ade1fada15c6
 k
 ;app/src/main/java/com/example/maisbarato/BaseApplication.kt,f\9\f9d326ead81372d42c630ac47a214511a1aed7fe
-h
-8app/src/main/java/com/example/maisbarato/MainActivity.kt,5\3\538bde0b7f117c629a0c112c36d1760304627025
 h
 8app/src/main/java/com/example/maisbarato/model/Oferta.kt,6\5\65019fa8b5b79c635e3736bc16081136b00b69a5
 y
 Iapp/src/main/java/com/example/maisbarato/viewmodel/CrudOfertaViewModel.kt,2\b\2bbd2a245e3cea0142dbb1279bd9668625af311e
 
 Oapp/src/main/java/com/example/maisbarato/remoterepository/FirebaseRepository.kt,e\3\e3b444162a74bdd59fe67b329331a330d06b9230
+t
+Dapp/src/main/java/com/example/maisbarato/viewmodel/LoginViewModel.kt,8/1/8178643dae4e265c8552b767279a17e35b855990
+z
+Japp/src/main/java/com/example/maisbarato/repository/DataStoreRepository.kt,5/a/5a84d9dd312450ae6e6e3939be1de89a5010b0e6
+n
+>app/src/main/java/com/example/maisbarato/view/LoginFragment.kt,d/9/d973f4c32cbfd9f5f3e244ff6f3d70f658f8fb05
+u
+Eapp/src/main/java/com/example/maisbarato/view/ListaOfertasFragment.kt,a/3/a330005ce4bde530d34b5d715f5a345e384df85a
