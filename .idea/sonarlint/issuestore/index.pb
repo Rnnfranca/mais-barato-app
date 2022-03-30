@@ -33,11 +33,11 @@ y
 Iapp/src/main/java/com/example/maisbarato/viewmodel/CrudOfertaViewModel.kt,2\b\2bbd2a245e3cea0142dbb1279bd9668625af311e
 
 Oapp/src/main/java/com/example/maisbarato/remoterepository/FirebaseRepository.kt,e\3\e3b444162a74bdd59fe67b329331a330d06b9230
+P
+ app/src/main/AndroidManifest.xml,8/c/8c55c3ccc257e5907959013f99656e4c8ec3903e
+w
+Gapp/src/main/java/com/example/maisbarato/viewmodel/CadastroViewModel.kt,b/3/b30d011bd9f082ae8f1ff3640babcd9f6239e94b
 t
 Dapp/src/main/java/com/example/maisbarato/viewmodel/LoginViewModel.kt,8/1/8178643dae4e265c8552b767279a17e35b855990
-z
-Japp/src/main/java/com/example/maisbarato/repository/DataStoreRepository.kt,5/a/5a84d9dd312450ae6e6e3939be1de89a5010b0e6
-n
->app/src/main/java/com/example/maisbarato/view/LoginFragment.kt,d/9/d973f4c32cbfd9f5f3e244ff6f3d70f658f8fb05
-u
-Eapp/src/main/java/com/example/maisbarato/view/ListaOfertasFragment.kt,a/3/a330005ce4bde530d34b5d715f5a345e384df85a
+j
+:app/src/main/java/com/example/maisbarato/util/Constants.kt,4/9/4984a7c959e9a24d1598e3fb0525ffb2e8194e51
