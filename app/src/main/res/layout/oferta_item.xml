@@ -17,6 +17,7 @@
             android:layout_height="50dp"
             android:layout_marginStart="12dp"
             android:layout_marginTop="18dp"
+            android:importantForAccessibility="no"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toTopOf="parent"
             tools:src="@tools:sample/backgrounds/scenic"
@@ -62,6 +63,7 @@
             android:layout_height="200dp"
             android:layout_marginTop="18dp"
             android:scaleType="centerCrop"
+            android:importantForAccessibility="no"
             app:layout_constraintStart_toStartOf="parent"
             app:layout_constraintTop_toBottomOf="@id/imagem_estabelecimento"
             tools:srcCompat="@tools:sample/backgrounds/scenic" />
@@ -94,6 +96,7 @@
             android:layout_height="30dp"
             android:layout_marginEnd="15dp"
             android:layout_marginTop="15dp"
+            android:contentDescription="@string/botao_favorito"
             android:src="@drawable/favorite_color"
             app:layout_constraintTop_toTopOf="@id/imagem_oferta"
             app:layout_constraintEnd_toEndOf="parent"/>
@@ -104,6 +107,7 @@
             android:layout_height="30dp"
             android:layout_marginTop="25dp"
             android:layout_marginStart="12dp"
+            android:contentDescription="@string/botao_comentario"
             android:src="@drawable/comments_color"
             app:layout_constraintTop_toBottomOf="@id/imagem_oferta"
             app:layout_constraintStart_toStartOf="parent"/>

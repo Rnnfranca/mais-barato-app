@@ -11,4 +11,6 @@
     <string name="hist_rico">History</string>
     <string name="fale_conosco">Contact</string>
     <string name="sair">Log out</string>
+    <string name="botao_favorito">favorite button</string>
+    <string name="botao_comentario">comment button</string>
 </resources>
