@@ -70,6 +70,8 @@ class MainActivity : AppCompatActivity() {
             NavController.OnDestinationChangedListener { _, destination, arguments ->
                 visibilidadeToolbar(destination.id)
                 desabilitaMenuDrawer(destination.id)
+
+//                binding.toolbar.title = destination.id
             }
     }
 

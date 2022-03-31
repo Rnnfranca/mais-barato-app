@@ -41,3 +41,10 @@ t
 Dapp/src/main/java/com/example/maisbarato/viewmodel/LoginViewModel.kt,8/1/8178643dae4e265c8552b767279a17e35b855990
 j
 :app/src/main/java/com/example/maisbarato/util/Constants.kt,4/9/4984a7c959e9a24d1598e3fb0525ffb2e8194e51
+q
+Aapp/src/main/java/com/example/maisbarato/view/CadastroFragment.kt,4/a/4a1eeeffdf29a5183bdd9f18d8d8200cecc53b2f
+n
+>app/src/main/java/com/example/maisbarato/view/LoginFragment.kt,d/9/d973f4c32cbfd9f5f3e244ff6f3d70f658f8fb05
+:
+
+.gitignore,a/5/a5cc2925ca8258af241be7e5b0381edf30266302

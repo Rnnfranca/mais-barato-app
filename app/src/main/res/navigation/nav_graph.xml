@@ -7,7 +7,7 @@
     <fragment
         android:id="@+id/listaOfertasFragment"
         android:name="com.example.maisbarato.view.ListaOfertasFragment"
-        android:label="fragment_lista_ofertas"
+        android:label="Ofertas"
         tools:layout="@layout/fragment_lista_ofertas" >
         <action
             android:id="@+id/action_listaOfertasFragment_to_crudOfertaFragment"
@@ -19,12 +19,12 @@
     <fragment
         android:id="@+id/crudOfertaFragment"
         android:name="com.example.maisbarato.view.CrudOfertaFragment"
-        android:label="fragment_crud_oferta"
+        android:label="Incluir oferta"
         tools:layout="@layout/fragment_crud_oferta"/>
     <fragment
         android:id="@+id/detalhesOfertaFragment"
         android:name="com.example.maisbarato.view.DetalhesOfertaFragment"
-        android:label="fragment_detalhes_oferta"
+        android:label="Detalhes"
         tools:layout="@layout/fragment_detalhes_oferta">
         <argument
             android:name="oferta"

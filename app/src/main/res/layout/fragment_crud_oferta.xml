@@ -61,7 +61,6 @@
                 android:hint="Titulo"
                 app:errorEnabled="true"
                 app:helperTextEnabled="true"
-                app:helperText="*Obrigatório"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
 
@@ -80,7 +79,6 @@
                 android:hint="Estabelecimento"
                 android:layout_marginTop="10dp"
                 app:helperTextEnabled="true"
-                app:helperText="*Obrigatório"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_arrow_drop_down"
                 app:layout_constraintTop_toBottomOf="@id/crud_titulo">
@@ -124,7 +122,6 @@
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="10dp"
                 app:helperTextEnabled="true"
-                app:helperText="*Obrigatório"
                 app:layout_constraintTop_toBottomOf="@id/crud_estabelecimento"
                 app:layout_constraintStart_toEndOf="@id/crud_preco_antigo"
                 app:layout_constraintEnd_toEndOf="parent">
@@ -144,7 +141,6 @@
                 android:hint="Informacoes adicionais"
                 android:layout_marginTop="10dp"
                 app:helperTextEnabled="true"
-                app:helperText="*Obrigatório"
                 app:errorEnabled="true"
                 app:layout_constraintTop_toBottomOf="@id/crud_preco_novo">
 
