@@ -13,4 +13,17 @@
     <string name="sair">Cerrar sesión</string>
     <string name="botao_favorito">botão favorito</string>
     <string name="botao_comentario">botão comentário</string>
+    <string name="estabelecimentos">Establecimientos</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="selecionar">Seleccione</string>
+    <string name="min_10_caracteres">Mínimo 10 caracteres</string>
+    <string name="digite_titulo">Introduce un título</string>
+    <string name="selecione_estabelecimento">Seleccione un establecimiento</string>
+    <string name="digite_preco_atual">Enter current price</string>
+    <string name="digite_detalhes">Ingrese los detalles de la promoción</string>
+    <string name="preencha_email">Rellene el correo electrónico</string>
+    <string name="preencha_senha">completa la contraseña</string>
+    <string name="falha_autenticacao">Autenticación fallida</string>
+    <string name="usuario_senha_invalidos">Nombre de usuario y / o contraseña inválido</string>
+
 </resources>

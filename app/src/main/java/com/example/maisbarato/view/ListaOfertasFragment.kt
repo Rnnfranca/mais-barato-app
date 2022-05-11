@@ -25,12 +25,6 @@ class ListaOfertasFragment : Fragment() {
     private lateinit var recyclerView: RecyclerView
     private lateinit var listaOfertasAdapter: ListaOfertaAdapter
 
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-
-    }
-
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
         savedInstanceState: Bundle?
@@ -64,9 +58,9 @@ class ListaOfertasFragment : Fragment() {
             binding.fabAddOferta.findNavController().navigate(action)
         }
 
-        listaOfertasViewModel.oferta.observe(viewLifecycleOwner, { listaOfertas ->
+        listaOfertasViewModel.oferta.observe(viewLifecycleOwner) { listaOfertas ->
             listaOfertasAdapter.atualizaListaOferta(listaOfertas)
-        })
+        }
     }
 
     override fun onDestroy() {

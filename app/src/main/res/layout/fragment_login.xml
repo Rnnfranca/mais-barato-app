@@ -83,26 +83,27 @@
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switch_lembrar_login" />
 
-    <TextView
+    <Button
         android:id="@+id/text_esqueci_senha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/esqueci_a_senha"
-        android:textStyle="bold"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         app:layout_constraintBottom_toTopOf="@+id/text_criar_conta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_entrar" />
 
-    <TextView
+    <Button
         android:id="@+id/text_criar_conta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/criar_conta"
         android:textStyle="bold"
+        style="@style/Widget.MaterialComponents.Button.TextButton"
         app:layout_constraintBottom_toBottomOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"

@@ -13,4 +13,16 @@
     <string name="sair">Sair</string>
     <string name="botao_favorito">botão favorito</string>
     <string name="botao_comentario">botão comentário</string>
+    <string name="estabelecimentos">Estabelecimentos</string>
+    <string name="cancelar">Cancelar</string>
+    <string name="selecionar">Selecionar</string>
+    <string name="min_10_caracteres">Mínimo 10 caracteres</string>
+    <string name="digite_titulo">Digite um título</string>
+    <string name="selecione_estabelecimento">Selecione um estabelecimento</string>
+    <string name="digite_preco_atual">Digite o preço atual</string>
+    <string name="digite_detalhes">Digite os detalhes da oferta</string>
+    <string name="preencha_email">Preencha o e-mail</string>
+    <string name="preencha_senha">Preencha a senha</string>
+    <string name="falha_autenticacao">Falha na autenticação</string>
+    <string name="usuario_senha_invalidos">Usuário e/ou senha inválido</string>
 </resources>

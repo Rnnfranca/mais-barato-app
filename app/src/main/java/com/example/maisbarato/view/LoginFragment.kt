@@ -11,6 +11,7 @@ import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
 import androidx.navigation.fragment.findNavController
+import com.example.maisbarato.R
 import com.example.maisbarato.databinding.FragmentLoginBinding
 import com.example.maisbarato.util.StateViewResult
 import com.example.maisbarato.viewmodel.LoginViewModel
@@ -54,13 +55,13 @@ class LoginFragment : Fragment() {
             val senha = binding.editTextSenhaLogin.text
 
             binding.inputEmailLogin.error = if(email.isNullOrEmpty()) {
-                "Preencha o e-mail"
+                getString(R.string.preencha_email)
             } else {
                 null
             }
 
             binding.inputSenhaLogin.error = if(senha.isNullOrEmpty()) {
-                "Preencha a senha"
+                getString(R.string.preencha_senha)
             } else {
                 null
             }
@@ -109,10 +110,10 @@ class LoginFragment : Fragment() {
 
                         Log.e(TAG, stateViewResult.errorMsg)
                         MaterialAlertDialogBuilder(requireContext())
-                            .setTitle("Falha na autenticação")
-                            .setMessage("Usuário e/ou senha inválido")
-                            .setNeutralButton("Ok") { dialog, which ->
-
+                            .setTitle(getString(R.string.falha_autenticacao))
+                            .setMessage(getString(R.string.usuario_senha_invalidos))
+                            .setNeutralButton("Ok") { dialog, _ ->
+                                dialog.dismiss()
                             }
                             .show()
 

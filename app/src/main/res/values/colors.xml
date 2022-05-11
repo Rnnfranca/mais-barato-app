@@ -11,4 +11,6 @@
     <color name="blue_200">#9BFFFF</color>
     <color name="blue_700">#08B9C4</color>
     <color name="cinza">#808080</color>
+    <color name="cinza_transparente">#40808080</color>
+    <color name="vermelho">#B20419</color>
 </resources>

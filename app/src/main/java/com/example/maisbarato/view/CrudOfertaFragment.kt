@@ -59,23 +59,27 @@ class CrudOfertaFragment : Fragment() {
         configuracaoView()
         configuracaoSelecaoImagem()
         listeners()
-        crudViewModel.ofertaStateView.observe(viewLifecycleOwner, { singleLiveEvent ->
+        observers()
+    }
+
+    private fun observers() {
+        crudViewModel.ofertaStateView.observe(viewLifecycleOwner) { singleLiveEvent ->
 
             singleLiveEvent.getContentIfNotHandled()?.also { stateView ->
                 when (stateView) {
                     is StateViewResult.Loading -> {
-
+                        binding.progressBar.visibility = View.VISIBLE
                     }
                     is StateViewResult.Success -> {
+                        binding.progressBar.visibility = View.GONE
                         findNavController().navigate(R.id.listaOfertasFragment)
                     }
                     is StateViewResult.Error -> {
-
+                        binding.progressBar.visibility = View.GONE
                     }
                 }
             }
-
-        })
+        }
     }
 
     private fun configuracaoSelecaoImagem() {
@@ -90,6 +94,7 @@ class CrudOfertaFragment : Fragment() {
                 if (listUri.isNotEmpty()) {
                     binding.imagemOferta.visibility = View.INVISIBLE
                     binding.botaoTrocarImagens.visibility = View.VISIBLE
+                    binding.tvErroImagem.visibility = View.INVISIBLE
                 } else {
                     binding.imagemOferta.visibility = View.VISIBLE
                     binding.botaoTrocarImagens.visibility = View.INVISIBLE
@@ -118,11 +123,10 @@ class CrudOfertaFragment : Fragment() {
 
         binding.btnSalvar.setOnClickListener {
 
-
             if (validaCampos()) {
                 salvaOferta()
             } else {
-                dialogValidaCampos()
+                mostraCamposComErro()
             }
         }
 
@@ -134,19 +138,20 @@ class CrudOfertaFragment : Fragment() {
         binding.editTextEstabelecimento.setOnClickListener {
 
             val singleItems = arrayOf("Muffato", "Amigão", "Bandeirantes")
-            var selecteditem = ""
+            var selecteditem = singleItems.first()
 
 
             MaterialAlertDialogBuilder(requireContext())
-                .setTitle("Estabelecimentos")
-                .setNeutralButton("Cancelar") { dialog, _ ->
+                .setTitle(getString(R.string.estabelecimentos))
+                .setNeutralButton(getString(R.string.cancelar)) { dialog, _ ->
                     dialog.dismiss()
                 }
-                .setPositiveButton("Selecionar") { dialog, which ->
+                .setPositiveButton(getString(R.string.selecionar)) { dialog, _ ->
                     binding.editTextEstabelecimento.setText(selecteditem)
+                    binding.crudEstabelecimento.error = ""
                     dialog.dismiss()
                 }
-                .setSingleChoiceItems(singleItems, checkedItem) { dialog, which ->
+                .setSingleChoiceItems(singleItems, checkedItem) { _, which ->
                     selecteditem = singleItems[which]
                     checkedItem = which
                     Log.d("CrudFragment", "$which")
@@ -180,6 +185,7 @@ class CrudOfertaFragment : Fragment() {
                     precoNovo = formataTextoPreco(s)
                     binding.editTextPrecoNovo.setText(precoNovo)
                     binding.editTextPrecoNovo.setSelection(precoNovo.length)
+                    binding.crudPrecoNovo.error = ""
                 }
             }
         })
@@ -187,7 +193,7 @@ class CrudOfertaFragment : Fragment() {
         binding.editTextTitulo.doAfterTextChanged {
             it?.toString()?.also { texto ->
                 binding.crudTitulo.error = if(texto.length < 10 ) {
-                    "Mínimo 10 caracteres"
+                    getString(R.string.min_10_caracteres)
                 } else {
                     null
                 }
@@ -198,7 +204,7 @@ class CrudOfertaFragment : Fragment() {
 
             it?.toString()?.also { texto ->
                 binding.crudInfoAdicionais.error = if(texto.length < 10) {
-                    "Mínimo 10 caracteres"
+                    getString(R.string.min_10_caracteres)
                 } else {
                     null
                 }
@@ -206,26 +212,41 @@ class CrudOfertaFragment : Fragment() {
         }
     }
 
-    private fun abrirSelecaoImagem() {
-        launcher.launch("image/*")
+    private fun mostraCamposComErro() {
+        if (listaImagens.isEmpty()) {
+            binding.tvErroImagem.visibility = View.VISIBLE
+        }
+
+        if (binding.editTextTitulo.text.isNullOrEmpty()) {
+            binding.crudTitulo.error = getString(R.string.digite_titulo)
+        }
+
+        if (binding.editTextEstabelecimento.text.isNullOrEmpty()) {
+            binding.crudEstabelecimento.error = getString(R.string.selecione_estabelecimento)
+        }
+
+        if (binding.editTextPrecoNovo.text.isNullOrEmpty()) {
+            binding.crudPrecoNovo.error = getString(R.string.digite_preco_atual)
+        }
+
+        if (binding.editTextInfoAdicionais.text.isNullOrEmpty()) {
+            binding.crudInfoAdicionais.error = getString(R.string.digite_detalhes)
+        }
     }
 
-    private fun dialogValidaCampos() {
-        MaterialAlertDialogBuilder(requireContext())
-            .setMessage("Preencha os campos obrigatórios")
-            .setNeutralButton("Confirmar") { dialog, _ ->
-                dialog.dismiss()
-            }
-            .show()
+    private fun abrirSelecaoImagem() {
+        launcher.launch("image/*")
     }
 
     private fun validaCampos(): Boolean {
 
         return listaImagens.isNotEmpty() &&
                 binding.editTextTitulo.text?.isNotEmpty() == true &&
+                binding.editTextTitulo.length() > 3 &&
                 binding.editTextEstabelecimento.text?.isNotEmpty() == true &&
                 binding.editTextPrecoNovo.text?.isNotEmpty() == true &&
-                binding.editTextInfoAdicionais.text?.isNotEmpty() == true
+                binding.editTextInfoAdicionais.text?.isNotEmpty() == true &&
+                binding.editTextInfoAdicionais.length() > 3
     }
 
     private fun formataTextoPreco(s: Editable?): String {

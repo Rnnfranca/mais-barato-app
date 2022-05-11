@@ -13,4 +13,17 @@
     <string name="sair">Log out</string>
     <string name="botao_favorito">favorite button</string>
     <string name="botao_comentario">comment button</string>
+    <string name="estabelecimentos">Stores</string>
+    <string name="cancelar">Cancel</string>
+    <string name="selecionar">Select</string>
+    <string name="min_10_caracteres">Minimum 10 characters</string>
+    <string name="digite_titulo">Enter a title</string>
+    <string name="selecione_estabelecimento">Select a store</string>
+    <string name="digite_preco_atual">Enter current price</string>
+    <string name="digite_detalhes">Enter promotion details</string>
+    <string name="preencha_email">Fill in the email</string>
+    <string name="preencha_senha">Fill in the password</string>
+    <string name="falha_autenticacao">Authentication failed</string>
+    <string name="usuario_senha_invalidos">Invalid username and/or password</string>
+
 </resources>

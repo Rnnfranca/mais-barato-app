@@ -12,10 +12,13 @@ class ListaImagemAdapter(private var listaUriImagens: List<String>) :
      inner class ImagemViewHolder(private val binding: ImagemItemBinding) :
          RecyclerView.ViewHolder(binding.root) {
 
-         fun bind(imagemUri: String) {
+         fun bind(imagemUri: String, position: Int) {
              Glide.with(binding.imagemProduto)
                  .load(imagemUri)
                  .into(binding.imagemProduto)
+
+            val currentImage = position+1
+             binding.contadorImagens.text = "$currentImage/${listaUriImagens.size}"
         }
 
      }
@@ -32,7 +35,7 @@ class ListaImagemAdapter(private var listaUriImagens: List<String>) :
     }
 
     override fun onBindViewHolder(holder: ImagemViewHolder, position: Int) {
-        holder.bind(listaUriImagens[position])
+        holder.bind(listaUriImagens[position], position)
     }
 
     override fun getItemCount(): Int {

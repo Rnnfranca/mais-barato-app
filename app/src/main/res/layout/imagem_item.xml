@@ -19,6 +19,16 @@
             app:layout_constraintEnd_toEndOf="parent"
             tools:srcCompat="@tools:sample/avatars" />
 
+
+        <TextView
+            android:id="@+id/contador_imagens"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:textAlignment="center"
+            android:background="@color/cinza_transparente"
+            app:layout_constraintBottom_toBottomOf="parent"
+            tools:text="1/2"/>
+
     </androidx.constraintlayout.widget.ConstraintLayout>
 
 </com.google.android.material.card.MaterialCardView>
