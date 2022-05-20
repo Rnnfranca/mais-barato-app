@@ -16,6 +16,7 @@
             android:layout_width="match_parent"
             android:layout_height="wrap_content"
             android:background="?attr/colorPrimary"
+            app:titleTextColor="@color/text_on_primary"
             app:layout_constraintTop_toTopOf="parent"
             tools:text="Mais Barato"/>
 
