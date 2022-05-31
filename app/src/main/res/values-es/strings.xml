@@ -25,5 +25,14 @@
     <string name="preencha_senha">completa la contraseña</string>
     <string name="falha_autenticacao">Autenticación fallida</string>
     <string name="usuario_senha_invalidos">Nombre de usuario y / o contraseña inválido</string>
+    <string name="adicionar_imagem">Añadir imagen</string>
+    <string name="trocar_imagens">Intercambiar imágenes</string>
+    <string name="adicione_no_minimo_uma_imagem">Añadir al menos una imagen</string>
+    <string name="titulo">Título</string>
+    <string name="estabelecimento">Establecimiento</string>
+    <string name="preco_antigo">Precio anterior</string>
+    <string name="preco_novo">Nuevo precio</string>
+    <string name="informacoes_adicionais">Informaciones adicionales</string>
+    <string name="salvar">Ahorrar</string>
 
 </resources>

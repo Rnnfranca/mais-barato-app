@@ -36,11 +36,21 @@
                 <ImageView
                     android:id="@+id/imagem_oferta"
                     android:layout_width="match_parent"
-                    android:layout_height="200dp"
-                    android:src="@drawable/add_image_grey_2"
+                    android:layout_height="150dp"
+                    android:src="@drawable/ic_add_photo"
+                    android:contentDescription="@string/adicionar_imagem"
                     app:layout_constraintTop_toTopOf="parent"
+                    app:layout_constraintStart_toStartOf="parent" />
+
+                <Button
+                    android:id="@+id/btn_add_imagem"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:text="@string/adicionar_imagem"
+                    style="@style/Widget.MaterialComponents.Button.TextButton"
                     app:layout_constraintStart_toStartOf="parent"
-                    tools:srcCompat="@drawable/add_image_grey_2" />
+                    app:layout_constraintEnd_toEndOf="parent"
+                    app:layout_constraintTop_toBottomOf="@id/imagem_oferta" />
 
                 <androidx.recyclerview.widget.RecyclerView
                     android:id="@+id/recycler_view_imagens"
@@ -55,7 +65,7 @@
                     android:layout_width="wrap_content"
                     android:layout_height="wrap_content"
                     android:visibility="gone"
-                    android:text="Trocar imagens"
+                    android:text="@string/trocar_imagens"
                     style="@style/Widget.MaterialComponents.Button.TextButton"
                     app:layout_constraintTop_toBottomOf="@id/recycler_view_imagens"
                     app:layout_constraintStart_toStartOf="parent"
@@ -72,7 +82,7 @@
             android:textColor="@color/vermelho"
             android:textAlignment="center"
             android:visibility="gone"
-            android:text="Adicione no mínimo um imagem"/>
+            android:text="@string/adicione_no_minimo_uma_imagem"/>
 
 
         <androidx.constraintlayout.widget.ConstraintLayout
@@ -87,7 +97,7 @@
                 android:id="@+id/crud_titulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Titulo"
+                android:hint="@string/titulo"
                 app:errorEnabled="true"
                 app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toTopOf="parent">
@@ -104,7 +114,7 @@
                 android:id="@+id/crud_estabelecimento"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Estabelecimento"
+                android:hint="@string/estabelecimento"
                 app:errorEnabled="true"
                 app:endIconMode="custom"
                 app:endIconDrawable="@drawable/ic_arrow_drop_down"
@@ -126,7 +136,7 @@
                 android:id="@+id/crud_preco_antigo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Preco antigo"
+                android:hint="@string/preco_antigo"
                 android:layout_marginEnd="10dp"
                 app:layout_constraintTop_toBottomOf="@id/crud_estabelecimento"
                 app:layout_constraintStart_toStartOf="parent"
@@ -144,7 +154,7 @@
                 android:id="@+id/crud_preco_novo"
                 android:layout_width="0dp"
                 android:layout_height="wrap_content"
-                android:hint="Preco novo"
+                android:hint="@string/preco_novo"
                 android:layout_marginStart="10dp"
                 app:errorEnabled="true"
                 app:layout_constraintTop_toBottomOf="@id/crud_estabelecimento"
@@ -163,7 +173,7 @@
                 android:id="@+id/crud_info_adicionais"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:hint="Informacoes adicionais"
+                android:hint="@string/informacoes_adicionais"
                 app:errorEnabled="true"
                 app:layout_constraintTop_toBottomOf="@id/crud_preco_novo">
 
@@ -179,7 +189,7 @@
                 android:id="@+id/btn_salvar"
                 android:layout_width="match_parent"
                 android:layout_height="50dp"
-                android:text="SALVAR"
+                android:text="@string/salvar"
                 android:layout_marginTop="20dp"
                 app:layout_constraintTop_toBottomOf="@id/crud_info_adicionais"/>
         </androidx.constraintlayout.widget.ConstraintLayout>

@@ -117,7 +117,7 @@ class CrudOfertaFragment : Fragment() {
     }
 
     private fun listeners() {
-        binding.imagemOferta.setOnClickListener {
+        binding.btnAddImagem.setOnClickListener {
             abrirSelecaoImagem()
         }
 
