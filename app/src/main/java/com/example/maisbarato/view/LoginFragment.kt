@@ -135,8 +135,8 @@ class LoginFragment : Fragment() {
 
                 when (stateViewResult) {
                     is StateViewResult.Success -> {
-                        binding.editTextEmailLogin.setText(stateViewResult.result.email)
-                        binding.editTextSenhaLogin.setText(stateViewResult.result.password)
+                        binding.editTextEmailLogin.setText(stateViewResult.result?.email)
+                        binding.editTextSenhaLogin.setText(stateViewResult.result?.password)
                     }
                     is StateViewResult.Error -> {
                         Toast.makeText(requireContext(), stateViewResult.errorMsg, LENGTH_LONG).show()
@@ -150,7 +150,7 @@ class LoginFragment : Fragment() {
 
                 when (stateViewResult) {
                     is StateViewResult.Success -> {
-                        binding.switchLembrarLogin.isChecked = stateViewResult.result
+                        binding.switchLembrarLogin.isChecked = stateViewResult.result ?: false
                     }
                     is StateViewResult.Error -> {
                         Toast.makeText(requireContext(), stateViewResult.errorMsg, LENGTH_LONG).show()
