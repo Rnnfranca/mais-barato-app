@@ -27,7 +27,7 @@ class CadastroFragment : Fragment() {
 
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
-    private val TAG = "CadastroFragment"
+    private val TAG = CadastroFragment::class.java.name
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -60,7 +60,7 @@ class CadastroFragment : Fragment() {
         binding.editTextNomeCadastro.doAfterTextChanged {
             it?.toString()?.also { texto ->
                 binding.inputNomeCadastro.error = if (validaNome(texto)) {
-                    "Digite seu nome completo"
+                    getString(R.string.digite_nome_completo)
                 } else {
                     null
                 }
@@ -70,7 +70,7 @@ class CadastroFragment : Fragment() {
         binding.editTextEmailCadastro.doAfterTextChanged {
             it?.toString()?.also { texto ->
                 binding.inputEmailCadastro.error = if (validaEmail(texto)) {
-                    "E-mail inválido"
+                    getString(R.string.email_invalido)
                 } else {
                     null
                 }
@@ -80,7 +80,7 @@ class CadastroFragment : Fragment() {
         binding.editTextSenhaCadastro.doAfterTextChanged {
             it?.toString()?.also { texto ->
                 binding.inputSenhaCadastro.error = if (validaSenha(texto)) {
-                    "Senha inválida"
+                    getString(R.string.senha_invalida)
                 } else {
                     null
                 }
@@ -102,7 +102,7 @@ class CadastroFragment : Fragment() {
             } else {
                 Log.w(TAG, "createUserWithEmail:failure", task.exception)
                 Toast.makeText(
-                    requireContext(), "Authentication failed.",
+                    requireContext(), getString(R.string.falha_autenticacao),
                     Toast.LENGTH_SHORT
                 ).show()
             }
@@ -117,7 +117,7 @@ class CadastroFragment : Fragment() {
                 if (taskEmailVerification.isSuccessful) {
                     Toast.makeText(
                         requireContext(),
-                        "Verification email sent to " + user.email,
+                        getString(R.string.email_verificacao_enviado) + user.email,
                         Toast.LENGTH_SHORT
                     ).show()
 
@@ -127,7 +127,7 @@ class CadastroFragment : Fragment() {
                     Log.e(TAG, "sendEmailVerification", taskEmailVerification.exception);
                     Toast.makeText(
                         requireContext(),
-                        "Failed to send verification email.",
+                        getString(R.string.falha_enviar_email_verificacao),
                         Toast.LENGTH_SHORT
                     ).show()
                 }

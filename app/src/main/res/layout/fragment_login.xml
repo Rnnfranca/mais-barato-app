@@ -12,7 +12,7 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:visibility="gone"
-        app:layout_constraintBottom_toTopOf="@+id/text_esqueci_senha"
+        app:layout_constraintBottom_toTopOf="@+id/btn_esqueci_senha"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switch_lembrar_login" />
 
@@ -79,25 +79,25 @@
         android:layout_width="match_parent"
         android:layout_height="50dp"
         android:text="@string/entrar"
-        app:layout_constraintBottom_toTopOf="@+id/text_esqueci_senha"
+        app:layout_constraintBottom_toTopOf="@+id/btn_esqueci_senha"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/switch_lembrar_login" />
 
     <Button
-        android:id="@+id/text_esqueci_senha"
+        android:id="@+id/btn_esqueci_senha"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
         android:text="@string/esqueci_a_senha"
         style="@style/Widget.MaterialComponents.Button.TextButton"
-        app:layout_constraintBottom_toTopOf="@+id/text_criar_conta"
+        app:layout_constraintBottom_toTopOf="@+id/btn_criar_conta"
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintTop_toBottomOf="@+id/btn_entrar" />
 
     <Button
-        android:id="@+id/text_criar_conta"
+        android:id="@+id/btn_criar_conta"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
         android:layout_marginTop="24dp"
@@ -108,6 +108,6 @@
         app:layout_constraintEnd_toEndOf="parent"
         app:layout_constraintHorizontal_bias="0.5"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/text_esqueci_senha" />
+        app:layout_constraintTop_toBottomOf="@+id/btn_esqueci_senha" />
 
 </androidx.constraintlayout.widget.ConstraintLayout>

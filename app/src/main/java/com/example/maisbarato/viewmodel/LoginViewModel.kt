@@ -2,16 +2,18 @@ package com.example.maisbarato.viewmodel
 
 import android.app.Application
 import android.util.Log
-import androidx.lifecycle.*
+import androidx.lifecycle.AndroidViewModel
+import androidx.lifecycle.LifecycleObserver
+import androidx.lifecycle.viewModelScope
 import com.example.maisbarato.localrepository.DataStoreRepository
 import com.example.maisbarato.localrepository.RepositoryResult
 import com.example.maisbarato.model.LoginUsuario
-import com.example.maisbarato.util.SingleLiveEvent
 import com.example.maisbarato.util.StateViewResult
 import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class LoginViewModel(application: Application) : AndroidViewModel(application), LifecycleObserver {
@@ -21,38 +23,26 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
     private val dataStore = DataStoreRepository(application)
     private var auth: FirebaseAuth = FirebaseAuth.getInstance()
 
+    private val _stateView = MutableStateFlow<StateViewResult<Any>>(StateViewResult.Initial)
+    val stateView =  _stateView.asStateFlow()
 
-    private val _stateView = MutableLiveData<SingleLiveEvent<StateViewResult<Any>>>()
-    val stateView: LiveData<SingleLiveEvent<StateViewResult<Any>>> get() =  _stateView
+    private val _loginUsuario = MutableStateFlow<StateViewResult<LoginUsuario>>(StateViewResult.Initial)
+    val loginUsuario = _loginUsuario.asStateFlow()
 
-    private val _loginUsuario = MutableLiveData<SingleLiveEvent<StateViewResult<LoginUsuario>>>()
-    val loginUsuario: LiveData<SingleLiveEvent<StateViewResult<LoginUsuario>>> = _loginUsuario
-
-    private val _switchStatus = MutableLiveData<SingleLiveEvent<StateViewResult<Boolean>>>()
-    val switchStatus: LiveData<SingleLiveEvent<StateViewResult<Boolean>>> = _switchStatus
+    private val _switchStatus = MutableStateFlow<StateViewResult<Boolean>>(StateViewResult.Initial)
+    val switchStatus = _switchStatus.asStateFlow()
 
     fun login(email: String, senha: String,) {
-        _stateView.postValue(SingleLiveEvent(StateViewResult.Loading))
+        _stateView.value = StateViewResult.Loading
         viewModelScope.launch {
             auth.signInWithEmailAndPassword(
                 email,
                 senha
             ).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
-
-                    _stateView.postValue(
-                        SingleLiveEvent(
-                            StateViewResult.Success(result = task)
-                        )
-                    )
+                    _stateView.value = StateViewResult.Success(result = task)
                 } else {
-                    _stateView.postValue(
-                        SingleLiveEvent(
-                            StateViewResult.Error(
-                                errorMsg = task.exception.toString()
-                            )
-                        )
-                    )
+                    _stateView.value = StateViewResult.Error(errorMsg = task.exception.toString())
                 }
             }
         }
@@ -79,26 +69,14 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
                 when(repositoryResult) {
                     is RepositoryResult.Success -> {
                         if (!repositoryResult.result.email.isNullOrBlank()) {
-                            _loginUsuario.postValue(
-                                SingleLiveEvent(
-                                    StateViewResult.Success(
-                                        repositoryResult.result
-                                    )
-                                )
-                            )
+                            _loginUsuario.value = StateViewResult.Success(repositoryResult.result)
                         }
                     }
 
                     is RepositoryResult.Error -> {
                         Log.e(TAG, repositoryResult.error)
 
-                        _loginUsuario.postValue(
-                            SingleLiveEvent(
-                                StateViewResult.Error(
-                                    "Não foi possível recuperar os dados de login"
-                                )
-                            )
-                        )
+                        _loginUsuario.value = StateViewResult.Error("Não foi possível recuperar os dados de login")
                     }
                 }
             }
@@ -130,25 +108,13 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
             dataStore.getSwitchLoginStatus().collect { repositoryResult ->
                 when (repositoryResult) {
                     is RepositoryResult.Success -> {
-                        _switchStatus.postValue(
-                            SingleLiveEvent(
-                                StateViewResult.Success(
-                                    repositoryResult.result
-                                )
-                            )
-                        )
+                        _switchStatus.value = StateViewResult.Success(repositoryResult.result)
                     }
 
                     is RepositoryResult.Error -> {
                         Log.e(TAG, repositoryResult.error)
 
-                        _switchStatus.postValue(
-                            SingleLiveEvent(
-                                StateViewResult.Error(
-                                    "Não foi possível recuperar o status do switch"
-                                )
-                            )
-                        )
+                        _switchStatus.value = StateViewResult.Error("Não foi possível recuperar o status do switch")
                     }
                 }
             }

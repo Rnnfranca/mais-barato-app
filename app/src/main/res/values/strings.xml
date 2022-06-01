@@ -25,6 +25,7 @@
     <string name="preencha_senha">Preencha a senha</string>
     <string name="falha_autenticacao">Falha na autenticação</string>
     <string name="usuario_senha_invalidos">Usuário e/ou senha inválido</string>
+    <string name="senha_invalida">Senha inválido</string>
     <string name="adicionar_imagem">Adicionar imagem</string>
     <string name="trocar_imagens">Trocar imagens</string>
     <string name="adicione_no_minimo_uma_imagem">Adicione no mínimo uma imagem</string>
@@ -34,4 +35,8 @@
     <string name="preco_novo">Preço novo</string>
     <string name="informacoes_adicionais">Informações adicionais</string>
     <string name="salvar">Salvar</string>
+    <string name="digite_nome_completo">Digite seu nome completo</string>
+    <string name="email_invalido">Email inválido</string>
+    <string name="email_verificacao_enviado">E-mail de verificação enviado para </string>
+    <string name="falha_enviar_email_verificacao">Falha ao enviar e-mail de verificação</string>
 </resources>

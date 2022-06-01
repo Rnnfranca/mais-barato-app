@@ -10,12 +10,16 @@ import android.widget.Toast.LENGTH_LONG
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.maisbarato.R
 import com.example.maisbarato.databinding.FragmentLoginBinding
 import com.example.maisbarato.util.StateViewResult
 import com.example.maisbarato.viewmodel.LoginViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import kotlinx.coroutines.launch
 
 class LoginFragment : Fragment() {
 
@@ -71,7 +75,7 @@ class LoginFragment : Fragment() {
             }
         }
 
-        binding.textCriarConta.setOnClickListener {
+        binding.btnCriarConta.setOnClickListener {
             val actions = LoginFragmentDirections.actionLoginFragmentToCadastroFragment()
             findNavController().navigate(actions)
         }
@@ -79,81 +83,84 @@ class LoginFragment : Fragment() {
 
     private fun observers() {
 
-        viewModel.stateView.observe(viewLifecycleOwner) { singleLiveEvent ->
-            singleLiveEvent.getContentIfNotHandled()?.also { stateViewResult ->
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.stateView.collect { stateViewResult ->
 
-                when (stateViewResult) {
-                    is StateViewResult.Success -> {
-                        binding.progressBar.visibility = View.GONE
+                    when (stateViewResult) {
+                        is StateViewResult.Success -> {
+                            binding.progressBar.visibility = View.GONE
 
-                        if (binding.switchLembrarLogin.isChecked) {
-                            viewModel.salvaDadosLogin(
-                                binding.editTextEmailLogin.text.toString(),
-                                binding.editTextSenhaLogin.text.toString()
-                            )
-                        } else {
-                            viewModel.limpaLoginSalvo()
-                        }
-
-                        viewModel.salvaSwitchLoginStatus(binding.switchLembrarLogin.isChecked)
-
-                        val actions = LoginFragmentDirections.actionLoginFragmentToListaOfertasFragment()
-                        findNavController().navigate(actions)
-
-                    }
-                    is StateViewResult.Error -> {
-                        binding.progressBar.visibility = View.GONE
-                        binding.btnEntrar.visibility = View.VISIBLE
-
-                        binding.textEsqueciSenha.isClickable = true
-                        binding.textCriarConta.isClickable = true
-
-                        Log.e(TAG, stateViewResult.errorMsg)
-                        MaterialAlertDialogBuilder(requireContext())
-                            .setTitle(getString(R.string.falha_autenticacao))
-                            .setMessage(getString(R.string.usuario_senha_invalidos))
-                            .setNeutralButton("Ok") { dialog, _ ->
-                                dialog.dismiss()
+                            if (binding.switchLembrarLogin.isChecked) {
+                                viewModel.salvaDadosLogin(
+                                    binding.editTextEmailLogin.text.toString(),
+                                    binding.editTextSenhaLogin.text.toString()
+                                )
+                            } else {
+                                viewModel.limpaLoginSalvo()
                             }
-                            .show()
 
-                    }
-                    is StateViewResult.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                        binding.btnEntrar.visibility = View.INVISIBLE
+                            viewModel.salvaSwitchLoginStatus(binding.switchLembrarLogin.isChecked)
 
-                        binding.textEsqueciSenha.isClickable = false
-                        binding.textCriarConta.isClickable = false
+                            val actions = LoginFragmentDirections.actionLoginFragmentToListaOfertasFragment()
+                            findNavController().navigate(actions)
+
+                        }
+                        is StateViewResult.Error -> {
+                            binding.progressBar.visibility = View.GONE
+                            binding.btnEntrar.visibility = View.VISIBLE
+
+                            binding.btnEsqueciSenha.isClickable = true
+                            binding.btnCriarConta.isClickable = true
+
+                            Log.e(TAG, stateViewResult.errorMsg)
+                            MaterialAlertDialogBuilder(requireContext())
+                                .setTitle(getString(R.string.falha_autenticacao))
+                                .setMessage(getString(R.string.usuario_senha_invalidos))
+                                .setNeutralButton("Ok") { dialog, _ ->
+                                    dialog.dismiss()
+                                }
+                                .show()
+
+                        }
+                        is StateViewResult.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                            binding.btnEntrar.visibility = View.INVISIBLE
+
+                            binding.btnEsqueciSenha.isClickable = false
+                            binding.btnCriarConta.isClickable = false
+                        }
                     }
                 }
             }
-
         }
 
-        viewModel.loginUsuario.observe(viewLifecycleOwner) { singleLiveEvent ->
-            singleLiveEvent.getContentIfNotHandled()?.also {  stateViewResult ->
-
-                when (stateViewResult) {
-                    is StateViewResult.Success -> {
-                        binding.editTextEmailLogin.setText(stateViewResult.result?.email)
-                        binding.editTextSenhaLogin.setText(stateViewResult.result?.password)
-                    }
-                    is StateViewResult.Error -> {
-                        Toast.makeText(requireContext(), stateViewResult.errorMsg, LENGTH_LONG).show()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.loginUsuario.collect { stateViewResult ->
+                    when (stateViewResult) {
+                        is StateViewResult.Success -> {
+                            binding.editTextEmailLogin.setText(stateViewResult.result?.email)
+                            binding.editTextSenhaLogin.setText(stateViewResult.result?.password)
+                        }
+                        is StateViewResult.Error -> {
+                            Toast.makeText(requireContext(), stateViewResult.errorMsg, LENGTH_LONG).show()
+                        }
                     }
                 }
             }
         }
 
-        viewModel.switchStatus.observe(viewLifecycleOwner) { singleLiveEvent ->
-            singleLiveEvent.getContentIfNotHandled()?.also { stateViewResult ->
-
-                when (stateViewResult) {
-                    is StateViewResult.Success -> {
-                        binding.switchLembrarLogin.isChecked = stateViewResult.result ?: false
-                    }
-                    is StateViewResult.Error -> {
-                        Toast.makeText(requireContext(), stateViewResult.errorMsg, LENGTH_LONG).show()
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.switchStatus.collect { stateViewResult ->
+                    when (stateViewResult) {
+                        is StateViewResult.Success -> {
+                            binding.switchLembrarLogin.isChecked = stateViewResult.result ?: false
+                        }
+                        is StateViewResult.Error -> {
+                            Toast.makeText(requireContext(), stateViewResult.errorMsg, LENGTH_LONG).show()
+                        }
                     }
                 }
             }

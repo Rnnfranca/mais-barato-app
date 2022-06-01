@@ -13,6 +13,9 @@ import androidx.activity.result.contract.ActivityResultContracts
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -25,6 +28,7 @@ import com.example.maisbarato.view.adapter.ListaImagemAdapter
 import com.example.maisbarato.viewmodel.CrudOfertaViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 import java.text.NumberFormat
 import java.util.*
 
@@ -63,20 +67,24 @@ class CrudOfertaFragment : Fragment() {
     }
 
     private fun observers() {
-        crudViewModel.ofertaStateView.observe(viewLifecycleOwner) { singleLiveEvent ->
 
-            singleLiveEvent.getContentIfNotHandled()?.also { stateView ->
-                when (stateView) {
-                    is StateViewResult.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                crudViewModel.ofertaStateView.collect { stateViewResult ->
+
+                    when (stateViewResult) {
+                        is StateViewResult.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
+                        is StateViewResult.Success -> {
+                            binding.progressBar.visibility = View.GONE
+                            findNavController().navigate(R.id.listaOfertasFragment)
+                        }
+                        is StateViewResult.Error -> {
+                            binding.progressBar.visibility = View.GONE
+                        }
                     }
-                    is StateViewResult.Success -> {
-                        binding.progressBar.visibility = View.GONE
-                        findNavController().navigate(R.id.listaOfertasFragment)
-                    }
-                    is StateViewResult.Error -> {
-                        binding.progressBar.visibility = View.GONE
-                    }
+
                 }
             }
         }
