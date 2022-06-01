@@ -4,8 +4,8 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.maisbarato.localrepository.OfertaRepository
 import com.example.maisbarato.model.Oferta
-import com.example.maisbarato.repository.OfertaRepository
 import com.example.maisbarato.util.StateViewResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher

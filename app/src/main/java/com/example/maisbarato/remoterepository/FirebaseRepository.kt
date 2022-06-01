@@ -2,8 +2,8 @@ package com.example.maisbarato.remoterepository
 
 import android.net.Uri
 import android.util.Log
+import com.example.maisbarato.localrepository.RepositoryResult
 import com.example.maisbarato.model.Oferta
-import com.example.maisbarato.repository.RepositoryResult
 import com.example.maisbarato.util.OFERTA_COLLECTION
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase

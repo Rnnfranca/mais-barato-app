@@ -1,4 +1,4 @@
-package com.example.maisbarato.repository
+package com.example.maisbarato.localrepository
 
 import android.util.Log
 import com.example.maisbarato.database.OfertaDAO
