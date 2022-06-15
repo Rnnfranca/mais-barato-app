@@ -1,7 +1,6 @@
 package com.example.maisbarato.view
 
 import android.os.Bundle
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -9,13 +8,15 @@ import android.widget.Toast
 import androidx.core.widget.doAfterTextChanged
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
+import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.findNavController
 import com.example.maisbarato.R
 import com.example.maisbarato.databinding.FragmentCadastroBinding
+import com.example.maisbarato.util.StateViewResult
 import com.example.maisbarato.viewmodel.CadastroViewModel
-import com.google.android.gms.tasks.Task
-import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
+import kotlinx.coroutines.launch
 import java.util.regex.Pattern
 
 class CadastroFragment : Fragment() {
@@ -25,20 +26,7 @@ class CadastroFragment : Fragment() {
 
     private val viewModel: CadastroViewModel by viewModels()
 
-    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
-
     private val TAG = CadastroFragment::class.java.name
-
-    override fun onCreate(savedInstanceState: Bundle?) {
-        super.onCreate(savedInstanceState)
-
-        val currentUser = auth.currentUser
-
-        if(currentUser != null) {
-            //reload()
-        }
-
-    }
 
     override fun onCreateView(
         inflater: LayoutInflater, container: ViewGroup?,
@@ -49,8 +37,17 @@ class CadastroFragment : Fragment() {
     }
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
+        listeners()
+        observers()
+    }
+
+    private fun listeners() {
         binding.btnCadastrar.setOnClickListener {
-            cadastrarUsuario()
+            viewModel.criarUsuario(
+                binding.editTextNomeCadastro.text.toString(),
+                binding.editTextEmailCadastro.text.toString(),
+                binding.editTextSenhaCadastro.text.toString()
+            )
         }
 
         binding.textEntrar.setOnClickListener {
@@ -88,50 +85,64 @@ class CadastroFragment : Fragment() {
         }
     }
 
-    private fun cadastrarUsuario() {
-        auth.createUserWithEmailAndPassword(
-            binding.editTextEmailCadastro.text.toString(),
-            binding.editTextSenhaCadastro.text.toString()
-        ).addOnCompleteListener { task ->
-            if (task.isSuccessful) {
-                Log.d(TAG, "createUserWithEmail:success")
+    private fun observers() {
+        lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.stateView.collect { stateView ->
 
-                findNavController().navigate(R.id.action_cadastroFragment_to_listaOfertasFragment)
+                    when (stateView) {
+                        is StateViewResult.Loading -> {
+                            binding.btnCadastrar.visibility = View.INVISIBLE
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
 
-                enviaEmailVerificacao(task)
-            } else {
-                Log.w(TAG, "createUserWithEmail:failure", task.exception)
-                Toast.makeText(
-                    requireContext(), getString(R.string.falha_autenticacao),
-                    Toast.LENGTH_SHORT
-                ).show()
-            }
-        }
-    }
+                        is StateViewResult.Success -> {
+                            binding.progressBar.visibility = View.INVISIBLE
 
-    private fun enviaEmailVerificacao(task: Task<AuthResult>) {
-        val user = task.result?.user
+                            findNavController().navigate(R.id.action_cadastroFragment_to_listaOfertasFragment)
+                        }
 
-        user?.sendEmailVerification()
-            ?.addOnCompleteListener { taskEmailVerification ->
-                if (taskEmailVerification.isSuccessful) {
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.email_verificacao_enviado) + user.email,
-                        Toast.LENGTH_SHORT
-                    ).show()
+                        is StateViewResult.Error -> {
+                            binding.progressBar.visibility = View.INVISIBLE
 
-                    viewModel.salvaUIDUsuario(user.uid)
+                            Toast.makeText(
+                                requireContext(), getString(R.string.falha_autenticacao),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
 
-                } else {
-                    Log.e(TAG, "sendEmailVerification", taskEmailVerification.exception);
-                    Toast.makeText(
-                        requireContext(),
-                        getString(R.string.falha_enviar_email_verificacao),
-                        Toast.LENGTH_SHORT
-                    ).show()
                 }
             }
+
+
+            repeatOnLifecycle(Lifecycle.State.STARTED) {
+                viewModel.emailAutenticationState.collect { stateView ->
+
+                    when (stateView) {
+                        is StateViewResult.Success -> {
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.email_verificacao_enviado) + stateView,
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+
+                        is StateViewResult.Error -> {
+                            Toast.makeText(
+                                requireContext(),
+                                getString(R.string.falha_enviar_email_verificacao),
+                                Toast.LENGTH_SHORT
+                            ).show()
+                        }
+                    }
+                }
+            }
+
+        }
+
+
+
     }
 
     private fun validaEmail(email: String): Boolean {

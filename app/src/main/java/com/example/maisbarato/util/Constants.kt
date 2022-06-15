@@ -4,11 +4,15 @@ import androidx.datastore.preferences.core.booleanPreferencesKey
 import androidx.datastore.preferences.core.stringPreferencesKey
 import com.example.maisbarato.R
 
-const val OFERTA_COLLECTION = "oferta"
+const val COLLECTION_OFERTA = "oferta"
+const val COLLECTION_USUARIO = "usuario"
+
 val PREFERENCE_EMAIL = stringPreferencesKey("email_data_key")
 val PREFERENCE_SENHA = stringPreferencesKey("senha_data_key")
 val PREFERENCE_SWITCH_STATUS = booleanPreferencesKey("switch_status_key")
 val PREFERENCE_USER_UID = stringPreferencesKey("user_uid")
+
+
 
 val telasComIconeMenuHamburguer = setOf(
     R.id.listaOfertasFragment

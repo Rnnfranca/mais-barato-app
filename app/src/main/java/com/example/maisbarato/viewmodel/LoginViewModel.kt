@@ -40,6 +40,11 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
                 senha
             ).addOnCompleteListener { task ->
                 if (task.isSuccessful) {
+
+                    task.result?.user?.also { firebaseUser ->
+                        salvaUIDUsuario(firebaseUser.uid)
+                    }
+
                     _stateView.value = StateViewResult.Success(result = task)
                 } else {
                     _stateView.value = StateViewResult.Error(errorMsg = task.exception.toString())
@@ -47,6 +52,16 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
             }
         }
 
+    }
+
+    private fun salvaUIDUsuario(uid: String, dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
+            try {
+                dataStore.salvaUIDUsuario(uid)
+            } catch (e: Exception) {
+                Log.e(TAG, e.message ?: "Erro ao salvar UID do usuário")
+            }
+        }
     }
 
     fun salvaDadosLogin(

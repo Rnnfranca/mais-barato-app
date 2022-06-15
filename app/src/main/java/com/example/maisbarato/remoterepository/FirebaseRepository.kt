@@ -4,14 +4,14 @@ import android.net.Uri
 import android.util.Log
 import com.example.maisbarato.localrepository.RepositoryResult
 import com.example.maisbarato.model.Oferta
-import com.example.maisbarato.util.OFERTA_COLLECTION
+import com.example.maisbarato.util.COLLECTION_OFERTA
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
 class FirebaseRepository {
     private val databaseFirestore = Firebase.firestore
-    private val ofertaCollectionRef = databaseFirestore.collection(OFERTA_COLLECTION)
+    private val ofertaCollectionRef = databaseFirestore.collection(COLLECTION_OFERTA)
 
     private val storage = Firebase.storage
     private var storageRef = storage.reference
