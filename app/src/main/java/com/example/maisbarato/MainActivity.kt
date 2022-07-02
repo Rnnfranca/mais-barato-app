@@ -2,10 +2,13 @@ package com.example.maisbarato
 
 import android.os.Bundle
 import android.view.View
+import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
+import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
@@ -16,6 +19,9 @@ import com.example.maisbarato.util.telasSemMenuDrawer
 import com.example.maisbarato.util.telasSemToolbar
 import com.example.maisbarato.viewmodel.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.CoroutineDispatcher
+import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class MainActivity : AppCompatActivity() {
@@ -43,6 +49,13 @@ class MainActivity : AppCompatActivity() {
         navegacaoMenuDrawer()
         configDestinationListener()
         verificarUsuarioLogado()
+        carregaUsuarioUID()
+    }
+
+    private fun carregaUsuarioUID(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+        lifecycleScope.launch(dispatcher) {
+            sharedViewModel.carregaUID()
+        }
     }
 
     private fun navegacaoMenuDrawer(){
@@ -59,7 +72,17 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun verificarUsuarioLogado() {
+    private fun verificarUsuarioLogado(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+        val headerView = binding.navigationView.getHeaderView(0)
+        val imgUsuario = headerView.findViewById<CardView>(R.id.card_view_imagem)
+
+        lifecycleScope.launch(dispatcher) {
+            sharedViewModel.dadosUsuario.collect { usuario ->
+                val tvNomeUsuario = headerView.findViewById<TextView>(R.id.nome_usuario)
+                tvNomeUsuario.text = usuario.nome
+            }
+        }
+
         sharedViewModel.currentUser?.also {
             navController.navigate(R.id.listaOfertasFragment)
         }
