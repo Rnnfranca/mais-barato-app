@@ -17,6 +17,7 @@ import com.example.maisbarato.databinding.ActivityMainBinding
 import com.example.maisbarato.util.telasComIconeMenuHamburguer
 import com.example.maisbarato.util.telasSemMenuDrawer
 import com.example.maisbarato.util.telasSemToolbar
+import com.example.maisbarato.view.BottomSheetMaisInfo
 import com.example.maisbarato.viewmodel.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineDispatcher
@@ -34,6 +35,7 @@ class MainActivity : AppCompatActivity() {
     private lateinit var navController: NavController
     private lateinit var appBarConfig: AppBarConfiguration
     private lateinit var destinationListener: NavController.OnDestinationChangedListener
+    private lateinit var headerView: View
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
@@ -42,6 +44,7 @@ class MainActivity : AppCompatActivity() {
 
         navController = findNavController(R.id.nav_host_fragment)
         appBarConfig = AppBarConfiguration(telasComIconeMenuHamburguer, binding.drawerLayout)
+        headerView = binding.navigationView.getHeaderView(0)
 
         binding.navigationView.setupWithNavController(navController)
         binding.toolbar.setupWithNavController(navController, appBarConfig)
@@ -50,6 +53,10 @@ class MainActivity : AppCompatActivity() {
         configDestinationListener()
         verificarUsuarioLogado()
         carregaUsuarioUID()
+        headerView.setOnClickListener {
+            val bottomSheetMaisInfo = BottomSheetMaisInfo()
+            bottomSheetMaisInfo.show(supportFragmentManager, BottomSheetMaisInfo.TAG)
+        }
     }
 
     private fun carregaUsuarioUID(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
@@ -72,11 +79,10 @@ class MainActivity : AppCompatActivity() {
         }
     }
 
-    private fun verificarUsuarioLogado(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
-        val headerView = binding.navigationView.getHeaderView(0)
+    private fun verificarUsuarioLogado() {
         val imgUsuario = headerView.findViewById<CardView>(R.id.card_view_imagem)
 
-        lifecycleScope.launch(dispatcher) {
+        lifecycleScope.launch {
             sharedViewModel.dadosUsuario.collect { usuario ->
                 val tvNomeUsuario = headerView.findViewById<TextView>(R.id.nome_usuario)
                 tvNomeUsuario.text = usuario.nome

@@ -39,5 +39,6 @@
     <string name="email_invalido">Email inválido</string>
     <string name="email_verificacao_enviado">Correo electrónico de verificación enviado a </string>
     <string name="falha_enviar_email_verificacao">No se pudo enviar el correo electrónico de verificación</string>
+    <string name="alterar_foto">Cambiar foto</string>
 
 </resources>
