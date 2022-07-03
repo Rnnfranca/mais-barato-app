@@ -6,10 +6,7 @@ import androidx.datastore.preferences.core.Preferences
 import androidx.datastore.preferences.core.edit
 import androidx.datastore.preferences.preferencesDataStore
 import com.example.maisbarato.model.LoginUsuario
-import com.example.maisbarato.util.PREFERENCE_EMAIL
-import com.example.maisbarato.util.PREFERENCE_SENHA
-import com.example.maisbarato.util.PREFERENCE_SWITCH_STATUS
-import com.example.maisbarato.util.PREFERENCE_USER_UID
+import com.example.maisbarato.util.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
 import kotlinx.coroutines.flow.map
@@ -80,4 +77,10 @@ class DataStoreRepository(private val context: Context) {
                 preferences[PREFERENCE_USER_UID] ?: ""
             )
         }
+
+    suspend fun salvaURLImagemUsuario(urlImagem: String) {
+        context.dataStore.edit { preferences ->
+            preferences[PREFERENCE_URL_IMAGEM_USUARIO] = urlImagem
+        }
+    }
 }

@@ -11,6 +11,7 @@ val PREFERENCE_EMAIL = stringPreferencesKey("email_data_key")
 val PREFERENCE_SENHA = stringPreferencesKey("senha_data_key")
 val PREFERENCE_SWITCH_STATUS = booleanPreferencesKey("switch_status_key")
 val PREFERENCE_USER_UID = stringPreferencesKey("user_uid")
+val PREFERENCE_URL_IMAGEM_USUARIO = stringPreferencesKey("url_imagem_usuario")
 
 
 

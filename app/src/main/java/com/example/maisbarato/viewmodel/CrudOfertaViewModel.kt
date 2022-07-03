@@ -1,5 +1,7 @@
 package com.example.maisbarato.viewmodel
 
+import android.app.Application
+import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.maisbarato.localrepository.OfertaRepository
@@ -16,10 +18,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CrudOfertaViewModel @Inject constructor(private val ofertaRepository: OfertaRepository) :
-    ViewModel() {
+class CrudOfertaViewModel @Inject constructor(application: Application) :
+    AndroidViewModel(application) {
 
-    val firebaseRepository = FirebaseRepository()
+    val firebaseRepository = FirebaseRepository(application)
 
     private val _ofertaStateView = MutableStateFlow<StateViewResult<String>>(StateViewResult.Initial)
     val ofertaStateView = _ofertaStateView.asStateFlow()
