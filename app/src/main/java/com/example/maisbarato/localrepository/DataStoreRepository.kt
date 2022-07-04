@@ -83,4 +83,15 @@ class DataStoreRepository(private val context: Context) {
             preferences[PREFERENCE_URL_IMAGEM_USUARIO] = urlImagem
         }
     }
+
+    fun getURLImagemUsuario(): Flow<RepositoryResult<String>> =
+        context.dataStore.data.catch {
+            RepositoryResult.Error(
+                it.message.toString()
+            )
+        }.map { preferences ->
+            RepositoryResult.Success(
+                preferences[PREFERENCE_URL_IMAGEM_USUARIO] ?: ""
+            )
+        }
 }

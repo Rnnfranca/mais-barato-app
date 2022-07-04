@@ -1,6 +1,7 @@
 package com.example.maisbarato.viewmodel
 
 import android.app.Application
+import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.maisbarato.localrepository.DataStoreRepository
@@ -12,9 +13,8 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.channels.BufferOverflow
-import kotlinx.coroutines.flow.MutableSharedFlow
-import kotlinx.coroutines.flow.SharedFlow
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
 
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
@@ -28,8 +28,11 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     private val remoteDatabase = Firebase.firestore
     private val dataStore = DataStoreRepository(application)
 
-    private val _dadosUsuario = MutableSharedFlow<Usuario>(replay = 2, onBufferOverflow = BufferOverflow.DROP_LATEST)
-    val dadosUsuario: SharedFlow<Usuario> = _dadosUsuario
+    private val _dadosUsuario = MutableStateFlow<Usuario?>(null)
+    val dadosUsuario = _dadosUsuario.asStateFlow()
+
+    private val _urlImagemUsuario = MutableStateFlow<String?>(null)
+    val urlImagemUsuario = _urlImagemUsuario.asStateFlow()
 
     fun logout() {
         auth.signOut()
@@ -50,6 +53,24 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                                 carregaDadosUsuario(firebaseUser.uid)
                             }
                         }
+                    }
+                }
+
+            }
+        }
+    }
+
+    fun carregaFotoUsuario(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
+            dataStore.getURLImagemUsuario().collect { repositoryResult ->
+
+                when (repositoryResult) {
+                    is RepositoryResult.Success -> {
+                        _urlImagemUsuario.emit(repositoryResult.result)
+                    }
+
+                    is RepositoryResult.Error -> {
+                        Log.e(TAG, repositoryResult.error)
                     }
                 }
 

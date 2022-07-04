@@ -23,7 +23,12 @@ class BottomSheetMaisInfoViewModel(application: Application) : AndroidViewModel(
 
                 when (repositoryResult) {
                     is RepositoryResult.Success -> {
-                        firebaseRepository.salvaImagemUsuario(uri, repositoryResult.result)
+                        firebaseRepository.salvaImagemUsuario(uri, repositoryResult.result) { urlImagem ->
+
+                            viewModelScope.launch(dispatcher) {
+                                dataStore.salvaURLImagemUsuario(urlImagem)
+                            }
+                        }
                     }
                 }
 

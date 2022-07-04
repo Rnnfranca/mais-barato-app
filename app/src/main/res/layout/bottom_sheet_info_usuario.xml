@@ -14,6 +14,7 @@
             android:id="@+id/tv_trocar_foto"
             android:layout_width="match_parent"
             android:layout_height="match_parent"
+            android:textSize="18sp"
             android:text="@string/alterar_foto" />
 
     </FrameLayout>

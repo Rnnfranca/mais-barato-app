@@ -3,7 +3,6 @@ package com.example.maisbarato.remoterepository
 import android.app.Application
 import android.net.Uri
 import android.util.Log
-import com.example.maisbarato.localrepository.DataStoreRepository
 import com.example.maisbarato.localrepository.RepositoryResult
 import com.example.maisbarato.model.Oferta
 import com.example.maisbarato.util.COLLECTION_OFERTA
@@ -12,10 +11,6 @@ import com.google.firebase.firestore.SetOptions
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
-import kotlinx.coroutines.CoroutineScope
-import kotlinx.coroutines.Dispatchers
-import kotlinx.coroutines.flow.collect
-import kotlinx.coroutines.withContext
 
 class FirebaseRepository(application: Application) {
 
@@ -41,7 +36,7 @@ class FirebaseRepository(application: Application) {
             }
     }
 
-    fun salvaImagemUsuario(uri: Uri, uidUsuario: String) {
+    fun salvaImagemUsuario(uri: Uri, uidUsuario: String, salvaNoDatastore: ((String) -> Unit)) {
         try {
 //            val fileUri = Uri.parse(uri)
             val imagemRef = storageRef.child("imagens/usuarios/${uri.lastPathSegment}")
@@ -50,11 +45,13 @@ class FirebaseRepository(application: Application) {
             uploadTask.addOnSuccessListener {
                 imagemRef.downloadUrl.addOnSuccessListener { downloadUrl ->
                     salvarImagemNaColecao(downloadUrl.toString(), uidUsuario)
+
+                    salvaNoDatastore.invoke(downloadUrl.toString())
                 }
             }
 
         } catch (e: Exception) {
-
+            Log.e(TAG, e.printStackTrace().toString())
         }
     }
 

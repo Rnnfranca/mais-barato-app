@@ -2,10 +2,10 @@ package com.example.maisbarato
 
 import android.os.Bundle
 import android.view.View
+import android.widget.ImageView
 import android.widget.TextView
 import androidx.activity.viewModels
 import androidx.appcompat.app.AppCompatActivity
-import androidx.cardview.widget.CardView
 import androidx.core.view.GravityCompat
 import androidx.drawerlayout.widget.DrawerLayout
 import androidx.lifecycle.lifecycleScope
@@ -13,6 +13,7 @@ import androidx.navigation.NavController
 import androidx.navigation.findNavController
 import androidx.navigation.ui.AppBarConfiguration
 import androidx.navigation.ui.setupWithNavController
+import com.bumptech.glide.Glide
 import com.example.maisbarato.databinding.ActivityMainBinding
 import com.example.maisbarato.util.telasComIconeMenuHamburguer
 import com.example.maisbarato.util.telasSemMenuDrawer
@@ -53,6 +54,24 @@ class MainActivity : AppCompatActivity() {
         configDestinationListener()
         verificarUsuarioLogado()
         carregaUsuarioUID()
+        clickListener()
+        carregaImagemUsuario()
+
+    }
+
+    private fun carregaImagemUsuario() {
+        lifecycleScope.launch {
+            sharedViewModel.urlImagemUsuario.collect { urlImagem ->
+                val imgUsuario = headerView.findViewById<ImageView>(R.id.imagem_usuario)
+
+                Glide.with(imgUsuario)
+                    .load(urlImagem)
+                    .into(imgUsuario)
+            }
+        }
+    }
+
+    private fun clickListener() {
         headerView.setOnClickListener {
             val bottomSheetMaisInfo = BottomSheetMaisInfo()
             bottomSheetMaisInfo.show(supportFragmentManager, BottomSheetMaisInfo.TAG)
@@ -62,6 +81,10 @@ class MainActivity : AppCompatActivity() {
     private fun carregaUsuarioUID(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         lifecycleScope.launch(dispatcher) {
             sharedViewModel.carregaUID()
+        }
+
+        lifecycleScope.launch(dispatcher) {
+            sharedViewModel.carregaFotoUsuario()
         }
     }
 
@@ -80,12 +103,11 @@ class MainActivity : AppCompatActivity() {
     }
 
     private fun verificarUsuarioLogado() {
-        val imgUsuario = headerView.findViewById<CardView>(R.id.card_view_imagem)
 
         lifecycleScope.launch {
             sharedViewModel.dadosUsuario.collect { usuario ->
                 val tvNomeUsuario = headerView.findViewById<TextView>(R.id.nome_usuario)
-                tvNomeUsuario.text = usuario.nome
+                tvNomeUsuario.text = usuario?.nome
             }
         }
 
