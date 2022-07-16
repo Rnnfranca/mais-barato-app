@@ -6,7 +6,7 @@ import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.maisbarato.localrepository.DataStoreRepository
 import com.example.maisbarato.localrepository.RepositoryResult
-import com.example.maisbarato.remoterepository.FirebaseRepository
+import com.example.maisbarato.repository.firebase.FirebaseRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -48,6 +48,12 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
                     }
                 }
             }
+        }
+    }
+
+    fun updateInfo(fullName: String, email: String, phone: String, imageUrl: String, dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
+            firebaseRepository
         }
     }
 }

@@ -41,6 +41,11 @@ class UserProfileFragment : Fragment() {
 
         viewModel.getImageUrl()
 
+        flowCollectors()
+        clickListeners()
+    }
+
+    private fun flowCollectors() {
         viewLifecycleOwner.lifecycleScope.launch {
             viewModel.imageUserUrl.collect { imgUserUrl ->
 
@@ -49,7 +54,9 @@ class UserProfileFragment : Fragment() {
                     .into(binding.imageUser)
             }
         }
+    }
 
+    private fun clickListeners() {
         binding.cardViewImageUser.setOnClickListener {
             launcher.launch("image/*")
         }

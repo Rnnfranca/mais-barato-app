@@ -1,6 +1,5 @@
-package com.example.maisbarato.remoterepository
+package com.example.maisbarato.repository.firebase
 
-import android.app.Application
 import android.net.Uri
 import android.util.Log
 import com.example.maisbarato.localrepository.RepositoryResult
@@ -12,7 +11,7 @@ import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
 
-class FirebaseRepository(application: Application) {
+class FirebaseRepository() {
 
     private val TAG = FirebaseRepository::class.java.name
 
@@ -46,7 +45,7 @@ class FirebaseRepository(application: Application) {
             uploadTask.addOnSuccessListener {
                 imagemRef.downloadUrl.addOnSuccessListener { downloadUrl ->
                     Log.d("TEESTE", "addOnSuccessListener")
-//                    salvarImagemNaColecao(downloadUrl.toString(), uidUsuario)
+                    salvarImagemNaColecao(downloadUrl.toString(), uidUsuario)
 
                     salvaNoDatastore.invoke(downloadUrl.toString())
                 }
@@ -104,4 +103,6 @@ class FirebaseRepository(application: Application) {
         }
 
     }
+
+
 }

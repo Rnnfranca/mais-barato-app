@@ -2,12 +2,10 @@ package com.example.maisbarato.viewmodel
 
 import android.app.Application
 import androidx.lifecycle.AndroidViewModel
-import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.maisbarato.localrepository.OfertaRepository
 import com.example.maisbarato.localrepository.RepositoryResult
 import com.example.maisbarato.model.Oferta
-import com.example.maisbarato.remoterepository.FirebaseRepository
+import com.example.maisbarato.repository.firebase.FirebaseRepository
 import com.example.maisbarato.util.StateViewResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
