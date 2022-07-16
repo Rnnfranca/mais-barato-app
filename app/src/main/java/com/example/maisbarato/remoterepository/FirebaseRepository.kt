@@ -37,14 +37,16 @@ class FirebaseRepository(application: Application) {
     }
 
     fun salvaImagemUsuario(uri: Uri, uidUsuario: String, salvaNoDatastore: ((String) -> Unit)) {
+        Log.d("TEESTE", "salvaImagemUsuario")
         try {
-//            val fileUri = Uri.parse(uri)
+            Log.d("TEESTE", "try")
             val imagemRef = storageRef.child("imagens/usuarios/${uri.lastPathSegment}")
             val uploadTask = imagemRef.putFile(uri)
 
             uploadTask.addOnSuccessListener {
                 imagemRef.downloadUrl.addOnSuccessListener { downloadUrl ->
-                    salvarImagemNaColecao(downloadUrl.toString(), uidUsuario)
+                    Log.d("TEESTE", "addOnSuccessListener")
+//                    salvarImagemNaColecao(downloadUrl.toString(), uidUsuario)
 
                     salvaNoDatastore.invoke(downloadUrl.toString())
                 }

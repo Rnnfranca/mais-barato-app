@@ -9,31 +9,45 @@ import com.example.maisbarato.localrepository.RepositoryResult
 import com.example.maisbarato.remoterepository.FirebaseRepository
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
+import kotlinx.coroutines.flow.MutableStateFlow
+import kotlinx.coroutines.flow.asStateFlow
+import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
-class BottomSheetMaisInfoViewModel(application: Application) : AndroidViewModel(application) {
-
+class UserProfileViewModel(application: Application) : AndroidViewModel(application) {
     private val dataStore = DataStoreRepository(application)
     private val firebaseRepository = FirebaseRepository(application)
 
-    fun salvaURLImagem(uri: Uri, dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+    private val _imageUserURL = MutableStateFlow<String?>(null)
+    val imageUserUrl = _imageUserURL.asStateFlow()
 
+    fun salvaURLImagem(uri: Uri, dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         viewModelScope.launch(dispatcher) {
-            dataStore.getUIDUsuario().collect { repositoryResult ->
+            dataStore.getUIDUsuario().take(1).collect { repositoryResult ->
 
                 when (repositoryResult) {
                     is RepositoryResult.Success -> {
                         firebaseRepository.salvaImagemUsuario(uri, repositoryResult.result) { urlImagem ->
-
                             viewModelScope.launch(dispatcher) {
                                 dataStore.salvaURLImagemUsuario(urlImagem)
                             }
                         }
                     }
                 }
-
             }
         }
+    }
 
+    fun getImageUrl(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
+            dataStore.getURLImagemUsuario().collect { repositoryResult ->
+
+                when (repositoryResult) {
+                    is RepositoryResult.Success -> {
+                        _imageUserURL.emit(repositoryResult.result)
+                    }
+                }
+            }
+        }
     }
 }

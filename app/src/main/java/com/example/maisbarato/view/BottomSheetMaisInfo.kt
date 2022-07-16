@@ -4,25 +4,15 @@ import android.os.Bundle
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
-import androidx.activity.result.ActivityResultLauncher
-import androidx.activity.result.contract.ActivityResultContracts
-import androidx.fragment.app.viewModels
+import androidx.navigation.fragment.findNavController
+import com.example.maisbarato.R
 import com.example.maisbarato.databinding.BottomSheetInfoUsuarioBinding
-import com.example.maisbarato.viewmodel.BottomSheetMaisInfoViewModel
 import com.google.android.material.bottomsheet.BottomSheetDialogFragment
 
 class BottomSheetMaisInfo : BottomSheetDialogFragment() {
 
     private var _binding: BottomSheetInfoUsuarioBinding? = null
     private val binding get() = _binding!!
-
-    private val viewModel: BottomSheetMaisInfoViewModel by viewModels()
-
-    private var launcher: ActivityResultLauncher<String> = registerForActivityResult(ActivityResultContracts.GetContent()) {
-        it?.also { uri ->
-            viewModel.salvaURLImagem(uri)
-        }
-    }
 
     companion object {
         const val TAG = "ModalBottomSheet"
@@ -40,8 +30,14 @@ class BottomSheetMaisInfo : BottomSheetDialogFragment() {
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
 
+        binding.icEdit.setOnClickListener {
+            findNavController().navigate(R.id.userProfileFragment)
+            dialog?.dismiss()
+        }
+
         binding.tvTrocarFoto.setOnClickListener {
-            launcher.launch("image/*")
+            findNavController().navigate(R.id.userProfileFragment)
+            dialog?.dismiss()
         }
     }
 

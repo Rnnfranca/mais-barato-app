@@ -9,6 +9,7 @@ import com.example.maisbarato.model.LoginUsuario
 import com.example.maisbarato.util.*
 import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.flow.catch
+import kotlinx.coroutines.flow.first
 import kotlinx.coroutines.flow.map
 
 private val Context.dataStore: DataStore<Preferences> by preferencesDataStore(name = "mais_barato_app_preferences")
@@ -77,6 +78,9 @@ class DataStoreRepository(private val context: Context) {
                 preferences[PREFERENCE_USER_UID] ?: ""
             )
         }
+
+    suspend fun getUIDUsuario2(): String =
+        context.dataStore.data.first()[PREFERENCE_USER_UID] ?: ""
 
     suspend fun salvaURLImagemUsuario(urlImagem: String) {
         context.dataStore.edit { preferences ->

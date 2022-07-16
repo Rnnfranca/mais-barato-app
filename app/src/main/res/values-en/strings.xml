@@ -40,5 +40,11 @@
     <string name="email_verificacao_enviado">Verification email sent to </string>
     <string name="falha_enviar_email_verificacao">Failed to send verification email</string>
     <string name="alterar_foto">Change photo</string>
-
+    <string name="nome_completo">Full name</string>
+    <string name="atualizar">Update</string>
+    <string name="editar_perfil">Edit profile</string>
+    <string name="imagem_usuario">Image user</string>
+    <string name="icone_alterar_imagem">Icone alterar imagem</string>
+    <string name="alterar_imagem">Update imagem</string>
+    <string name="telefone">Phone</string>
 </resources>
