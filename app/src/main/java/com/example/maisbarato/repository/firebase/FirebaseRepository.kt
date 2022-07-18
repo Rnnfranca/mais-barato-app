@@ -2,7 +2,7 @@ package com.example.maisbarato.repository.firebase
 
 import android.net.Uri
 import android.util.Log
-import com.example.maisbarato.localrepository.RepositoryResult
+import com.example.maisbarato.repository.local.RepositoryResult
 import com.example.maisbarato.model.Oferta
 import com.example.maisbarato.util.COLLECTION_OFERTA
 import com.example.maisbarato.util.COLLECTION_USUARIO

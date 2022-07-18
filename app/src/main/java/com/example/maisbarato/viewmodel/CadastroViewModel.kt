@@ -4,7 +4,7 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.maisbarato.localrepository.DataStoreRepository
+import com.example.maisbarato.repository.local.DataStoreRepository
 import com.example.maisbarato.model.Usuario
 import com.example.maisbarato.util.COLLECTION_USUARIO
 import com.example.maisbarato.util.StateViewResult

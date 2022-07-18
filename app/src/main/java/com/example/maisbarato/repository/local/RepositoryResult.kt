@@ -1,4 +1,4 @@
-package com.example.maisbarato.localrepository
+package com.example.maisbarato.repository.local
 
 sealed class RepositoryResult<out t> {
     data class Success<T>(val result: T) : RepositoryResult<T>()

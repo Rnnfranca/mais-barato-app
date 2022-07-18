@@ -5,8 +5,8 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.viewModelScope
-import com.example.maisbarato.localrepository.DataStoreRepository
-import com.example.maisbarato.localrepository.RepositoryResult
+import com.example.maisbarato.repository.local.DataStoreRepository
+import com.example.maisbarato.repository.local.RepositoryResult
 import com.example.maisbarato.model.LoginUsuario
 import com.example.maisbarato.util.StateViewResult
 import com.google.firebase.auth.FirebaseAuth

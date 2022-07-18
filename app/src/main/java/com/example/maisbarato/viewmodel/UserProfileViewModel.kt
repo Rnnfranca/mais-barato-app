@@ -4,9 +4,9 @@ import android.app.Application
 import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.maisbarato.localrepository.DataStoreRepository
-import com.example.maisbarato.localrepository.RepositoryResult
 import com.example.maisbarato.repository.firebase.FirebaseRepository
+import com.example.maisbarato.repository.local.DataStoreRepository
+import com.example.maisbarato.repository.local.RepositoryResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -16,7 +16,7 @@ import kotlinx.coroutines.launch
 
 class UserProfileViewModel(application: Application) : AndroidViewModel(application) {
     private val dataStore = DataStoreRepository(application)
-    private val firebaseRepository = FirebaseRepository(application)
+    private val firebaseRepository = FirebaseRepository()
 
     private val _imageUserURL = MutableStateFlow<String?>(null)
     val imageUserUrl = _imageUserURL.asStateFlow()

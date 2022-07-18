@@ -1,4 +1,4 @@
-package com.example.maisbarato.dependencyinjection
+package com.example.maisbarato.di
 
 import android.content.Context
 import androidx.room.Room

@@ -1,4 +1,4 @@
-package com.example.maisbarato.localrepository
+package com.example.maisbarato.repository.local
 
 import android.content.Context
 import androidx.datastore.core.DataStore
