@@ -4,11 +4,11 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.maisbarato.model.Usuario
+import com.example.maisbarato.repository.auth.AuthenticationRepository
 import com.example.maisbarato.repository.local.DataStoreRepository
 import com.example.maisbarato.repository.local.RepositoryResult
-import com.example.maisbarato.model.Usuario
 import com.example.maisbarato.util.COLLECTION_USUARIO
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -20,10 +20,9 @@ import kotlinx.coroutines.launch
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
 
     private val TAG = SharedViewModel::class.java.name
+    private var authRepository = AuthenticationRepository()
 
-    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
-
-    val currentUser get() = auth.currentUser
+    val currentUser get() = authRepository.currentUser
 
     private val remoteDatabase = Firebase.firestore
     private val dataStore = DataStoreRepository(application)
@@ -35,7 +34,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val urlImagemUsuario = _urlImagemUsuario.asStateFlow()
 
     fun logout() {
-        auth.signOut()
+        authRepository.signOut()
     }
 
     fun carregaUID(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
@@ -49,7 +48,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                         if (uidUsuario.isNotEmpty()) {
                             carregaDadosUsuario(uidUsuario)
                         } else {
-                            auth.currentUser?.also { firebaseUser ->
+                            authRepository.currentUser?.also { firebaseUser ->
                                 carregaDadosUsuario(firebaseUser.uid)
                             }
                         }

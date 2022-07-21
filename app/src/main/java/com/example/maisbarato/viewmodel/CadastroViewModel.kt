@@ -4,13 +4,13 @@ import android.app.Application
 import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.maisbarato.repository.local.DataStoreRepository
 import com.example.maisbarato.model.Usuario
+import com.example.maisbarato.repository.auth.AuthenticationRepository
+import com.example.maisbarato.repository.local.DataStoreRepository
 import com.example.maisbarato.util.COLLECTION_USUARIO
 import com.example.maisbarato.util.StateViewResult
 import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
-import com.google.firebase.auth.FirebaseAuth
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import kotlinx.coroutines.CoroutineDispatcher
@@ -23,8 +23,8 @@ class CadastroViewModel(application: Application) : AndroidViewModel(application
 
     private val TAG = CadastroViewModel::class.java.name
 
-    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
-    private val remoteDataBase = Firebase.firestore
+    private var authRepository = AuthenticationRepository()
+    private val firebase = Firebase.firestore
 
     private val dataStore = DataStoreRepository(application)
 
@@ -38,10 +38,8 @@ class CadastroViewModel(application: Application) : AndroidViewModel(application
         _stateView.value = StateViewResult.Loading
 
         viewModelScope.launch(dispatcher) {
-            auth.createUserWithEmailAndPassword(
-                email,
-                senha
-            ).addOnCompleteListener { task ->
+            authRepository.createUser(email, senha)
+                .addOnCompleteListener { task ->
 
                 if (task.isSuccessful) {
 
@@ -55,7 +53,7 @@ class CadastroViewModel(application: Application) : AndroidViewModel(application
                             email = email
                         )
 
-                        remoteDataBase.collection(COLLECTION_USUARIO)
+                        firebase.collection(COLLECTION_USUARIO)
                             .document(firebaseUser.uid)
                             .set(usuario)
                     }
@@ -64,7 +62,6 @@ class CadastroViewModel(application: Application) : AndroidViewModel(application
                     enviaEmailVerificacao(task)
 
                 } else {
-
                     Log.w(TAG, "createUserWithEmail:failure", task.exception)
                     _stateView.value = StateViewResult.Error(task.exception.toString())
                 }

@@ -5,11 +5,11 @@ import android.util.Log
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.LifecycleObserver
 import androidx.lifecycle.viewModelScope
+import com.example.maisbarato.model.LoginUsuario
+import com.example.maisbarato.repository.auth.AuthenticationRepository
 import com.example.maisbarato.repository.local.DataStoreRepository
 import com.example.maisbarato.repository.local.RepositoryResult
-import com.example.maisbarato.model.LoginUsuario
 import com.example.maisbarato.util.StateViewResult
-import com.google.firebase.auth.FirebaseAuth
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
@@ -21,7 +21,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
     private val TAG = LoginViewModel::class.java.name
 
     private val dataStore = DataStoreRepository(application)
-    private var auth: FirebaseAuth = FirebaseAuth.getInstance()
+    private val authRepository = AuthenticationRepository()
 
     private val _stateView = MutableStateFlow<StateViewResult<Any>>(StateViewResult.Initial)
     val stateView =  _stateView.asStateFlow()
@@ -32,23 +32,21 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
     private val _switchStatus = MutableStateFlow<StateViewResult<Boolean>>(StateViewResult.Initial)
     val switchStatus = _switchStatus.asStateFlow()
 
-    fun login(email: String, senha: String,) {
+    fun login(email: String, senha: String) {
         _stateView.value = StateViewResult.Loading
         viewModelScope.launch {
-            auth.signInWithEmailAndPassword(
-                email,
-                senha
-            ).addOnCompleteListener { task ->
-                if (task.isSuccessful) {
+            authRepository.login(email, senha)
+                .addOnCompleteListener { task ->
+                    if (task.isSuccessful) {
 
-                    task.result?.user?.also { firebaseUser ->
-                        salvaUIDUsuario(firebaseUser.uid)
+                        task.result?.user?.also { firebaseUser ->
+                            salvaUIDUsuario(firebaseUser.uid)
+                        }
+
+                        _stateView.value = StateViewResult.Success(result = task)
+                    } else {
+                        _stateView.value = StateViewResult.Error(errorMsg = task.exception.toString())
                     }
-
-                    _stateView.value = StateViewResult.Success(result = task)
-                } else {
-                    _stateView.value = StateViewResult.Error(errorMsg = task.exception.toString())
-                }
             }
         }
 
