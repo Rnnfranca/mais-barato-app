@@ -64,9 +64,15 @@ class MainActivity : AppCompatActivity() {
             sharedViewModel.urlImagemUsuario.collect { urlImagem ->
                 val imgUsuario = headerView.findViewById<ImageView>(R.id.imagem_usuario)
 
-                Glide.with(imgUsuario)
-                    .load(urlImagem)
-                    .into(imgUsuario)
+                if (urlImagem.isNullOrEmpty()) {
+                    Glide.with(imgUsuario)
+                        .load(R.drawable.profile_picture_default)
+                        .into(imgUsuario)
+                } else {
+                    Glide.with(imgUsuario)
+                        .load(urlImagem)
+                        .into(imgUsuario)
+                }
             }
         }
     }

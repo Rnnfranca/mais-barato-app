@@ -1,17 +1,17 @@
 package com.example.maisbarato.viewmodel
 
 import android.app.Application
-import android.net.Uri
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.maisbarato.model.Usuario
 import com.example.maisbarato.repository.firebase.FirebaseRepository
 import com.example.maisbarato.repository.local.DataStoreRepository
 import com.example.maisbarato.repository.local.RepositoryResult
+import com.example.maisbarato.util.StateViewResult
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
-import kotlinx.coroutines.flow.take
 import kotlinx.coroutines.launch
 
 class UserProfileViewModel(application: Application) : AndroidViewModel(application) {
@@ -21,21 +21,16 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     private val _imageUserURL = MutableStateFlow<String?>(null)
     val imageUserUrl = _imageUserURL.asStateFlow()
 
-    fun salvaURLImagem(uri: Uri, dispatcher: CoroutineDispatcher = Dispatchers.IO) {
-        viewModelScope.launch(dispatcher) {
-            dataStore.getUIDUsuario().take(1).collect { repositoryResult ->
+    private val _userInfo = MutableStateFlow<Usuario?>(null)
+    val userInfo = _userInfo.asStateFlow()
 
-                when (repositoryResult) {
-                    is RepositoryResult.Success -> {
-                        firebaseRepository.salvaImagemUsuario(uri, repositoryResult.result) { urlImagem ->
-                            viewModelScope.launch(dispatcher) {
-                                dataStore.salvaURLImagemUsuario(urlImagem)
-                            }
-                        }
-                    }
-                }
-            }
-        }
+    private val _stateView: MutableStateFlow<StateViewResult<Any>?> = MutableStateFlow(null)
+    val stateView = _stateView.asStateFlow()
+
+    var userUid: String = ""
+
+    fun setImageUri(url: String) {
+        _imageUserURL.value = url
     }
 
     fun getImageUrl(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
@@ -51,9 +46,37 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
         }
     }
 
-    fun updateInfo(fullName: String, email: String, phone: String, imageUrl: String, dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+    fun getInfoUser(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         viewModelScope.launch(dispatcher) {
-            firebaseRepository
+            dataStore.getUIDUsuario().collect { repositoryResult ->
+                when (repositoryResult) {
+                    is RepositoryResult.Success -> {
+                        userUid = repositoryResult.result
+                        firebaseRepository.getUserInfo(repositoryResult.result) { usuario ->
+                            _userInfo.value = usuario
+                        }
+                    }
+                }
+            }
+
+        }
+    }
+
+    fun updateInfo(fullName: String, email: String, dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
+            _stateView.emit(StateViewResult.Loading)
+
+            firebaseRepository.updateUserInfo(userUid, fullName, email, _imageUserURL.value) { isUpdate, urlImage ->
+                viewModelScope.launch(dispatcher) {
+                    dataStore.salvaURLImagemUsuario(urlImage)
+                    if (isUpdate) {
+                        _stateView.emit(StateViewResult.Success())
+                    } else {
+                        _stateView.emit(StateViewResult.Error())
+                    }
+                }
+            }
+
         }
     }
 }

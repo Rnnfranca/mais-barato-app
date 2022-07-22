@@ -15,9 +15,9 @@ import androidx.navigation.fragment.findNavController
 import com.example.maisbarato.R
 import com.example.maisbarato.databinding.FragmentCadastroBinding
 import com.example.maisbarato.util.StateViewResult
+import com.example.maisbarato.util.ValidateUtil
 import com.example.maisbarato.viewmodel.CadastroViewModel
 import kotlinx.coroutines.launch
-import java.util.regex.Pattern
 
 class CadastroFragment : Fragment() {
 
@@ -56,7 +56,7 @@ class CadastroFragment : Fragment() {
 
         binding.editTextNomeCadastro.doAfterTextChanged {
             it?.toString()?.also { texto ->
-                binding.inputNomeCadastro.error = if (validaNome(texto)) {
+                binding.inputNomeCadastro.error = if (ValidateUtil.validaNome(texto)) {
                     getString(R.string.digite_nome_completo)
                 } else {
                     null
@@ -66,7 +66,7 @@ class CadastroFragment : Fragment() {
 
         binding.editTextEmailCadastro.doAfterTextChanged {
             it?.toString()?.also { texto ->
-                binding.inputEmailCadastro.error = if (validaEmail(texto)) {
+                binding.inputEmailCadastro.error = if (ValidateUtil.validaEmail(texto)) {
                     getString(R.string.email_invalido)
                 } else {
                     null
@@ -76,7 +76,7 @@ class CadastroFragment : Fragment() {
 
         binding.editTextSenhaCadastro.doAfterTextChanged {
             it?.toString()?.also { texto ->
-                binding.inputSenhaCadastro.error = if (validaSenha(texto)) {
+                binding.inputSenhaCadastro.error = if (ValidateUtil.validaSenha(texto)) {
                     getString(R.string.senha_invalida)
                 } else {
                     null
@@ -143,22 +143,6 @@ class CadastroFragment : Fragment() {
 
 
 
-    }
-
-    private fun validaEmail(email: String): Boolean {
-        return !android.util.Patterns.EMAIL_ADDRESS.matcher(email).matches()
-    }
-
-    private fun validaNome(nome: String): Boolean {
-        return nome.length < 3 || !nome.contains(" ")
-    }
-
-    private fun validaSenha(senha: String): Boolean {
-
-        val pattern = Pattern.compile("^(?=.*[0-9])(?=.*[a-z])(?=.*[A-Z])(?=.*[@#$%^&+=])(?=\\S+$).{4,}$")
-        val matcher = pattern.matcher(senha)
-
-        return !matcher.matches()
     }
 
     override fun onDestroy() {

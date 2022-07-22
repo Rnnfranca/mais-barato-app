@@ -93,7 +93,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
                             _dadosUsuario.emit(
                                 Usuario(
                                     nome = usuario["nome"].toString(),
-                                    telefone = usuario["telefone"].toString().toLongOrNull(),
+                                    telefone = usuario["telefone"].toString(),
                                     email = usuario["email"].toString(),
                                 )
                             )

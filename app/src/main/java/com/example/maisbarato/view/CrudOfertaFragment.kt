@@ -22,8 +22,8 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.maisbarato.R
 import com.example.maisbarato.databinding.FragmentCrudOfertaBinding
 import com.example.maisbarato.model.Oferta
+import com.example.maisbarato.util.DateUtil
 import com.example.maisbarato.util.StateViewResult
-import com.example.maisbarato.util.getCurrentTime
 import com.example.maisbarato.view.adapter.ListaImagemAdapter
 import com.example.maisbarato.viewmodel.CrudOfertaViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
@@ -275,7 +275,7 @@ class CrudOfertaFragment : Fragment() {
             nomeLoja = binding.editTextEstabelecimento.text.toString(),
             valorAntigo = formatarPrecoParaSalvar(binding.editTextPrecoAntigo.text?.toString()),
             valorNovo = formatarPrecoParaSalvar(binding.editTextPrecoNovo.text?.toString()),
-            dataInclusao = getCurrentTime(),
+            dataInclusao = DateUtil.getCurrentTime(),
             descricao = binding.editTextInfoAdicionais.text.toString()
         )
 

@@ -49,4 +49,5 @@
     <string name="icone_alterar_imagem">Icone alterar imagem</string>
     <string name="alterar_imagem">Alterar imagem</string>
     <string name="telefone">Telefone</string>
+    <string name="falha_atualizacao_user">Falhar ao atualizar informações</string>
 </resources>

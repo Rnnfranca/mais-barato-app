@@ -1,5 +1,11 @@
 package com.example.maisbarato.util
 
-fun getCurrentTime(): Long {
-    return System.currentTimeMillis()
+
+class DateUtil {
+
+    companion object {
+        fun getCurrentTime(): Long {
+            return System.currentTimeMillis()
+        }
+    }
 }

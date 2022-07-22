@@ -47,4 +47,5 @@
     <string name="icone_alterar_imagem">Icono cambiar imagen</string>
     <string name="alterar_imagem">Cambiar imagen</string>
     <string name="telefone">Teléfono</string>
+    <string name="falha_atualizacao_user">No se pudo actualizar la información</string>
 </resources>

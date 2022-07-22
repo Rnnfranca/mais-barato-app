@@ -2,11 +2,10 @@ package com.example.maisbarato.repository.firebase
 
 import android.net.Uri
 import android.util.Log
-import com.example.maisbarato.repository.local.RepositoryResult
 import com.example.maisbarato.model.Oferta
-import com.example.maisbarato.util.COLLECTION_OFERTA
-import com.example.maisbarato.util.COLLECTION_USUARIO
-import com.google.firebase.firestore.SetOptions
+import com.example.maisbarato.model.Usuario
+import com.example.maisbarato.repository.local.RepositoryResult
+import com.example.maisbarato.util.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
@@ -35,39 +34,21 @@ class FirebaseRepository() {
             }
     }
 
-    fun salvaImagemUsuario(uri: Uri, uidUsuario: String, salvaNoDatastore: ((String) -> Unit)) {
-        Log.d("TEESTE", "salvaImagemUsuario")
+    fun uploadImageUser(uri: Uri, savedImageUrl: ((String) -> Unit)) {
+
         try {
-            Log.d("TEESTE", "try")
-            val imagemRef = storageRef.child("imagens/usuarios/${uri.lastPathSegment}")
+            val imagemRef = storageRef.child("$PATH_IMAGENS/$PATH_USUARIOS/${uri.lastPathSegment}")
             val uploadTask = imagemRef.putFile(uri)
 
             uploadTask.addOnSuccessListener {
                 imagemRef.downloadUrl.addOnSuccessListener { downloadUrl ->
-                    Log.d("TEESTE", "addOnSuccessListener")
-                    salvarImagemNaColecao(downloadUrl.toString(), uidUsuario)
-
-                    salvaNoDatastore.invoke(downloadUrl.toString())
+                    savedImageUrl.invoke(downloadUrl.toString())
                 }
             }
 
         } catch (e: Exception) {
             Log.e(TAG, e.printStackTrace().toString())
         }
-    }
-
-    private fun salvarImagemNaColecao(url: String, uidUsuario: String) {
-        val data = hashMapOf("urlImagemPerfil" to url)
-
-        usuarioCollectionRef.document(uidUsuario)
-            .set(data, SetOptions.merge())
-            .addOnSuccessListener {
-                Log.d(TAG, "DocumentSnapshot added with ID: $it")
-            }
-            .addOnFailureListener {
-                Log.w(TAG, "Error adding document", it)
-            }
-
     }
 
     fun salvaOferta(oferta: Oferta): RepositoryResult<String> {
@@ -104,5 +85,43 @@ class FirebaseRepository() {
 
     }
 
+    fun getUserInfo(userUid: String, userInfo: (Usuario) -> Unit) {
+        usuarioCollectionRef.document(userUid)
+            .get()
+            .addOnSuccessListener {
+                it.data?.also { usuario ->
+
+                    userInfo.invoke(
+                        Usuario(
+                            nome = usuario[FIELD_NOME].toString(),
+                            email = usuario[FIELD_EMAIL].toString(),
+                            telefone = usuario[FIELD_TELEFONE].toString()
+                        )
+                    )
+                }
+            }
+    }
+
+    fun updateUserInfo(uidUsuario: String, fullName: String, email: String, imageUri: String?, updated: (Boolean, String) -> Unit) {
+
+        uploadImageUser(Uri.parse(imageUri)) { urlImage ->
+            val data = hashMapOf(
+                FIELD_EMAIL to email,
+                FIELD_NOME to fullName,
+                FIELD_URL_IMAGEM_PERFIL to urlImage
+            )
+
+            usuarioCollectionRef.document(uidUsuario)
+                .set(data)
+                .addOnSuccessListener {
+                    updated.invoke(true, urlImage)
+                }
+                .addOnFailureListener {
+                    updated.invoke(false, urlImage)
+                    Log.e(TAG, it.message.toString())
+                }
+        }
+
+    }
 
 }

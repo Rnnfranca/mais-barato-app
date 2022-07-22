@@ -7,6 +7,14 @@ import com.example.maisbarato.R
 const val COLLECTION_OFERTA = "oferta"
 const val COLLECTION_USUARIO = "usuario"
 
+const val FIELD_EMAIL = "email"
+const val FIELD_NOME = "nome"
+const val FIELD_TELEFONE = "telefone"
+const val FIELD_URL_IMAGEM_PERFIL = "urlImagemPerfil"
+
+const val PATH_IMAGENS = "imagens"
+const val PATH_USUARIOS = "usuarios"
+
 val PREFERENCE_EMAIL = stringPreferencesKey("email_data_key")
 val PREFERENCE_SENHA = stringPreferencesKey("senha_data_key")
 val PREFERENCE_SWITCH_STATUS = booleanPreferencesKey("switch_status_key")
