@@ -124,4 +124,48 @@ class FirebaseRepository() {
 
     }
 
+    fun saveFavoriteOffer(userUid: String, oferta: Oferta, saved: (Boolean) -> Unit) {
+
+        usuarioCollectionRef.document(userUid)
+            .collection(SUBCOLLECTION_FAVORITOS)
+            .document(oferta.id)
+            .set(oferta)
+            .addOnSuccessListener {
+                Log.d(TAG, "Favorito salvo com sucesso")
+                saved.invoke(true)
+            }
+            .addOnFailureListener {
+                Log.i(TAG, it.message.toString())
+                saved.invoke(false)
+            }
+    }
+
+    fun verifyFavorite(userUid: String, ofertaId: String, savedOffer: (Boolean) -> Unit) {
+        usuarioCollectionRef.document(userUid)
+            .collection(SUBCOLLECTION_FAVORITOS)
+            .document(ofertaId)
+            .get()
+            .addOnSuccessListener {
+                it.data?.also { oferta ->
+                    savedOffer.invoke(true)
+                } ?: run {
+                    savedOffer.invoke(false)
+                }
+            }
+    }
+
+    fun removeFavorite(userUid: String, offerId: String, removed: (Boolean) -> Unit) {
+        usuarioCollectionRef.document(userUid)
+            .collection(SUBCOLLECTION_FAVORITOS)
+            .document(offerId)
+            .delete()
+            .addOnSuccessListener {
+                Log.d(TAG, "Favorito excluído")
+                removed.invoke(true)
+            }
+            .addOnFailureListener {
+                Log.e(TAG, "Falha ao excluir favorito ${it.message}")
+                removed.invoke(false)
+            }
+    }
 }

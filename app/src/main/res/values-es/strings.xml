@@ -48,4 +48,7 @@
     <string name="alterar_imagem">Cambiar imagen</string>
     <string name="telefone">Teléfono</string>
     <string name="falha_atualizacao_user">No se pudo actualizar la información</string>
+    <string name="falha_salvar_favorito">No se pudo guardar el favorito</string>
+    <string name="adicionar_aos_favoritos">Agregar a los favoritos</string>
+    <string name="remover_dos_favoritos">Quitar de favoritos</string>
 </resources>

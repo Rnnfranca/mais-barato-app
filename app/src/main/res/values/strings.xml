@@ -50,4 +50,7 @@
     <string name="alterar_imagem">Alterar imagem</string>
     <string name="telefone">Telefone</string>
     <string name="falha_atualizacao_user">Falhar ao atualizar informações</string>
+    <string name="falha_salvar_favorito">Falha ao salvar favorito</string>
+    <string name="adicionar_aos_favoritos">Adicionar aos favoritos</string>
+    <string name="remover_dos_favoritos">Remover dos favoritos</string>
 </resources>

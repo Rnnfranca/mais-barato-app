@@ -6,12 +6,17 @@ import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
+import androidx.fragment.app.viewModels
+import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.example.maisbarato.R
 import com.example.maisbarato.databinding.FragmentDetalhesOfertaBinding
 import com.example.maisbarato.model.Oferta
 import com.example.maisbarato.view.adapter.ListaImagemAdapter
+import com.example.maisbarato.viewmodel.DetalhesOfertaViewModel
+import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
@@ -19,6 +24,8 @@ class DetalhesOfertaFragment : Fragment() {
 
     private var _binding: FragmentDetalhesOfertaBinding? = null
     private val binding get() = _binding!!
+
+    private val viewModel: DetalhesOfertaViewModel by viewModels()
 
     private lateinit var recyclerView: RecyclerView
     private lateinit var listaImagemAdapter: ListaImagemAdapter
@@ -60,6 +67,8 @@ class DetalhesOfertaFragment : Fragment() {
             val formatDate = SimpleDateFormat("dd/MM/yyyy")
             val dateText = formatDate.format(data)
 
+            viewModel.verifyFavorite(ofertaId = oferta.id)
+
             listaImagemAdapter.atualizaListaImagens(oferta.listaUrlImagem)
 
             binding.tituloPromocao.text = oferta.titulo
@@ -69,8 +78,24 @@ class DetalhesOfertaFragment : Fragment() {
             binding.precoAntigo.text = oferta.valorAntigo?.toString()
             binding.precoNovo.text = oferta.valorNovo.toString()
             binding.descricaoOferta.text = oferta.descricao
+
+            binding.botaoAdicionarFavoritos.setOnClickListener {
+                viewModel.saveOrRemoveFavorite(oferta)
+            }
+
         }
 
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.isFavorite.collect { isFavorite ->
+                if (isFavorite) {
+                    binding.botaoAdicionarFavoritos.setIconResource(R.drawable.ic_favorite_filled)
+                    binding.botaoAdicionarFavoritos.text = getString(R.string.remover_dos_favoritos)
+                } else {
+                    binding.botaoAdicionarFavoritos.setIconResource(R.drawable.ic_favorite)
+                    binding.botaoAdicionarFavoritos.text = getString(R.string.adicionar_aos_favoritos)
+                }
+            }
+        }
     }
 
     override fun onDestroy() {

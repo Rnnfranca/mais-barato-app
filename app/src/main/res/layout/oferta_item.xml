@@ -91,17 +91,6 @@
             tools:text="R$ 99,99"/>
 
         <ImageView
-            android:id="@+id/icone_favorito"
-            android:layout_width="30dp"
-            android:layout_height="30dp"
-            android:layout_marginEnd="15dp"
-            android:layout_marginTop="15dp"
-            android:contentDescription="@string/botao_favorito"
-            android:src="@drawable/favorite_color"
-            app:layout_constraintTop_toTopOf="@id/imagem_oferta"
-            app:layout_constraintEnd_toEndOf="parent"/>
-
-        <ImageView
             android:id="@+id/icone_comentario"
             android:layout_width="30dp"
             android:layout_height="30dp"

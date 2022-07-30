@@ -86,7 +86,7 @@ class MainActivity : AppCompatActivity() {
 
     private fun carregaUsuarioUID(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         lifecycleScope.launch(dispatcher) {
-            sharedViewModel.carregaUID()
+            sharedViewModel.carregaDadosUsuario()
         }
 
         lifecycleScope.launch(dispatcher) {

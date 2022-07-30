@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.maisbarato.model.Usuario
+import com.example.maisbarato.repository.auth.AuthenticationRepository
 import com.example.maisbarato.repository.firebase.FirebaseRepository
 import com.example.maisbarato.repository.local.DataStoreRepository
 import com.example.maisbarato.repository.local.RepositoryResult
@@ -27,7 +28,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     private val _stateView: MutableStateFlow<StateViewResult<Any>?> = MutableStateFlow(null)
     val stateView = _stateView.asStateFlow()
 
-    var userUid: String = ""
+    var userUid: String = AuthenticationRepository.currentUser?.uid ?: ""
 
     fun setImageUri(url: String) {
         _imageUserURL.value = url
@@ -48,17 +49,9 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
 
     fun getInfoUser(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         viewModelScope.launch(dispatcher) {
-            dataStore.getUIDUsuario().collect { repositoryResult ->
-                when (repositoryResult) {
-                    is RepositoryResult.Success -> {
-                        userUid = repositoryResult.result
-                        firebaseRepository.getUserInfo(repositoryResult.result) { usuario ->
-                            _userInfo.value = usuario
-                        }
-                    }
-                }
+            firebaseRepository.getUserInfo(userUid) { usuario ->
+                _userInfo.value = usuario
             }
-
         }
     }
 

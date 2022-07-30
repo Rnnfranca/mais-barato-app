@@ -20,9 +20,9 @@ import kotlinx.coroutines.launch
 class SharedViewModel(application: Application) : AndroidViewModel(application) {
 
     private val TAG = SharedViewModel::class.java.name
-    private var authRepository = AuthenticationRepository()
 
-    val currentUser get() = authRepository.currentUser
+    val currentUser get() = AuthenticationRepository.currentUser
+    val userUid = currentUser?.uid ?: ""
 
     private val remoteDatabase = Firebase.firestore
     private val dataStore = DataStoreRepository(application)
@@ -34,29 +34,7 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
     val urlImagemUsuario = _urlImagemUsuario.asStateFlow()
 
     fun logout() {
-        authRepository.signOut()
-    }
-
-    fun carregaUID(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
-        viewModelScope.launch(dispatcher) {
-            dataStore.getUIDUsuario().collect { repositoryResult ->
-
-                when (repositoryResult) {
-                    is RepositoryResult.Success -> {
-                        val uidUsuario = repositoryResult.result
-
-                        if (uidUsuario.isNotEmpty()) {
-                            carregaDadosUsuario(uidUsuario)
-                        } else {
-                            authRepository.currentUser?.also { firebaseUser ->
-                                carregaDadosUsuario(firebaseUser.uid)
-                            }
-                        }
-                    }
-                }
-
-            }
-        }
+        AuthenticationRepository.signOut()
     }
 
     fun carregaFotoUsuario(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
@@ -77,11 +55,11 @@ class SharedViewModel(application: Application) : AndroidViewModel(application) 
         }
     }
 
-    private fun carregaDadosUsuario(uid: String, dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+    fun carregaDadosUsuario(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         viewModelScope.launch(dispatcher) {
 
             val usuarioDoc = remoteDatabase.collection(COLLECTION_USUARIO)
-                .document(uid)
+                .document(userUid)
                 .get()
 
             usuarioDoc.addOnSuccessListener { documento ->

@@ -23,7 +23,6 @@ class CadastroViewModel(application: Application) : AndroidViewModel(application
 
     private val TAG = CadastroViewModel::class.java.name
 
-    private var authRepository = AuthenticationRepository()
     private val firebase = Firebase.firestore
 
     private val dataStore = DataStoreRepository(application)
@@ -38,7 +37,7 @@ class CadastroViewModel(application: Application) : AndroidViewModel(application
         _stateView.value = StateViewResult.Loading
 
         viewModelScope.launch(dispatcher) {
-            authRepository.createUser(email, senha)
+            AuthenticationRepository.createUser(email, senha)
                 .addOnCompleteListener { task ->
 
                 if (task.isSuccessful) {

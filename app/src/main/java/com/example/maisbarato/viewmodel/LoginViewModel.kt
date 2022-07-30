@@ -21,7 +21,6 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
     private val TAG = LoginViewModel::class.java.name
 
     private val dataStore = DataStoreRepository(application)
-    private val authRepository = AuthenticationRepository()
 
     private val _stateView = MutableStateFlow<StateViewResult<Any>>(StateViewResult.Initial)
     val stateView =  _stateView.asStateFlow()
@@ -35,7 +34,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
     fun login(email: String, senha: String) {
         _stateView.value = StateViewResult.Loading
         viewModelScope.launch {
-            authRepository.login(email, senha)
+            AuthenticationRepository.login(email, senha)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
 
