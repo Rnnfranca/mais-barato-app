@@ -9,6 +9,7 @@ import com.example.maisbarato.util.*
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
 import com.google.firebase.storage.ktx.storage
+import kotlinx.coroutines.tasks.await
 
 class FirebaseRepository() {
 
@@ -167,5 +168,17 @@ class FirebaseRepository() {
                 Log.e(TAG, "Falha ao excluir favorito ${it.message}")
                 removed.invoke(false)
             }
+    }
+
+    suspend fun getFavorites(userUid: String): List<Oferta> {
+        return try {
+            usuarioCollectionRef.document(userUid)
+                .collection(SUBCOLLECTION_FAVORITOS)
+                .get()
+                .await()
+                .toObjects(Oferta::class.java)
+        } catch (e: Exception) {
+            emptyList()
+        }
     }
 }

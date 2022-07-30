@@ -18,6 +18,9 @@
         <action
             android:id="@+id/action_listaOfertasFragment_to_userProfileFragment"
             app:destination="@id/userProfileFragment" />
+        <action
+            android:id="@+id/action_listaOfertasFragment_to_favoritesFragment"
+            app:destination="@id/favoritesFragment" />
     </fragment>
     <fragment
         android:id="@+id/crudOfertaFragment"
@@ -60,4 +63,9 @@
         android:name="com.example.maisbarato.view.UserProfileFragment"
         android:label="Perfil"
         tools:layout="@layout/fragment_user_profile" />
+    <fragment
+        android:id="@+id/favoritesFragment"
+        android:name="com.example.maisbarato.view.FavoritesFragment"
+        android:label="fragment_favorites"
+        tools:layout="@layout/fragment_favorites" />
 </navigation>
