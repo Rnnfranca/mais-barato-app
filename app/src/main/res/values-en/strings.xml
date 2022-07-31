@@ -51,4 +51,5 @@
     <string name="falha_salvar_favorito">Failed to save favorite</string>
     <string name="adicionar_aos_favoritos">Add to favorites</string>
     <string name="remover_dos_favoritos">Remove from favorites</string>
+    <string name="falha_carregar_favoritos">Failed to load favorites</string>
 </resources>

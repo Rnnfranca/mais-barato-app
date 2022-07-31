@@ -51,4 +51,5 @@
     <string name="falha_salvar_favorito">No se pudo guardar el favorito</string>
     <string name="adicionar_aos_favoritos">Agregar a los favoritos</string>
     <string name="remover_dos_favoritos">Quitar de favoritos</string>
+    <string name="falha_carregar_favoritos">No se pudieron cargar los favoritos</string>
 </resources>
