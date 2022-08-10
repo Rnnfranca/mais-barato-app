@@ -10,29 +10,9 @@
             android:title="@string/favoritos" />
 
         <item
-            android:id="@+id/notificacao"
-            android:icon="@drawable/ic_notifications"
-            android:title="@string/notifica_es" />
-
-        <item
             android:id="@+id/historico"
             android:icon="@drawable/ic_history"
             android:title="@string/hist_rico" />
-    </group>
-
-    <group
-        android:id="@+id/group2">
-
-        <item
-            android:id="@+id/contato"
-            android:icon="@drawable/ic_mail"
-            android:title="@string/fale_conosco" />
-
-        <item
-            android:id="@+id/sair"
-            android:icon="@drawable/ic_exit"
-            android:title="@string/sair" />
-
     </group>
 
 </menu>

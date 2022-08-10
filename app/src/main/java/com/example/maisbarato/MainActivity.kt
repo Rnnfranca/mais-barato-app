@@ -82,6 +82,15 @@ class MainActivity : AppCompatActivity() {
             val bottomSheetMaisInfo = BottomSheetMaisInfo()
             bottomSheetMaisInfo.show(supportFragmentManager, BottomSheetMaisInfo.TAG)
         }
+
+        binding.faleConosco.setOnClickListener {
+
+        }
+
+        binding.sair.setOnClickListener {
+            sharedViewModel.logout()
+            navController.navigate(R.id.loginFragment)
+        }
     }
 
     private fun carregaUsuarioUID(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
@@ -98,12 +107,8 @@ class MainActivity : AppCompatActivity() {
         binding.navigationView.setNavigationItemSelectedListener {
             binding.drawerLayout.closeDrawer(GravityCompat.START)
 
-            if (it.itemId == R.id.sair) {
-                sharedViewModel.logout()
-                navController.navigate(R.id.loginFragment)
-            } else {
-                navController.navigate(it.itemId)
-            }
+            navController.navigate(it.itemId)
+
             true
         }
     }
