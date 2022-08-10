@@ -16,8 +16,9 @@ data class Oferta (
     var dataInclusao: Long = 0,
     var fotoLoja: String = "",
     var nomeLoja: String = "",
-    var temperatura: Int? = null,
+    var endereco: String = "",
     var valorAntigo: Double? = null,
     var valorNovo: Double? = 0.0,
-    var descricao: String = ""
+    var descricao: String = "",
+    var userUid: String = ""
 ): Parcelable

@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.maisbarato.model.Oferta
+import com.example.maisbarato.repository.auth.AuthenticationRepository
 import com.example.maisbarato.repository.firebase.FirebaseRepository
 import com.example.maisbarato.repository.local.RepositoryResult
 import com.example.maisbarato.util.StateViewResult
@@ -23,6 +24,8 @@ class CrudOfertaViewModel @Inject constructor(application: Application) :
 
     private val _ofertaStateView = MutableStateFlow<StateViewResult<String>>(StateViewResult.Initial)
     val ofertaStateView = _ofertaStateView.asStateFlow()
+
+    val userUid = AuthenticationRepository.currentUser?.uid ?: ""
 
     fun adicionaOferta(oferta: Oferta, dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         _ofertaStateView.value = StateViewResult.Loading

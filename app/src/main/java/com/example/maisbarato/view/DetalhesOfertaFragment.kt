@@ -11,6 +11,7 @@ import androidx.lifecycle.lifecycleScope
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
+import com.bumptech.glide.Glide
 import com.example.maisbarato.R
 import com.example.maisbarato.databinding.FragmentDetalhesOfertaBinding
 import com.example.maisbarato.model.Oferta
@@ -50,17 +51,27 @@ class DetalhesOfertaFragment : Fragment() {
 
     override fun onViewCreated(view: View, savedInstanceState: Bundle?) {
         super.onViewCreated(view, savedInstanceState)
+        configRecyclerViewImages()
+        configOffer()
+        configFavoriteButton()
+    }
 
-        recyclerView = binding.recyclerViewImagens
-        recyclerView.layoutManager = LinearLayoutManager(
-            context,
-            LinearLayoutManager.HORIZONTAL,
-            false
-        )
-        listaImagemAdapter = ListaImagemAdapter(listOf())
-        recyclerView.adapter = listaImagemAdapter
+    private fun configFavoriteButton() {
+        viewLifecycleOwner.lifecycleScope.launch {
+            viewModel.isFavorite.collect { isFavorite ->
+                if (isFavorite) {
+                    binding.botaoAdicionarFavoritos.setIconResource(R.drawable.ic_favorite_filled)
+                    binding.botaoAdicionarFavoritos.text = getString(R.string.remover_dos_favoritos)
+                } else {
+                    binding.botaoAdicionarFavoritos.setIconResource(R.drawable.ic_favorite)
+                    binding.botaoAdicionarFavoritos.text =
+                        getString(R.string.adicionar_aos_favoritos)
+                }
+            }
+        }
+    }
 
-
+    private fun configOffer() {
         oferta?.also { oferta ->
 
             val data = Date(oferta.dataInclusao)
@@ -74,28 +85,35 @@ class DetalhesOfertaFragment : Fragment() {
             binding.tituloPromocao.text = oferta.titulo
             binding.dataInclusao.text = dateText
             binding.nomeLoja.text = oferta.nomeLoja
-            binding.precoAntigo.paintFlags = binding.precoAntigo.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+            binding.endereco.text = oferta.endereco
+            binding.precoAntigo.paintFlags =
+                binding.precoAntigo.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
             binding.precoAntigo.text = oferta.valorAntigo?.toString()
             binding.precoNovo.text = oferta.valorNovo.toString()
             binding.descricaoOferta.text = oferta.descricao
+            viewModel.getUserOffersInfos(oferta.userUid) { userName, userImage ->
+                binding.nomeUsuario.text = userName
+                Glide.with(binding.fotoUsuario)
+                    .load(userImage)
+                    .into(binding.fotoUsuario)
+            }
 
             binding.botaoAdicionarFavoritos.setOnClickListener {
                 viewModel.saveOrRemoveFavorite(oferta)
             }
 
         }
+    }
 
-        viewLifecycleOwner.lifecycleScope.launch {
-            viewModel.isFavorite.collect { isFavorite ->
-                if (isFavorite) {
-                    binding.botaoAdicionarFavoritos.setIconResource(R.drawable.ic_favorite_filled)
-                    binding.botaoAdicionarFavoritos.text = getString(R.string.remover_dos_favoritos)
-                } else {
-                    binding.botaoAdicionarFavoritos.setIconResource(R.drawable.ic_favorite)
-                    binding.botaoAdicionarFavoritos.text = getString(R.string.adicionar_aos_favoritos)
-                }
-            }
-        }
+    private fun configRecyclerViewImages() {
+        recyclerView = binding.recyclerViewImagens
+        recyclerView.layoutManager = LinearLayoutManager(
+            context,
+            LinearLayoutManager.HORIZONTAL,
+            false
+        )
+        listaImagemAdapter = ListaImagemAdapter(listOf())
+        recyclerView.adapter = listaImagemAdapter
     }
 
     override fun onDestroy() {

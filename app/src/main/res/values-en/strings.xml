@@ -14,11 +14,14 @@
     <string name="botao_favorito">favorite button</string>
     <string name="botao_comentario">comment button</string>
     <string name="estabelecimentos">Stores</string>
+    <string name="estabelecimento">Store</string>
     <string name="cancelar">Cancel</string>
     <string name="selecionar">Select</string>
     <string name="min_10_caracteres">Minimum 10 characters</string>
+    <string name="min_3_caracteres">Minimum 3 characters</string>
     <string name="digite_titulo">Enter a title</string>
-    <string name="selecione_estabelecimento">Select a store</string>
+    <string name="selecione_estabelecimento">Type the store name</string>
+    <string name="endereco_estabelecimento">Type store\'s address or website</string>
     <string name="digite_preco_atual">Enter current price</string>
     <string name="digite_detalhes">Enter promotion details</string>
     <string name="preencha_email">Fill in the email</string>
@@ -30,7 +33,7 @@
     <string name="trocar_imagens">Exchange images</string>
     <string name="adicione_no_minimo_uma_imagem">Add at least one image</string>
     <string name="titulo">Title</string>
-    <string name="estabelecimento">Establishment</string>
+    <string name="nome_estabelecimento">Establishment name</string>
     <string name="preco_antigo">Old price</string>
     <string name="preco_novo">New price</string>
     <string name="informacoes_adicionais">Additional Information</string>
@@ -52,4 +55,8 @@
     <string name="adicionar_aos_favoritos">Add to favorites</string>
     <string name="remover_dos_favoritos">Remove from favorites</string>
     <string name="falha_carregar_favoritos">Failed to load favorites</string>
+    <string name="endereco_ou_site_do_estabelecimento">Address or website</string>
+    <string name="detalhes">Details</string>
+    <string name="enviado_por">Sent by</string>
+    <string name="comentarios">Comments</string>
 </resources>

@@ -54,4 +54,12 @@ class DetalhesOfertaViewModel(application: Application) :
         }
     }
 
+    fun getUserOffersInfos(uidUserOffer: String, dispatcher: CoroutineDispatcher = Dispatchers.IO, user: (userName: String?, userImage: String?) -> Unit) {
+        viewModelScope.launch(dispatcher) {
+            firebaseRepository.getUserInfo(uidUserOffer) {
+                user.invoke(it.nome, it.urlImagePerfil)
+            }
+        }
+    }
+
 }

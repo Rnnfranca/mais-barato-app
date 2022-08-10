@@ -96,6 +96,7 @@ class FirebaseRepository() {
                         Usuario(
                             nome = usuario[FIELD_NOME].toString(),
                             email = usuario[FIELD_EMAIL].toString(),
+                            urlImagePerfil = usuario[FIELD_URL_IMAGEM_PERFIL].toString(),
                             telefone = usuario[FIELD_TELEFONE].toString()
                         )
                     )

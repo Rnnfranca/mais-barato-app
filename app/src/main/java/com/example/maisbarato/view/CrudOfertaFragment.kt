@@ -4,7 +4,6 @@ import android.content.ContentResolver
 import android.os.Bundle
 import android.text.Editable
 import android.text.TextWatcher
-import android.util.Log
 import android.view.LayoutInflater
 import android.view.View
 import android.view.ViewGroup
@@ -26,7 +25,6 @@ import com.example.maisbarato.util.DateUtil
 import com.example.maisbarato.util.StateViewResult
 import com.example.maisbarato.view.adapter.ListaImagemAdapter
 import com.example.maisbarato.viewmodel.CrudOfertaViewModel
-import com.google.android.material.dialog.MaterialAlertDialogBuilder
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.NumberFormat
@@ -38,7 +36,7 @@ class CrudOfertaFragment : Fragment() {
     private var _binding: FragmentCrudOfertaBinding? = null
     private val binding get() = _binding!!
 
-    private val crudViewModel: CrudOfertaViewModel by viewModels()
+    private val viewModel: CrudOfertaViewModel by viewModels()
     private lateinit var launcher: ActivityResultLauncher<String>
     private lateinit var recyclerView: RecyclerView
     private lateinit var listaImagemAdapter: ListaImagemAdapter
@@ -70,7 +68,7 @@ class CrudOfertaFragment : Fragment() {
 
         lifecycleScope.launch {
             repeatOnLifecycle(Lifecycle.State.STARTED) {
-                crudViewModel.ofertaStateView.collect { stateViewResult ->
+                viewModel.ofertaStateView.collect { stateViewResult ->
 
                     when (stateViewResult) {
                         is StateViewResult.Loading -> {
@@ -142,31 +140,6 @@ class CrudOfertaFragment : Fragment() {
             abrirSelecaoImagem()
         }
 
-        var checkedItem = 0
-        binding.editTextEstabelecimento.setOnClickListener {
-
-            val singleItems = arrayOf("Muffato", "Amigão", "Bandeirantes")
-            var selecteditem = singleItems.first()
-
-
-            MaterialAlertDialogBuilder(requireContext())
-                .setTitle(getString(R.string.estabelecimentos))
-                .setNeutralButton(getString(R.string.cancelar)) { dialog, _ ->
-                    dialog.dismiss()
-                }
-                .setPositiveButton(getString(R.string.selecionar)) { dialog, _ ->
-                    binding.editTextEstabelecimento.setText(selecteditem)
-                    binding.crudEstabelecimento.error = ""
-                    dialog.dismiss()
-                }
-                .setSingleChoiceItems(singleItems, checkedItem) { _, which ->
-                    selecteditem = singleItems[which]
-                    checkedItem = which
-                    Log.d("CrudFragment", "$which")
-                }
-                .show()
-        }
-
         binding.editTextPrecoAntigo.addTextChangedListener(object : TextWatcher {
             override fun beforeTextChanged(s: CharSequence?, start: Int, count: Int, after: Int) {}
 
@@ -208,6 +181,26 @@ class CrudOfertaFragment : Fragment() {
             }
         }
 
+        binding.editTextEstabelecimento.doAfterTextChanged {
+            it?.toString()?.also { texto ->
+                binding.crudEstabelecimento.error = if (texto.length < 3) {
+                    getString(R.string.min_3_caracteres)
+                } else {
+                    null
+                }
+            }
+        }
+
+        binding.editTextEnderecoEstabelecimento.doAfterTextChanged {
+            it?.toString()?.also { texto ->
+                binding.crudEnderecoEstabelecimento.error = if (texto.length < 10) {
+                    getString(R.string.min_10_caracteres)
+                } else {
+                    null
+                }
+            }
+        }
+
         binding.editTextInfoAdicionais.doAfterTextChanged {
 
             it?.toString()?.also { texto ->
@@ -233,6 +226,10 @@ class CrudOfertaFragment : Fragment() {
             binding.crudEstabelecimento.error = getString(R.string.selecione_estabelecimento)
         }
 
+        if (binding.editTextEnderecoEstabelecimento.text.isNullOrEmpty()) {
+            binding.crudEnderecoEstabelecimento.error = getString(R.string.endereco_estabelecimento)
+        }
+
         if (binding.editTextPrecoNovo.text.isNullOrEmpty()) {
             binding.crudPrecoNovo.error = getString(R.string.digite_preco_atual)
         }
@@ -252,6 +249,7 @@ class CrudOfertaFragment : Fragment() {
                 binding.editTextTitulo.text?.isNotEmpty() == true &&
                 binding.editTextTitulo.length() > 3 &&
                 binding.editTextEstabelecimento.text?.isNotEmpty() == true &&
+                binding.editTextEnderecoEstabelecimento.text?.isNotEmpty() == true &&
                 binding.editTextPrecoNovo.text?.isNotEmpty() == true &&
                 binding.editTextInfoAdicionais.text?.isNotEmpty() == true &&
                 binding.editTextInfoAdicionais.length() > 3
@@ -273,13 +271,15 @@ class CrudOfertaFragment : Fragment() {
             listaUrlImagem = listaImagens,
             titulo = binding.editTextTitulo.text.toString(),
             nomeLoja = binding.editTextEstabelecimento.text.toString(),
+            endereco = binding.editTextEnderecoEstabelecimento.text.toString(),
             valorAntigo = formatarPrecoParaSalvar(binding.editTextPrecoAntigo.text?.toString()),
             valorNovo = formatarPrecoParaSalvar(binding.editTextPrecoNovo.text?.toString()),
             dataInclusao = DateUtil.getCurrentTime(),
-            descricao = binding.editTextInfoAdicionais.text.toString()
+            descricao = binding.editTextInfoAdicionais.text.toString(),
+            userUid = viewModel.userUid
         )
 
-        crudViewModel.adicionaOferta(oferta)
+        viewModel.adicionaOferta(oferta)
     }
 
     private fun formatarPrecoParaSalvar(preco: String?): Double? {

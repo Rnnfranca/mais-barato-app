@@ -14,12 +14,15 @@
     <string name="botao_favorito">botão favorito</string>
     <string name="botao_comentario">botão comentário</string>
     <string name="estabelecimentos">Establecimientos</string>
+    <string name="estabelecimento">Establecimiento</string>
     <string name="cancelar">Cancelar</string>
     <string name="selecionar">Seleccione</string>
     <string name="min_10_caracteres">Mínimo 10 caracteres</string>
+    <string name="min_3_caracteres">Mínimo 3 caracteres</string>
     <string name="digite_titulo">Introduce un título</string>
-    <string name="selecione_estabelecimento">Seleccione un establecimiento</string>
-    <string name="digite_preco_atual">Enter current price</string>
+    <string name="selecione_estabelecimento">Introduce el nombre del establecimiento</string>
+    <string name="endereco_estabelecimento">Ingrese dirección o sitio web</string>
+    <string name="digite_preco_atual">Introduce valor atual</string>
     <string name="digite_detalhes">Ingrese los detalles de la promoción</string>
     <string name="preencha_email">Rellene el correo electrónico</string>
     <string name="preencha_senha">completa la contraseña</string>
@@ -30,7 +33,7 @@
     <string name="trocar_imagens">Intercambiar imágenes</string>
     <string name="adicione_no_minimo_uma_imagem">Añadir al menos una imagen</string>
     <string name="titulo">Título</string>
-    <string name="estabelecimento">Establecimiento</string>
+    <string name="nome_estabelecimento">Nombre del establecimiento</string>
     <string name="preco_antigo">Precio anterior</string>
     <string name="preco_novo">Nuevo precio</string>
     <string name="informacoes_adicionais">Informaciones adicionales</string>
@@ -52,4 +55,8 @@
     <string name="adicionar_aos_favoritos">Agregar a los favoritos</string>
     <string name="remover_dos_favoritos">Quitar de favoritos</string>
     <string name="falha_carregar_favoritos">No se pudieron cargar los favoritos</string>
+    <string name="endereco_ou_site_do_estabelecimento">Dirección o sitio web</string>
+    <string name="detalhes">Detalles</string>
+    <string name="enviado_por">Enviado por</string>
+    <string name="comentarios">Comentarios</string>
 </resources>

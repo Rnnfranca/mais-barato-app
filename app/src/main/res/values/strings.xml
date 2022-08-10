@@ -14,11 +14,14 @@
     <string name="botao_favorito">botão favorito</string>
     <string name="botao_comentario">botão comentário</string>
     <string name="estabelecimentos">Estabelecimentos</string>
+    <string name="estabelecimento">Estabelecimento</string>
     <string name="cancelar">Cancelar</string>
     <string name="selecionar">Selecionar</string>
     <string name="min_10_caracteres">Mínimo 10 caracteres</string>
+    <string name="min_3_caracteres">Mínimo 3 caracteres</string>
     <string name="digite_titulo">Digite um título</string>
-    <string name="selecione_estabelecimento">Selecione um estabelecimento</string>
+    <string name="selecione_estabelecimento">Digite o nome do estabelecimento</string>
+    <string name="endereco_estabelecimento">Digite o endereço ou site</string>
     <string name="digite_preco_atual">Digite o preço atual</string>
     <string name="digite_detalhes">Digite os detalhes da oferta</string>
     <string name="preencha_email">Preencha o e-mail</string>
@@ -30,7 +33,7 @@
     <string name="trocar_imagens">Trocar imagens</string>
     <string name="adicione_no_minimo_uma_imagem">Adicione no mínimo uma imagem</string>
     <string name="titulo">Título</string>
-    <string name="estabelecimento">Estabelecimento</string>
+    <string name="nome_estabelecimento">Nome do estabelecimento</string>
     <string name="preco_antigo">Preço antigo</string>
     <string name="preco_novo">Preço novo</string>
     <string name="informacoes_adicionais">Informações adicionais</string>
@@ -54,4 +57,8 @@
     <string name="adicionar_aos_favoritos">Adicionar aos favoritos</string>
     <string name="remover_dos_favoritos">Remover dos favoritos</string>
     <string name="falha_carregar_favoritos">Falha ao carregar favoritos</string>
+    <string name="endereco_ou_site_do_estabelecimento">Endereço, local ou site</string>
+    <string name="detalhes">Detalhes</string>
+    <string name="enviado_por">Enviado por</string>
+    <string name="comentarios">Comentários</string>
 </resources>

@@ -42,17 +42,6 @@
                 app:layout_constraintStart_toStartOf="parent"
                 tools:text="31/12/2021" />
 
-            <ImageView
-                android:id="@+id/imagem_estabelecimento"
-                android:layout_width="50dp"
-                android:layout_height="50dp"
-                android:layout_marginStart="12dp"
-                android:layout_marginTop="18dp"
-                app:layout_constraintStart_toStartOf="parent"
-                app:layout_constraintTop_toBottomOf="@id/data_inclusao"
-                tools:src="@tools:sample/backgrounds/scenic"
-                tools:srcCompat="@tools:sample/avatars" />
-
             <TextView
                 android:id="@+id/titulo_promocao"
                 android:layout_width="0dp"
@@ -62,8 +51,7 @@
                 android:textSize="18sp"
                 android:textStyle="bold"
                 app:layout_constraintEnd_toStartOf="@+id/preco_novo"
-                app:layout_constraintStart_toEndOf="@id/imagem_estabelecimento"
-
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/data_inclusao"
                 tools:text="Titulo da promocao" />
 
@@ -75,7 +63,7 @@
                 android:layout_marginTop="8dp"
                 android:textSize="12sp"
                 app:layout_constraintEnd_toStartOf="@+id/preco_novo"
-                app:layout_constraintStart_toEndOf="@id/imagem_estabelecimento"
+                app:layout_constraintStart_toStartOf="parent"
                 app:layout_constraintTop_toBottomOf="@id/titulo_promocao"
                 tools:text="Nome da loja" />
 
@@ -87,7 +75,6 @@
                 android:layout_marginTop="15dp"
                 android:textSize="14sp"
                 app:layout_constraintTop_toBottomOf="@id/data_inclusao"
-
                 app:layout_constraintEnd_toEndOf="parent"
                 tools:text="R$ 199,99" />
 
@@ -128,127 +115,31 @@
                 android:layout_height="wrap_content"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="12dp"
-                android:text="Estabelecimento"
+                android:text="@string/estabelecimento"
                 android:textStyle="bold"
                 android:textSize="14sp"
                 app:layout_constraintTop_toBottomOf="@id/divisao_estabelecimento"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/label_endereco"
+                android:id="@+id/label_estabelecimento_subtitulo"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="Endereço"
+                android:text="@string/endereco_ou_site_do_estabelecimento"
                 android:textSize="12sp"
-                android:layout_marginTop="10dp"
                 app:layout_constraintTop_toBottomOf="@id/label_estabelecimento"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/label_logradouro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                tools:text="Rua: Exemplo"
-                app:layout_constraintTop_toBottomOf="@id/label_endereco"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/virgula_logradouro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=","
-                app:layout_constraintStart_toEndOf="@id/label_logradouro"
-                app:layout_constraintTop_toTopOf="@id/label_logradouro"
-                app:layout_constraintBottom_toBottomOf="@id/label_logradouro" />
-
-            <TextView
-                android:id="@+id/numero_logradouro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                tools:text="123"
-                app:layout_constraintStart_toEndOf="@id/label_logradouro"
-                app:layout_constraintTop_toTopOf="@id/label_logradouro"
-                app:layout_constraintBottom_toBottomOf="@id/label_logradouro" />
-
-            <TextView
-                android:id="@+id/label_bairro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                tools:text="Bairro:"
-                app:layout_constraintTop_toBottomOf="@id/label_logradouro"
-                app:layout_constraintEnd_toStartOf="@id/label_descricao_bairro"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/label_descricao_bairro"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                app:layout_constraintStart_toEndOf="@id/label_bairro"
-                app:layout_constraintTop_toTopOf="@id/label_bairro"
-                tools:text="Algum Bairro" />
-
-            <TextView
-                android:id="@+id/traco_separador_cidade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                android:text="-"
-                app:layout_constraintStart_toEndOf="@id/label_descricao_bairro"
-                app:layout_constraintTop_toTopOf="@id/label_descricao_bairro"
-                app:layout_constraintBottom_toBottomOf="@id/label_descricao_bairro" />
-
-            <TextView
-                android:id="@+id/cidade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                tools:text="Birigui"
-                app:layout_constraintStart_toEndOf="@id/traco_separador_cidade"
-                app:layout_constraintTop_toTopOf="@id/traco_separador_cidade"
-                app:layout_constraintBottom_toBottomOf="@id/traco_separador_cidade" />
-
-            <TextView
-                android:id="@+id/virgula_cidade"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:text=","
-                app:layout_constraintStart_toEndOf="@id/cidade"
-                app:layout_constraintTop_toTopOf="@id/cidade"
-                app:layout_constraintBottom_toBottomOf="@id/cidade" />
-
-            <TextView
-                android:id="@+id/estado"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="5dp"
-                tools:text="SP"
-                app:layout_constraintStart_toEndOf="@id/virgula_cidade"
-                app:layout_constraintTop_toTopOf="@id/virgula_cidade"
-                app:layout_constraintBottom_toBottomOf="@id/virgula_cidade" />
-
-            <TextView
-                android:id="@+id/label_contatos"
+                android:id="@+id/endereco"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
-                android:text="Contatos"
+                tools:text="Endereço"
                 android:textSize="12sp"
                 android:layout_marginTop="10dp"
-                app:layout_constraintTop_toBottomOf="@id/label_bairro"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
-                android:id="@+id/contato"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content"
-                android:layout_marginStart="12dp"
-                tools:text="wwww.exemplo.com.br"
-                app:layout_constraintTop_toBottomOf="@id/label_contatos"
+                app:layout_constraintTop_toBottomOf="@id/label_estabelecimento_subtitulo"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <View
@@ -257,13 +148,13 @@
                 android:layout_height="1dp"
                 android:background="@color/cinza"
                 android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/contato" />
+                app:layout_constraintTop_toBottomOf="@id/endereco" />
 
             <TextView
                 android:id="@+id/label_detalhes"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Detalhes"
+                android:text="@string/detalhes"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="12dp"
@@ -272,23 +163,12 @@
                 app:layout_constraintStart_toStartOf="parent" />
 
             <TextView
-                android:id="@+id/label_data"
-                android:layout_width="match_parent"
-                android:layout_height="wrap_content"
-                android:textSize="12sp"
-                android:layout_marginTop="10dp"
-                android:layout_marginStart="12dp"
-                tools:text="01/01/2021"
-                app:layout_constraintTop_toBottomOf="@id/label_detalhes"
-                app:layout_constraintStart_toStartOf="parent" />
-
-            <TextView
                 android:id="@+id/descricao_oferta"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
                 android:layout_marginStart="12dp"
                 tools:text="Alguma descrição importante"
-                app:layout_constraintTop_toBottomOf="@id/label_data"
+                app:layout_constraintTop_toBottomOf="@id/label_detalhes"
                 app:layout_constraintStart_toStartOf="parent" />
 
             <View
@@ -303,7 +183,7 @@
                 android:id="@+id/label_enviado_por"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Enviado por"
+                android:text="@string/enviado_por"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="12dp"
@@ -311,25 +191,35 @@
                 app:layout_constraintTop_toBottomOf="@id/divisao_usuario"
                 app:layout_constraintStart_toStartOf="parent" />
 
-            <ImageView
-                android:id="@+id/foto_usuario"
+            <androidx.cardview.widget.CardView
+                android:id="@+id/cv_foto_usuario"
                 android:layout_width="50dp"
                 android:layout_height="50dp"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="12dp"
-                tools:src="@tools:sample/backgrounds/scenic"
+                app:cardCornerRadius="50dp"
                 app:layout_constraintTop_toBottomOf="@id/label_enviado_por"
-                app:layout_constraintStart_toStartOf="parent" />
+                app:layout_constraintStart_toStartOf="parent">
+
+                <ImageView
+                    android:id="@+id/foto_usuario"
+                    android:layout_width="match_parent"
+                    android:layout_height="match_parent"
+                    android:importantForAccessibility="no"
+                    tools:src="@tools:sample/backgrounds/scenic" />
+
+            </androidx.cardview.widget.CardView>
+
 
             <TextView
                 android:id="@+id/nome_usuario"
                 android:layout_width="wrap_content"
                 android:layout_height="wrap_content"
-                android:text="Nome do usuário"
+                tools:text="Nome do usuário"
                 android:layout_marginStart="10dp"
-                app:layout_constraintStart_toEndOf="@id/foto_usuario"
-                app:layout_constraintTop_toTopOf="@id/foto_usuario"
-                app:layout_constraintBottom_toBottomOf="@id/foto_usuario" />
+                app:layout_constraintStart_toEndOf="@id/cv_foto_usuario"
+                app:layout_constraintTop_toTopOf="@id/cv_foto_usuario"
+                app:layout_constraintBottom_toBottomOf="@id/cv_foto_usuario" />
 
             <View
                 android:id="@+id/divisao_comentarios"
@@ -337,13 +227,13 @@
                 android:layout_height="1dp"
                 android:background="@color/cinza"
                 android:layout_marginTop="20dp"
-                app:layout_constraintTop_toBottomOf="@id/foto_usuario" />
+                app:layout_constraintTop_toBottomOf="@id/cv_foto_usuario" />
 
             <TextView
                 android:id="@+id/label_comentario"
                 android:layout_width="match_parent"
                 android:layout_height="wrap_content"
-                android:text="Comentários"
+                android:text="@string/comentarios"
                 android:textStyle="bold"
                 android:layout_marginTop="10dp"
                 android:layout_marginStart="12dp"
