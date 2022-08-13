@@ -8,6 +8,7 @@ const val COLLECTION_OFERTA = "oferta"
 const val COLLECTION_USUARIO = "usuario"
 
 const val SUBCOLLECTION_FAVORITOS = "favoritos"
+const val SUBCOLLECTION_HISTORY = "history"
 
 const val FIELD_EMAIL = "email"
 const val FIELD_NOME = "nome"

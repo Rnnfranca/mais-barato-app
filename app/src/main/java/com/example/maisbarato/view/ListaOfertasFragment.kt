@@ -17,7 +17,6 @@ import com.example.maisbarato.view.adapter.ListaOfertaAdapter
 import com.example.maisbarato.viewmodel.ListaOfertasViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
-import kotlinx.coroutines.flow.collect
 
 @AndroidEntryPoint
 class ListaOfertasFragment : Fragment() {
@@ -95,6 +94,9 @@ class ListaOfertasFragment : Fragment() {
             false
         )
         listaOfertasAdapter = ListaOfertaAdapter(listOf()) { oferta ->
+
+            listaOfertasViewModel.addOfferToHistory(oferta)
+
             val action =
                 ListaOfertasFragmentDirections.actionListaOfertasFragmentToDetalhesOfertaFragment(
                     oferta

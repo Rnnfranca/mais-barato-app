@@ -4,8 +4,9 @@ import androidx.lifecycle.LiveData
 import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
-import com.example.maisbarato.repository.local.OfertaRepository
 import com.example.maisbarato.model.Oferta
+import com.example.maisbarato.repository.auth.AuthenticationRepository
+import com.example.maisbarato.repository.local.OfertaRepository
 import com.example.maisbarato.util.StateViewResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -25,6 +26,8 @@ class ListaOfertasViewModel @Inject constructor(private val ofertaRepository: Of
     private var _oferta = MutableLiveData<List<Oferta>>()
     val oferta: LiveData<List<Oferta>> get() = _oferta
 
+    private var userUid = AuthenticationRepository.currentUser?.uid ?: ""
+
     fun lerTodasOfertas(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         _stateView.value = StateViewResult.Loading
         viewModelScope.launch(dispatcher) {
@@ -36,6 +39,12 @@ class ListaOfertasViewModel @Inject constructor(private val ofertaRepository: Of
             } else {
                 _stateView.value = StateViewResult.Error("Falha ao carregar lista de ofertas")
             }
+        }
+    }
+
+    fun addOfferToHistory(offer: Oferta, dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+        viewModelScope.launch(dispatcher) {
+            ofertaRepository.addOfferToHistory(userUid, offer)
         }
     }
 
