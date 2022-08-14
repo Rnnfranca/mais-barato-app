@@ -7,6 +7,7 @@ import androidx.lifecycle.viewModelScope
 import com.example.maisbarato.model.Oferta
 import com.example.maisbarato.repository.auth.AuthenticationRepository
 import com.example.maisbarato.repository.local.OfertaRepository
+import com.example.maisbarato.util.DateUtil
 import com.example.maisbarato.util.StateViewResult
 import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
@@ -44,6 +45,7 @@ class ListaOfertasViewModel @Inject constructor(private val ofertaRepository: Of
 
     fun addOfferToHistory(offer: Oferta, dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         viewModelScope.launch(dispatcher) {
+            offer.dataAcesso = DateUtil.getCurrentTime()
             ofertaRepository.addOfferToHistory(userUid, offer)
         }
     }

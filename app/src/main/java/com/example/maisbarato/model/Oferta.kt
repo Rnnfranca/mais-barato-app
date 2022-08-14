@@ -14,6 +14,7 @@ data class Oferta (
     var titulo: String = "",
     var listaUrlImagem: List<String> = listOf(),
     var dataInclusao: Long = 0,
+    var dataAcesso: Long? = null,
     var fotoLoja: String = "",
     var nomeLoja: String = "",
     var endereco: String = "",

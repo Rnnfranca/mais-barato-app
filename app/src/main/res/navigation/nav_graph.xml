@@ -78,6 +78,10 @@
     <fragment
         android:id="@+id/historyFragment"
         android:name="com.example.maisbarato.view.HistoryFragment"
-        android:label="fragment_history"
-        tools:layout="@layout/fragment_history" />
+        android:label="Histórico"
+        tools:layout="@layout/fragment_history" >
+        <action
+            android:id="@+id/action_historyFragment_to_detalhesOfertaFragment"
+            app:destination="@id/detalhesOfertaFragment" />
+    </fragment>
 </navigation>

@@ -39,5 +39,6 @@ val telasSemMenuDrawer = setOf(
     R.id.loginFragment,
     R.id.cadastroFragment,
     R.id.detalhesOfertaFragment,
-    R.id.userProfileFragment
+    R.id.userProfileFragment,
+    R.id.historyFragment
 )

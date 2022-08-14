@@ -1,0 +1,129 @@
+<?xml version="1.0" encoding="utf-8"?>
+<com.google.android.material.card.MaterialCardView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="wrap_content"
+    android:layout_marginBottom="20dp"
+    xmlns:tools="http://schemas.android.com/tools"
+    xmlns:app="http://schemas.android.com/apk/res-auto">
+
+    <androidx.constraintlayout.widget.ConstraintLayout
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:paddingBottom="18dp">
+
+        <ImageView
+            android:id="@+id/imagem_estabelecimento"
+            android:layout_width="50dp"
+            android:layout_height="50dp"
+            android:layout_marginStart="12dp"
+            android:layout_marginTop="18dp"
+            android:importantForAccessibility="no"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toTopOf="parent"
+            tools:src="@tools:sample/backgrounds/scenic"
+            tools:srcCompat="@tools:sample/avatars" />
+
+        <TextView
+            android:id="@+id/titulo_promocao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="18dp"
+            android:layout_marginStart="12dp"
+            android:textSize="18sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toTopOf="parent"
+            app:layout_constraintStart_toEndOf="@id/imagem_estabelecimento"
+            tools:text="Titulo da promocao"/>
+
+        <TextView
+            android:id="@+id/nome_loja"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="8dp"
+            android:layout_marginStart="12dp"
+            android:textSize="12sp"
+            app:layout_constraintTop_toBottomOf="@id/titulo_promocao"
+            app:layout_constraintStart_toEndOf="@id/imagem_estabelecimento"
+            tools:text="Nome da loja"/>
+
+        <TextView
+            android:id="@+id/data_inclusao"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="12dp"
+            android:textSize="12sp"
+            app:layout_constraintTop_toTopOf="@id/nome_loja"
+            app:layout_constraintBottom_toBottomOf="@id/nome_loja"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="31/12/2021"/>
+
+        <ImageView
+            android:id="@+id/imagem_oferta"
+            android:layout_width="match_parent"
+            android:layout_height="200dp"
+            android:layout_marginTop="18dp"
+            android:scaleType="centerCrop"
+            android:importantForAccessibility="no"
+            app:layout_constraintStart_toStartOf="parent"
+            app:layout_constraintTop_toBottomOf="@id/imagem_estabelecimento"
+            tools:srcCompat="@tools:sample/backgrounds/scenic" />
+
+        <TextView
+            android:id="@+id/preco_antigo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:layout_marginTop="18dp"
+            android:textSize="14sp"
+            app:layout_constraintTop_toBottomOf="@id/imagem_oferta"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="R$ 199,99"/>
+
+        <TextView
+            android:id="@+id/preco_novo"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="18dp"
+            android:textSize="20sp"
+            android:textStyle="bold"
+            app:layout_constraintTop_toBottomOf="@id/preco_antigo"
+            app:layout_constraintEnd_toEndOf="parent"
+            tools:text="R$ 99,99"/>
+
+        <ImageView
+            android:id="@+id/icone_comentario"
+            android:layout_width="30dp"
+            android:layout_height="30dp"
+            android:layout_marginTop="25dp"
+            android:layout_marginStart="12dp"
+            android:contentDescription="@string/botao_comentario"
+            android:src="@drawable/comments_color"
+            app:layout_constraintTop_toBottomOf="@id/imagem_oferta"
+            app:layout_constraintStart_toStartOf="parent"/>
+
+        <TextView
+            android:id="@+id/numero_comentario"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:textSize="22sp"
+            android:layout_marginStart="8dp"
+            tools:text="2"
+            app:layout_constraintTop_toTopOf="@id/icone_comentario"
+            app:layout_constraintBottom_toBottomOf="@id/icone_comentario"
+            app:layout_constraintStart_toEndOf="@id/icone_comentario"/>
+
+        <com.google.android.material.button.MaterialButton
+            android:id="@+id/btn_excluir"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginEnd="17dp"
+            android:layout_marginTop="5dp"
+            android:text="Excluir"
+            style="@style/Widget.MaterialComponents.Button.TextButton"
+            app:layout_constraintTop_toBottomOf="@id/preco_novo"
+            app:layout_constraintEnd_toEndOf="parent" />
+
+    </androidx.constraintlayout.widget.ConstraintLayout>
+
+
+</com.google.android.material.card.MaterialCardView>
