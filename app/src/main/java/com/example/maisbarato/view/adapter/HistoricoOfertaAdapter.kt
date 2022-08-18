@@ -6,18 +6,21 @@ import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
 import com.example.maisbarato.databinding.OfertaHistoricoItemBinding
-import com.example.maisbarato.databinding.OfertaItemBinding
 import com.example.maisbarato.model.Oferta
 import java.text.SimpleDateFormat
 import java.util.*
 
-class HistoricoOfertaAdapter(private var listaOferta: List<Oferta>, val clickListener: (Oferta) -> Unit) :
+class HistoricoOfertaAdapter(
+    private var listaOferta: List<Oferta>,
+    val clickListenerCard: (Oferta) -> Unit,
+    val clickListenerDelete: (Oferta) -> Unit
+) :
     RecyclerView.Adapter<HistoricoOfertaAdapter.OfertaHistoricoViewHolder>() {
 
     inner class OfertaHistoricoViewHolder(private val binding: OfertaHistoricoItemBinding) :
         RecyclerView.ViewHolder(binding.root) {
 
-        fun bind(oferta: Oferta, clickListener: (Oferta) -> Unit) {
+        fun bind(oferta: Oferta, clickListener: (Oferta) -> Unit, clickListenerDelete: (Oferta) -> Unit) {
 
             oferta.apply {
 
@@ -38,6 +41,7 @@ class HistoricoOfertaAdapter(private var listaOferta: List<Oferta>, val clickLis
                 binding.precoNovo.text = valorNovo.toString()
 
                 binding.root.setOnClickListener { clickListener(oferta) }
+                binding.btnExcluir.setOnClickListener { clickListenerDelete(oferta) }
             }
         }
     }
@@ -54,7 +58,7 @@ class HistoricoOfertaAdapter(private var listaOferta: List<Oferta>, val clickLis
     }
 
     override fun onBindViewHolder(holder: OfertaHistoricoViewHolder, position: Int) {
-        holder.bind(listaOferta[position], clickListener)
+        holder.bind(listaOferta[position], clickListenerCard, clickListenerDelete)
     }
 
     override fun getItemCount(): Int = listaOferta.size

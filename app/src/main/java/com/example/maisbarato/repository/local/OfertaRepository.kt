@@ -43,15 +43,47 @@ class OfertaRepository @Inject constructor(val ofertaDAO: OfertaDAO) {
     }
 
     suspend fun addOfferToHistory(userUid: String, offer: Oferta) {
+        validateInsertHistory(userUid, offer)
+    }
+
+    private suspend fun validateInsertHistory(userUid: String, offer: Oferta) {
         try {
-            usuarioCollectionRef.document(userUid)
-                .collection(SUBCOLLECTION_HISTORY)
-                .document(offer.id)
-                .set(offer)
-                .await()
+            val offerHistory = getOfferHistory(userUid)
+
+            if (offerHistory.size < 10) {
+                insertHistory(userUid, offer)
+            } else {
+
+                val lastOfferHistory = offerHistory.maxByOrNull {
+                    it.dataAcesso ?: 0L
+                }
+
+                lastOfferHistory?.also {
+                    deleteOfferFromHistory(userUid, it)
+                }
+
+                insertHistory(userUid, offer)
+            }
+
         } catch (e: Exception) {
             Log.e(TAG, e.message.toString())
         }
+    }
+
+    private suspend fun insertHistory(userUid: String, offer: Oferta) {
+        usuarioCollectionRef.document(userUid)
+            .collection(SUBCOLLECTION_HISTORY)
+            .document(offer.id)
+            .set(offer)
+            .await()
+    }
+
+    suspend fun deleteOfferFromHistory(userUid: String, offer: Oferta) {
+        usuarioCollectionRef.document(userUid)
+            .collection(SUBCOLLECTION_HISTORY)
+            .document(offer.id)
+            .delete()
+            .await()
     }
 
 }

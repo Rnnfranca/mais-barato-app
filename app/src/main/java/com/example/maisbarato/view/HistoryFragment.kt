@@ -15,7 +15,6 @@ import androidx.recyclerview.widget.RecyclerView
 import com.example.maisbarato.databinding.FragmentHistoryBinding
 import com.example.maisbarato.util.StateViewResult
 import com.example.maisbarato.view.adapter.HistoricoOfertaAdapter
-import com.example.maisbarato.view.adapter.ListaOfertaAdapter
 import com.example.maisbarato.viewmodel.HistoryViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
@@ -53,13 +52,19 @@ class HistoryFragment : Fragment() {
             LinearLayoutManager.VERTICAL,
             false
         )
-        listaOfertasAdapter = HistoricoOfertaAdapter(listOf()) { oferta ->
+        listaOfertasAdapter = HistoricoOfertaAdapter(listOf(),
+            { offer ->
 
             val action = HistoryFragmentDirections.actionHistoryFragmentToDetalhesOfertaFragment(
-                oferta
+                offer
             )
             findNavController().navigate(action)
-        }
+            },
+            { offer ->
+                viewModel.deleteOfferFromHistory(offer)
+                viewModel.getOfferHistory()
+            }
+        )
         recyclerView.adapter = listaOfertasAdapter
 
     }

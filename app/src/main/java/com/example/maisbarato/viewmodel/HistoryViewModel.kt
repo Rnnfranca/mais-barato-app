@@ -36,6 +36,20 @@ class HistoryViewModel @Inject constructor(private val ofertaRepository: OfertaR
                 _oferta.value = offerHistory.sortedByDescending { it.dataAcesso }
                 _stateView.value = StateViewResult.Success()
             } else {
+                _oferta.value = emptyList()
+                _stateView.value = StateViewResult.Error()
+            }
+        }
+    }
+
+    fun deleteOfferFromHistory(offer: Oferta, dispatcher: CoroutineDispatcher = Dispatchers.IO) {
+        _stateView.value = StateViewResult.Loading
+
+        viewModelScope.launch(dispatcher) {
+            try {
+                ofertaRepository.deleteOfferFromHistory(userUid, offer)
+                _stateView.value = StateViewResult.Success()
+            } catch (e: Exception) {
                 _stateView.value = StateViewResult.Error()
             }
         }
