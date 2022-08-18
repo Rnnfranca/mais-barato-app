@@ -22,6 +22,6 @@
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         app:layout_constraintTop_toTopOf="parent"
-        tools:listitem="@layout/oferta_item"/>
+        tools:listitem="@layout/oferta_historico_item"/>
 
 </androidx.constraintlayout.widget.ConstraintLayout>

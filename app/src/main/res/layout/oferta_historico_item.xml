@@ -112,13 +112,24 @@
             app:layout_constraintBottom_toBottomOf="@id/icone_comentario"
             app:layout_constraintStart_toEndOf="@id/icone_comentario"/>
 
+        <TextView
+            android:id="@+id/data_acesso"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_marginStart="12dp"
+            android:text="@string/acessado_em"
+            tools:text="Acessado em: \n 18/08/2022"
+            app:layout_constraintTop_toTopOf="@id/btn_excluir"
+            app:layout_constraintBottom_toBottomOf="@id/btn_excluir"
+            app:layout_constraintStart_toStartOf="parent"/>
+
         <com.google.android.material.button.MaterialButton
             android:id="@+id/btn_excluir"
             android:layout_width="wrap_content"
             android:layout_height="wrap_content"
             android:layout_marginEnd="17dp"
             android:layout_marginTop="5dp"
-            android:text="Excluir"
+            android:text="@string/excluir"
             style="@style/Widget.MaterialComponents.Button.TextButton"
             app:layout_constraintTop_toBottomOf="@id/preco_novo"
             app:layout_constraintEnd_toEndOf="parent" />

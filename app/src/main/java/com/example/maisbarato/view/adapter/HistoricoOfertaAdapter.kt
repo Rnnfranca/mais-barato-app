@@ -5,6 +5,7 @@ import android.view.LayoutInflater
 import android.view.ViewGroup
 import androidx.recyclerview.widget.RecyclerView
 import com.bumptech.glide.Glide
+import com.example.maisbarato.R
 import com.example.maisbarato.databinding.OfertaHistoricoItemBinding
 import com.example.maisbarato.model.Oferta
 import java.text.SimpleDateFormat
@@ -25,12 +26,15 @@ class HistoricoOfertaAdapter(
             oferta.apply {
 
                 Glide.with(binding.imagemOferta)
-                    .load(oferta.listaUrlImagem.firstOrNull())
+                    .load(listaUrlImagem.firstOrNull())
                     .into(binding.imagemOferta)
 
-                val data = Date(oferta.dataInclusao)
+                val data = Date(dataInclusao)
                 val formatDate = SimpleDateFormat("dd/MM/yyyy")
                 val dateText = formatDate.format(data)
+
+                val dataAcesso = Date(dataAcesso ?: 0)
+                val dataAcessoText = formatDate.format(dataAcesso)
 
                 binding.precoAntigo.paintFlags = binding.precoAntigo.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
 
@@ -39,6 +43,7 @@ class HistoricoOfertaAdapter(
                 binding.dataInclusao.text = dateText
                 binding.precoAntigo.text = valorAntigo?.toString()
                 binding.precoNovo.text = valorNovo.toString()
+                binding.dataAcesso.text = binding.root.resources.getString(R.string.acessado_em, dataAcessoText)
 
                 binding.root.setOnClickListener { clickListener(oferta) }
                 binding.btnExcluir.setOnClickListener { clickListenerDelete(oferta) }

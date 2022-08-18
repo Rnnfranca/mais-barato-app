@@ -59,4 +59,6 @@
     <string name="detalhes">Detalles</string>
     <string name="enviado_por">Enviado por</string>
     <string name="comentarios">Comentarios</string>
+    <string name="excluir">Retirar</string>
+    <string name="acessado_em">Accedido en: \n %1$s</string>
 </resources>

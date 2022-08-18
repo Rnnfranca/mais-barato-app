@@ -59,4 +59,6 @@
     <string name="detalhes">Details</string>
     <string name="enviado_por">Sent by</string>
     <string name="comentarios">Comments</string>
+    <string name="excluir">Delete</string>
+    <string name="acessado_em">Access date: \n %1$s</string>
 </resources>
