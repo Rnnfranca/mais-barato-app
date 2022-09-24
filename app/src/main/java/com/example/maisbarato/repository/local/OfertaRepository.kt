@@ -1,8 +1,8 @@
 package com.example.maisbarato.repository.local
 
 import android.util.Log
-import com.example.maisbarato.database.dao.OfertaDAO
 import com.example.maisbarato.model.Oferta
+import com.example.maisbarato.repository.OfferDataSource
 import com.example.maisbarato.util.COLLECTION_OFERTA
 import com.example.maisbarato.util.COLLECTION_USUARIO
 import com.example.maisbarato.util.SUBCOLLECTION_HISTORY
@@ -10,7 +10,7 @@ import com.google.firebase.firestore.FirebaseFirestore
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class OfertaRepository @Inject constructor(val ofertaDAO: OfertaDAO) {
+class OfertaRepository @Inject constructor() : OfferDataSource {
 
     private val TAG = OfertaRepository::class.java.simpleName
 
@@ -18,15 +18,20 @@ class OfertaRepository @Inject constructor(val ofertaDAO: OfertaDAO) {
     private val ofertaCollection = firestore.collection(COLLECTION_OFERTA)
     private val usuarioCollectionRef = firestore.collection(COLLECTION_USUARIO)
 
-    suspend fun lerTodasOfertas(): List<Oferta> {
+    override suspend fun getAllOffers(): RepositoryResult<List<Oferta>> {
         return try {
-            ofertaCollection.get()
+            val offerList = ofertaCollection.get()
                 .await()
                 .toObjects(Oferta::class.java)
+            RepositoryResult.Success(offerList)
         } catch (e: Exception) {
             Log.e(TAG, e.message.toString())
-            emptyList()
+            RepositoryResult.Error(e.message.toString())
         }
+    }
+
+    override suspend fun addOfferToHistory(userUid: String, offer: Oferta) {
+        validateInsertHistory(userUid, offer)
     }
 
     suspend fun getOfferHistory(userUid: String): List<Oferta> {
@@ -40,10 +45,6 @@ class OfertaRepository @Inject constructor(val ofertaDAO: OfertaDAO) {
             Log.e(TAG, e.message.toString())
             emptyList()
         }
-    }
-
-    suspend fun addOfferToHistory(userUid: String, offer: Oferta) {
-        validateInsertHistory(userUid, offer)
     }
 
     private suspend fun validateInsertHistory(userUid: String, offer: Oferta) {
@@ -85,5 +86,7 @@ class OfertaRepository @Inject constructor(val ofertaDAO: OfertaDAO) {
             .delete()
             .await()
     }
+
+
 
 }

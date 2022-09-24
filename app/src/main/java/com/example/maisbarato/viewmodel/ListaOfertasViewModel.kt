@@ -5,8 +5,9 @@ import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.maisbarato.model.Oferta
+import com.example.maisbarato.repository.OfferDataSource
 import com.example.maisbarato.repository.auth.AuthenticationRepository
-import com.example.maisbarato.repository.local.OfertaRepository
+import com.example.maisbarato.repository.local.RepositoryResult
 import com.example.maisbarato.util.DateUtil
 import com.example.maisbarato.util.StateViewResult
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -18,8 +19,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class ListaOfertasViewModel @Inject constructor(private val ofertaRepository: OfertaRepository) :
-    ViewModel() {
+class ListaOfertasViewModel @Inject constructor(
+    private val ofertaRepository: OfferDataSource,
+    authRepository: AuthenticationRepository
+) : ViewModel() {
 
     private var _stateView: MutableStateFlow<StateViewResult<Any>?> = MutableStateFlow(null)
     val stateView get() = _stateView.asStateFlow()
@@ -27,18 +30,21 @@ class ListaOfertasViewModel @Inject constructor(private val ofertaRepository: Of
     private var _oferta = MutableLiveData<List<Oferta>>()
     val oferta: LiveData<List<Oferta>> get() = _oferta
 
-    private var userUid = AuthenticationRepository.currentUser?.uid ?: ""
+    private var userUid = authRepository.currentUser?.uid ?: ""
 
     fun lerTodasOfertas(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         _stateView.value = StateViewResult.Loading
         viewModelScope.launch(dispatcher) {
-            val listOferta = ofertaRepository.lerTodasOfertas()
+            val listOferta = ofertaRepository.getAllOffers()
 
-            if (listOferta.isNotEmpty()) {
-                _oferta.postValue(listOferta)
-                _stateView.value = StateViewResult.Success()
-            } else {
-                _stateView.value = StateViewResult.Error("Falha ao carregar lista de ofertas")
+            when (listOferta) {
+                is RepositoryResult.Success -> {
+                    _oferta.postValue(listOferta.result)
+                    _stateView.value = StateViewResult.Success()
+                }
+                is RepositoryResult.Error -> {
+                    _stateView.value = StateViewResult.Error("Falha ao carregar lista de ofertas")
+                }
             }
         }
     }

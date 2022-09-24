@@ -7,20 +7,26 @@ import com.example.maisbarato.model.Oferta
 import com.example.maisbarato.repository.auth.AuthenticationRepository
 import com.example.maisbarato.repository.firebase.FirebaseRepository
 import com.example.maisbarato.util.StateViewResult
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class FavoritesViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class FavoritesViewModel @Inject constructor(
+    application: Application,
+    authRepository: AuthenticationRepository
+) : AndroidViewModel(application) {
 
     val firebaseRepository = FirebaseRepository()
 
     private val _stateView: MutableStateFlow<StateViewResult<List<Oferta>>?> = MutableStateFlow(null)
     val stateView = _stateView.asStateFlow()
 
-    val userUid = AuthenticationRepository.currentUser?.uid ?: ""
+    val userUid = authRepository.currentUser?.uid ?: ""
 
     fun getFavorites(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         viewModelScope.launch(dispatcher) {

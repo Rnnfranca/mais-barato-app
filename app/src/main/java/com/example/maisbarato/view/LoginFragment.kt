@@ -19,8 +19,10 @@ import com.example.maisbarato.databinding.FragmentLoginBinding
 import com.example.maisbarato.util.StateViewResult
 import com.example.maisbarato.viewmodel.LoginViewModel
 import com.google.android.material.dialog.MaterialAlertDialogBuilder
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class LoginFragment : Fragment() {
 
     private var _binding: FragmentLoginBinding? = null

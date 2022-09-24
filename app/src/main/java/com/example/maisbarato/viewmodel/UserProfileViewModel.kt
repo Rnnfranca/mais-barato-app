@@ -9,13 +9,19 @@ import com.example.maisbarato.repository.firebase.FirebaseRepository
 import com.example.maisbarato.repository.local.DataStoreRepository
 import com.example.maisbarato.repository.local.RepositoryResult
 import com.example.maisbarato.util.StateViewResult
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class UserProfileViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class UserProfileViewModel @Inject constructor(
+    application: Application,
+    authRepository: AuthenticationRepository
+) : AndroidViewModel(application) {
     private val dataStore = DataStoreRepository(application)
     private val firebaseRepository = FirebaseRepository()
 
@@ -28,7 +34,7 @@ class UserProfileViewModel(application: Application) : AndroidViewModel(applicat
     private val _stateView: MutableStateFlow<StateViewResult<Any>?> = MutableStateFlow(null)
     val stateView = _stateView.asStateFlow()
 
-    var userUid: String = AuthenticationRepository.currentUser?.uid ?: ""
+    var userUid: String = authRepository.currentUser?.uid ?: ""
 
     fun setImageUri(url: String) {
         _imageUserURL.value = url

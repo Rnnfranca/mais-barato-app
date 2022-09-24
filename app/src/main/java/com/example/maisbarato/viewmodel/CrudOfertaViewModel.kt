@@ -17,15 +17,17 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class CrudOfertaViewModel @Inject constructor(application: Application) :
-    AndroidViewModel(application) {
+class CrudOfertaViewModel @Inject constructor(
+    application: Application,
+    authRepository: AuthenticationRepository
+) : AndroidViewModel(application) {
 
     val firebaseRepository = FirebaseRepository()
 
     private val _ofertaStateView = MutableStateFlow<StateViewResult<String>>(StateViewResult.Initial)
     val ofertaStateView = _ofertaStateView.asStateFlow()
 
-    val userUid = AuthenticationRepository.currentUser?.uid ?: ""
+    val userUid = authRepository.currentUser?.uid ?: ""
 
     fun adicionaOferta(oferta: Oferta, dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         _ofertaStateView.value = StateViewResult.Loading

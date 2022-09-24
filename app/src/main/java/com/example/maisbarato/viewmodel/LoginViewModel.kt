@@ -10,13 +10,19 @@ import com.example.maisbarato.repository.auth.AuthenticationRepository
 import com.example.maisbarato.repository.local.DataStoreRepository
 import com.example.maisbarato.repository.local.RepositoryResult
 import com.example.maisbarato.util.StateViewResult
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class LoginViewModel(application: Application) : AndroidViewModel(application), LifecycleObserver {
+@HiltViewModel
+class LoginViewModel @Inject constructor(
+    application: Application,
+    private val authRepository: AuthenticationRepository
+) : AndroidViewModel(application), LifecycleObserver {
 
     private val TAG = LoginViewModel::class.java.name
 
@@ -34,7 +40,7 @@ class LoginViewModel(application: Application) : AndroidViewModel(application), 
     fun login(email: String, senha: String) {
         _stateView.value = StateViewResult.Loading
         viewModelScope.launch {
-            AuthenticationRepository.login(email, senha)
+            authRepository.login(email, senha)
                 .addOnCompleteListener { task ->
                     if (task.isSuccessful) {
 

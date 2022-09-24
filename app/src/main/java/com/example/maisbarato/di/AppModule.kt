@@ -3,6 +3,9 @@ package com.example.maisbarato.di
 import android.content.Context
 import androidx.room.Room
 import com.example.maisbarato.database.MaisBaratoDatabase
+import com.example.maisbarato.repository.OfferDataSource
+import com.example.maisbarato.repository.auth.AuthenticationRepository
+import com.example.maisbarato.repository.local.OfertaRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn
@@ -22,4 +25,10 @@ object AppModule {
     @Singleton
     @Provides
     fun provideOfertaDAO(db: MaisBaratoDatabase) = db.ofertaDAO()
+
+    @Provides
+    fun provideAuthRepository() = AuthenticationRepository()
+
+    @Provides
+    fun provideOfferRepository(ofertaRepository: OfertaRepository) : OfferDataSource = ofertaRepository
 }

@@ -15,7 +15,10 @@ import kotlinx.coroutines.launch
 import javax.inject.Inject
 
 @HiltViewModel
-class HistoryViewModel @Inject constructor(private val ofertaRepository: OfertaRepository) : ViewModel() {
+class HistoryViewModel @Inject constructor(
+    private val ofertaRepository: OfertaRepository,
+    authRepository: AuthenticationRepository
+) : ViewModel() {
 
     private var _stateView: MutableStateFlow<StateViewResult<Any>?> = MutableStateFlow(null)
     val stateView get() = _stateView.asStateFlow()
@@ -23,7 +26,7 @@ class HistoryViewModel @Inject constructor(private val ofertaRepository: OfertaR
     private var _oferta: MutableStateFlow<List<Oferta>> = MutableStateFlow(listOf())
     val oferta get() = _oferta.asStateFlow()
 
-    private var userUid = AuthenticationRepository.currentUser?.uid ?: ""
+    private var userUid = authRepository.currentUser?.uid ?: ""
 
     fun getOfferHistory(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         _stateView.value = StateViewResult.Loading

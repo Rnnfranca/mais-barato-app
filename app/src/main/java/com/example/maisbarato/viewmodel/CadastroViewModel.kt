@@ -13,13 +13,19 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.firestore.ktx.firestore
 import com.google.firebase.ktx.Firebase
+import dagger.hilt.android.lifecycle.HiltViewModel
 import kotlinx.coroutines.CoroutineDispatcher
 import kotlinx.coroutines.Dispatchers
 import kotlinx.coroutines.flow.MutableStateFlow
 import kotlinx.coroutines.flow.asStateFlow
 import kotlinx.coroutines.launch
+import javax.inject.Inject
 
-class CadastroViewModel(application: Application) : AndroidViewModel(application) {
+@HiltViewModel
+class CadastroViewModel @Inject constructor(
+    application: Application,
+    private val authRepository: AuthenticationRepository
+) : AndroidViewModel(application) {
 
     private val TAG = CadastroViewModel::class.java.name
 
@@ -37,7 +43,7 @@ class CadastroViewModel(application: Application) : AndroidViewModel(application
         _stateView.value = StateViewResult.Loading
 
         viewModelScope.launch(dispatcher) {
-            AuthenticationRepository.createUser(email, senha)
+            authRepository.createUser(email, senha)
                 .addOnCompleteListener { task ->
 
                 if (task.isSuccessful) {

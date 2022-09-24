@@ -4,7 +4,7 @@ import com.google.android.gms.tasks.Task
 import com.google.firebase.auth.AuthResult
 import com.google.firebase.auth.FirebaseAuth
 
-object AuthenticationRepository {
+class AuthenticationRepository {
 
     private val auth: FirebaseAuth = FirebaseAuth.getInstance()
     val currentUser = auth.currentUser
