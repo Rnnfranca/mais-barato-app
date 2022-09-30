@@ -14,11 +14,11 @@ data class Oferta (
     var titulo: String = "",
     var listaUrlImagem: List<String> = listOf(),
     var dataInclusao: Long = 0,
-    var dataAcesso: Long? = null,
+    var dataAcesso: Long? = 0,
     var fotoLoja: String = "",
     var nomeLoja: String = "",
     var endereco: String = "",
-    var valorAntigo: Double? = null,
+    var valorAntigo: Double? = 0.0,
     var valorNovo: Double? = 0.0,
     var descricao: String = "",
     var userUid: String = ""

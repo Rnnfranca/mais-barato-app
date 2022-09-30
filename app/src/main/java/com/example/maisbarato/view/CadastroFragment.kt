@@ -17,8 +17,11 @@ import com.example.maisbarato.databinding.FragmentCadastroBinding
 import com.example.maisbarato.util.StateViewResult
 import com.example.maisbarato.util.ValidateUtil
 import com.example.maisbarato.viewmodel.CadastroViewModel
+import dagger.hilt.android.AndroidEntryPoint
+import dagger.hilt.android.HiltAndroidApp
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class CadastroFragment : Fragment() {
 
     private var _binding: FragmentCadastroBinding? = null

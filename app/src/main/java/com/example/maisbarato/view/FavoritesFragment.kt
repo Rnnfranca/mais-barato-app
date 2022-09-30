@@ -16,8 +16,10 @@ import com.example.maisbarato.databinding.FragmentFavoritesBinding
 import com.example.maisbarato.util.StateViewResult
 import com.example.maisbarato.view.adapter.ListaOfertaAdapter
 import com.example.maisbarato.viewmodel.FavoritesViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class FavoritesFragment : Fragment() {
 
     private var _binding: FragmentFavoritesBinding? = null

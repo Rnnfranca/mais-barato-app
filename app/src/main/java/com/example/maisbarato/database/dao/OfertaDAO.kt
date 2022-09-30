@@ -5,6 +5,7 @@ import androidx.room.Insert
 import androidx.room.OnConflictStrategy
 import androidx.room.Query
 import com.example.maisbarato.model.Oferta
+import kotlinx.coroutines.flow.Flow
 
 @Dao
 interface OfertaDAO {
@@ -12,6 +13,9 @@ interface OfertaDAO {
     @Insert(onConflict = OnConflictStrategy.IGNORE)
     suspend fun adicionaOferta(oferta: Oferta)
 
+    @Insert(onConflict = OnConflictStrategy.REPLACE)
+    suspend fun addListOffers(offerList: List<Oferta>)
+
     @Query("SELECT * FROM oferta ORDER BY dataInclusao ASC")
-    suspend fun lerTodasOfertas(): List<Oferta>
+    fun readAllOffers(): Flow<List<Oferta>>
 }

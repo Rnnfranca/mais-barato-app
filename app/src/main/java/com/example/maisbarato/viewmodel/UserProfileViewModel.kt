@@ -55,8 +55,8 @@ class UserProfileViewModel @Inject constructor(
 
     fun getInfoUser(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         viewModelScope.launch(dispatcher) {
-            firebaseRepository.getUserInfo(userUid) { usuario ->
-                _userInfo.value = usuario
+            firebaseRepository.getUserInfo(userUid)?.also { user ->
+                _userInfo.emit(user)
             }
         }
     }

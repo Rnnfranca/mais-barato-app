@@ -4,6 +4,7 @@ import android.app.Application
 import androidx.lifecycle.AndroidViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.maisbarato.model.Oferta
+import com.example.maisbarato.model.Usuario
 import com.example.maisbarato.repository.auth.AuthenticationRepository
 import com.example.maisbarato.repository.firebase.FirebaseRepository
 import dagger.hilt.android.lifecycle.HiltViewModel
@@ -24,6 +25,9 @@ class DetalhesOfertaViewModel @Inject constructor(
 
     private val _isFavorite: MutableStateFlow<Boolean> = MutableStateFlow(false)
     val isFavorite = _isFavorite.asStateFlow()
+
+    private val _userInfo: MutableStateFlow<Usuario?> = MutableStateFlow(null)
+    val userInfo get() = _userInfo.asStateFlow()
 
     private var userUid = authRepository.currentUser?.uid ?: ""
 
@@ -59,10 +63,10 @@ class DetalhesOfertaViewModel @Inject constructor(
         }
     }
 
-    fun getUserOffersInfos(uidUserOffer: String, dispatcher: CoroutineDispatcher = Dispatchers.IO, user: (userName: String?, userImage: String?) -> Unit) {
+    fun getUserOffersInfos(uidUserOffer: String, dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         viewModelScope.launch(dispatcher) {
-            firebaseRepository.getUserInfo(uidUserOffer) {
-                user.invoke(it.nome, it.urlImagePerfil)
+            firebaseRepository.getUserInfo(uidUserOffer)?.also { user ->
+                _userInfo.emit(user)
             }
         }
     }

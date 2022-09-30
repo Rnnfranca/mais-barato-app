@@ -20,10 +20,6 @@ class ListaOfertasViewModelTest() {
     @get:Rule
     var instantExecutorRule = InstantTaskExecutorRule()
 
-    /*private val authRepositoryFake = mock<AuthenticationRepository>() {
-        on { this.currentUser?.uid } doReturn ""
-    }*/
-
     private val authRepositoryFake = mock<AuthenticationRepository>()
 
     @Test

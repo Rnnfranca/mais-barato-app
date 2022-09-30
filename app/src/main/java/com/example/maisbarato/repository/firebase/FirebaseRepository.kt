@@ -86,22 +86,11 @@ class FirebaseRepository() {
 
     }
 
-    fun getUserInfo(userUid: String, userInfo: (Usuario) -> Unit) {
-        usuarioCollectionRef.document(userUid)
+    suspend fun getUserInfo(userUid: String): Usuario? {
+        return usuarioCollectionRef.document(userUid)
             .get()
-            .addOnSuccessListener {
-                it.data?.also { usuario ->
-
-                    userInfo.invoke(
-                        Usuario(
-                            nome = usuario[FIELD_NOME].toString(),
-                            email = usuario[FIELD_EMAIL].toString(),
-                            urlImagePerfil = usuario[FIELD_URL_IMAGEM_PERFIL].toString(),
-                            telefone = usuario[FIELD_TELEFONE].toString()
-                        )
-                    )
-                }
-            }
+            .await()
+            .toObject(Usuario::class.java)
     }
 
     fun updateUserInfo(uidUsuario: String, fullName: String, email: String, imageUri: String?, updated: (Boolean, String) -> Unit) {

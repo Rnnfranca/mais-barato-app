@@ -7,7 +7,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.fragment.navArgs
 import androidx.recyclerview.widget.LinearLayoutManager
 import androidx.recyclerview.widget.RecyclerView
@@ -17,10 +19,12 @@ import com.example.maisbarato.databinding.FragmentDetalhesOfertaBinding
 import com.example.maisbarato.model.Oferta
 import com.example.maisbarato.view.adapter.ListaImagemAdapter
 import com.example.maisbarato.viewmodel.DetalhesOfertaViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 import java.text.SimpleDateFormat
 import java.util.*
 
+@AndroidEntryPoint
 class DetalhesOfertaFragment : Fragment() {
 
     private var _binding: FragmentDetalhesOfertaBinding? = null
@@ -38,6 +42,9 @@ class DetalhesOfertaFragment : Fragment() {
         super.onCreate(savedInstanceState)
 
         oferta = args.oferta
+        oferta?.also {
+            viewModel.getUserOffersInfos(it.userUid)
+        }
     }
 
     override fun onCreateView(
@@ -72,36 +79,41 @@ class DetalhesOfertaFragment : Fragment() {
     }
 
     private fun configOffer() {
-        oferta?.also { oferta ->
 
-            val data = Date(oferta.dataInclusao)
-            val formatDate = SimpleDateFormat("dd/MM/yyyy")
-            val dateText = formatDate.format(data)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                viewModel.userInfo.collect { usuario ->
+                    oferta?.also { oferta ->
 
-            viewModel.verifyFavorite(ofertaId = oferta.id)
+                        val data = Date(oferta.dataInclusao)
+                        val formatDate = SimpleDateFormat("dd/MM/yyyy")
+                        val dateText = formatDate.format(data)
 
-            listaImagemAdapter.atualizaListaImagens(oferta.listaUrlImagem)
+                        viewModel.verifyFavorite(ofertaId = oferta.id)
 
-            binding.tituloPromocao.text = oferta.titulo
-            binding.dataInclusao.text = dateText
-            binding.nomeLoja.text = oferta.nomeLoja
-            binding.endereco.text = oferta.endereco
-            binding.precoAntigo.paintFlags =
-                binding.precoAntigo.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
-            binding.precoAntigo.text = oferta.valorAntigo?.toString()
-            binding.precoNovo.text = oferta.valorNovo.toString()
-            binding.descricaoOferta.text = oferta.descricao
-            viewModel.getUserOffersInfos(oferta.userUid) { userName, userImage ->
-                binding.nomeUsuario.text = userName
-                Glide.with(binding.fotoUsuario)
-                    .load(userImage)
-                    .into(binding.fotoUsuario)
+                        listaImagemAdapter.atualizaListaImagens(oferta.listaUrlImagem)
+
+                        binding.tituloPromocao.text = oferta.titulo
+                        binding.dataInclusao.text = dateText
+                        binding.nomeLoja.text = oferta.nomeLoja
+                        binding.endereco.text = oferta.endereco
+                        binding.precoAntigo.paintFlags =
+                            binding.precoAntigo.paintFlags or Paint.STRIKE_THRU_TEXT_FLAG
+                        binding.precoAntigo.text = oferta.valorAntigo?.toString()
+                        binding.precoNovo.text = oferta.valorNovo.toString()
+                        binding.descricaoOferta.text = oferta.descricao
+                        binding.nomeUsuario.text = usuario?.nome
+                        Glide.with(binding.fotoUsuario)
+                            .load(usuario?.urlImagePerfil)
+                            .into(binding.fotoUsuario)
+
+                        binding.botaoAdicionarFavoritos.setOnClickListener {
+                            viewModel.saveOrRemoveFavorite(oferta)
+                        }
+
+                    }
+                }
             }
-
-            binding.botaoAdicionarFavoritos.setOnClickListener {
-                viewModel.saveOrRemoveFavorite(oferta)
-            }
-
         }
     }
 

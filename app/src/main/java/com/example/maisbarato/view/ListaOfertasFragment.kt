@@ -6,7 +6,9 @@ import android.view.View
 import android.view.ViewGroup
 import androidx.fragment.app.Fragment
 import androidx.fragment.app.viewModels
+import androidx.lifecycle.Lifecycle
 import androidx.lifecycle.lifecycleScope
+import androidx.lifecycle.repeatOnLifecycle
 import androidx.navigation.findNavController
 import androidx.navigation.fragment.findNavController
 import androidx.recyclerview.widget.LinearLayoutManager
@@ -17,6 +19,7 @@ import com.example.maisbarato.view.adapter.ListaOfertaAdapter
 import com.example.maisbarato.viewmodel.ListaOfertasViewModel
 import com.google.android.material.snackbar.Snackbar
 import dagger.hilt.android.AndroidEntryPoint
+import kotlinx.coroutines.launch
 
 @AndroidEntryPoint
 class ListaOfertasFragment : Fragment() {
@@ -48,25 +51,31 @@ class ListaOfertasFragment : Fragment() {
     }
 
     private fun observers() {
-        listaOfertasViewModel.oferta.observe(viewLifecycleOwner) { listaOfertas ->
-            listaOfertasAdapter.atualizaListaOferta(listaOfertas)
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                listaOfertasViewModel.oferta.collect { offerList ->
+                    listaOfertasAdapter.atualizaListaOferta(offerList)
+                }
+            }
         }
 
-        lifecycleScope.launchWhenResumed {
-            listaOfertasViewModel.stateView.collect { stateView ->
+        viewLifecycleOwner.lifecycleScope.launch {
+            repeatOnLifecycle(Lifecycle.State.RESUMED) {
+                listaOfertasViewModel.stateView.collect { stateView ->
 
-                when (stateView) {
-                    is StateViewResult.Loading -> {
-                        binding.progressBar.visibility = View.VISIBLE
-                    }
-                    is StateViewResult.Success -> {
-                        binding.swipeToRefresh.isRefreshing = false
-                        binding.progressBar.visibility = View.GONE
-                    }
-                    is StateViewResult.Error -> {
-                        binding.swipeToRefresh.isRefreshing = false
-                        binding.progressBar.visibility = View.GONE
-                        Snackbar.make(binding.root, stateView.errorMsg, Snackbar.LENGTH_LONG).show()
+                    when (stateView) {
+                        is StateViewResult.Loading -> {
+                            binding.progressBar.visibility = View.VISIBLE
+                        }
+                        is StateViewResult.Success -> {
+                            binding.swipeToRefresh.isRefreshing = false
+                            binding.progressBar.visibility = View.GONE
+                        }
+                        is StateViewResult.Error -> {
+                            binding.swipeToRefresh.isRefreshing = false
+                            binding.progressBar.visibility = View.GONE
+                            Snackbar.make(binding.root, stateView.errorMsg, Snackbar.LENGTH_LONG).show()
+                        }
                     }
                 }
             }
@@ -98,9 +107,7 @@ class ListaOfertasFragment : Fragment() {
             listaOfertasViewModel.addOfferToHistory(oferta)
 
             val action =
-                ListaOfertasFragmentDirections.actionListaOfertasFragmentToDetalhesOfertaFragment(
-                    oferta
-                )
+                ListaOfertasFragmentDirections.actionListaOfertasFragmentToDetalhesOfertaFragment(oferta)
             findNavController().navigate(action)
         }
         recyclerView.adapter = listaOfertasAdapter

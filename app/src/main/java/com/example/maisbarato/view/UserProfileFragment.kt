@@ -18,8 +18,10 @@ import com.example.maisbarato.databinding.FragmentUserProfileBinding
 import com.example.maisbarato.util.StateViewResult
 import com.example.maisbarato.util.ValidateUtil
 import com.example.maisbarato.viewmodel.UserProfileViewModel
+import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.launch
 
+@AndroidEntryPoint
 class UserProfileFragment : Fragment() {
 
     private var _binding: FragmentUserProfileBinding? = null

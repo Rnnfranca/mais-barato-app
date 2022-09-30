@@ -1,7 +1,5 @@
 package com.example.maisbarato.viewmodel
 
-import androidx.lifecycle.LiveData
-import androidx.lifecycle.MutableLiveData
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
 import com.example.maisbarato.model.Oferta
@@ -27,20 +25,22 @@ class ListaOfertasViewModel @Inject constructor(
     private var _stateView: MutableStateFlow<StateViewResult<Any>?> = MutableStateFlow(null)
     val stateView get() = _stateView.asStateFlow()
 
-    private var _oferta = MutableLiveData<List<Oferta>>()
-    val oferta: LiveData<List<Oferta>> get() = _oferta
+    private var _oferta = MutableStateFlow<List<Oferta>>(listOf())
+    val oferta get() = _oferta.asStateFlow()
 
     private var userUid = authRepository.currentUser?.uid ?: ""
 
     fun lerTodasOfertas(dispatcher: CoroutineDispatcher = Dispatchers.IO) {
         _stateView.value = StateViewResult.Loading
         viewModelScope.launch(dispatcher) {
-            val listOferta = ofertaRepository.getAllOffers()
+            val listOffer = ofertaRepository.getAllOffers()
 
-            when (listOferta) {
+            when (listOffer) {
                 is RepositoryResult.Success -> {
-                    _oferta.postValue(listOferta.result)
-                    _stateView.value = StateViewResult.Success()
+                    listOffer.result.collect { list ->
+                        _oferta.emit(list)
+                        _stateView.value = StateViewResult.Success()
+                    }
                 }
                 is RepositoryResult.Error -> {
                     _stateView.value = StateViewResult.Error("Falha ao carregar lista de ofertas")

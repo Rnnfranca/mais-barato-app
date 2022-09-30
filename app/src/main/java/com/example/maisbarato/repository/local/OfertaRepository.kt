@@ -1,16 +1,18 @@
 package com.example.maisbarato.repository.local
 
 import android.util.Log
+import com.example.maisbarato.database.dao.OfertaDAO
 import com.example.maisbarato.model.Oferta
 import com.example.maisbarato.repository.OfferDataSource
 import com.example.maisbarato.util.COLLECTION_OFERTA
 import com.example.maisbarato.util.COLLECTION_USUARIO
 import com.example.maisbarato.util.SUBCOLLECTION_HISTORY
 import com.google.firebase.firestore.FirebaseFirestore
+import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class OfertaRepository @Inject constructor() : OfferDataSource {
+class OfertaRepository @Inject constructor(private val ofertaDAO: OfertaDAO) : OfferDataSource {
 
     private val TAG = OfertaRepository::class.java.simpleName
 
@@ -18,12 +20,17 @@ class OfertaRepository @Inject constructor() : OfferDataSource {
     private val ofertaCollection = firestore.collection(COLLECTION_OFERTA)
     private val usuarioCollectionRef = firestore.collection(COLLECTION_USUARIO)
 
-    override suspend fun getAllOffers(): RepositoryResult<List<Oferta>> {
+    override suspend fun getAllOffers(): RepositoryResult<Flow<List<Oferta>>> {
         return try {
             val offerList = ofertaCollection.get()
                 .await()
                 .toObjects(Oferta::class.java)
-            RepositoryResult.Success(offerList)
+
+            ofertaDAO.addListOffers(offerList)
+
+            val listFromDb = ofertaDAO.readAllOffers()
+            RepositoryResult.Success(listFromDb)
+
         } catch (e: Exception) {
             Log.e(TAG, e.message.toString())
             RepositoryResult.Error(e.message.toString())
