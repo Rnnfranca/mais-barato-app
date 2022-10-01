@@ -89,7 +89,7 @@ class DetalhesOfertaFragment : Fragment() {
                         val formatDate = SimpleDateFormat("dd/MM/yyyy")
                         val dateText = formatDate.format(data)
 
-                        viewModel.verifyFavorite(ofertaId = oferta.id)
+                        viewModel.verifyFavorite(ofertaId = oferta.uid)
 
                         listaImagemAdapter.atualizaListaImagens(oferta.listaUrlImagem)
 

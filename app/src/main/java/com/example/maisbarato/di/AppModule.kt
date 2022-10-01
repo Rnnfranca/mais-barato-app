@@ -24,7 +24,7 @@ object AppModule {
 
     @Singleton
     @Provides
-    fun provideOfertaDAO(db: MaisBaratoDatabase) = db.ofertaDAO()
+    fun provideOfertaDAO(db: MaisBaratoDatabase) = db.offerDAO()
 
     @Provides
     fun provideAuthRepository() = AuthenticationRepository()

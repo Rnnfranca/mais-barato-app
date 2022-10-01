@@ -2,6 +2,7 @@ package com.example.maisbarato.viewmodel
 
 import androidx.lifecycle.ViewModel
 import androidx.lifecycle.viewModelScope
+import com.example.maisbarato.database.entity.OfferEntity
 import com.example.maisbarato.model.Oferta
 import com.example.maisbarato.repository.OfferDataSource
 import com.example.maisbarato.repository.auth.AuthenticationRepository
@@ -25,7 +26,7 @@ class ListaOfertasViewModel @Inject constructor(
     private var _stateView: MutableStateFlow<StateViewResult<Any>?> = MutableStateFlow(null)
     val stateView get() = _stateView.asStateFlow()
 
-    private var _oferta = MutableStateFlow<List<Oferta>>(listOf())
+    private var _oferta = MutableStateFlow<List<OfferEntity>>(listOf())
     val oferta get() = _oferta.asStateFlow()
 
     private var userUid = authRepository.currentUser?.uid ?: ""

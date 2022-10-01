@@ -24,9 +24,9 @@ class FirebaseRepository() {
 
     private fun salvarNoFirebase(oferta: Oferta) {
         val document = ofertaCollectionRef.document()
-        oferta.id = document.id
+        oferta.uid = document.id
 
-        ofertaCollectionRef.document(oferta.id).set(oferta)
+        ofertaCollectionRef.document(oferta.uid).set(oferta)
             .addOnSuccessListener {
                 Log.d(TAG, "DocumentSnapshot added with ID: $it")
             }
@@ -119,7 +119,7 @@ class FirebaseRepository() {
 
         usuarioCollectionRef.document(userUid)
             .collection(SUBCOLLECTION_FAVORITOS)
-            .document(oferta.id)
+            .document(oferta.uid)
             .set(oferta)
             .addOnSuccessListener {
                 Log.d(TAG, "Favorito salvo com sucesso")

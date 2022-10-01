@@ -1,10 +1,11 @@
-package com.example.maisbarato.model
+package com.example.maisbarato.database.entity
 
-import android.os.Parcelable
-import kotlinx.parcelize.Parcelize
+import androidx.room.Entity
+import androidx.room.PrimaryKey
 
-@Parcelize
-data class Oferta (
+@Entity(tableName = "offer")
+data class OfferEntity(
+    @PrimaryKey
     var idRoom: Int = 0,
     var uid: String = "",
     var titulo: String = "",
@@ -18,4 +19,4 @@ data class Oferta (
     var valorNovo: Double? = 0.0,
     var descricao: String = "",
     var userUid: String = ""
-): Parcelable
+)

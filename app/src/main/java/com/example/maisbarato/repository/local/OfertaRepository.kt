@@ -1,7 +1,8 @@
 package com.example.maisbarato.repository.local
 
 import android.util.Log
-import com.example.maisbarato.database.dao.OfertaDAO
+import com.example.maisbarato.database.dao.OfferDAO
+import com.example.maisbarato.database.entity.OfferEntity
 import com.example.maisbarato.model.Oferta
 import com.example.maisbarato.repository.OfferDataSource
 import com.example.maisbarato.util.COLLECTION_OFERTA
@@ -12,7 +13,7 @@ import kotlinx.coroutines.flow.Flow
 import kotlinx.coroutines.tasks.await
 import javax.inject.Inject
 
-class OfertaRepository @Inject constructor(private val ofertaDAO: OfertaDAO) : OfferDataSource {
+class OfertaRepository @Inject constructor(private val ofertaDAO: OfferDAO) : OfferDataSource {
 
     private val TAG = OfertaRepository::class.java.simpleName
 
@@ -20,11 +21,11 @@ class OfertaRepository @Inject constructor(private val ofertaDAO: OfertaDAO) : O
     private val ofertaCollection = firestore.collection(COLLECTION_OFERTA)
     private val usuarioCollectionRef = firestore.collection(COLLECTION_USUARIO)
 
-    override suspend fun getAllOffers(): RepositoryResult<Flow<List<Oferta>>> {
+    override suspend fun getAllOffers(): RepositoryResult<Flow<List<OfferEntity>>> {
         return try {
             val offerList = ofertaCollection.get()
                 .await()
-                .toObjects(Oferta::class.java)
+                .toObjects(OfferEntity::class.java)
 
             ofertaDAO.addListOffers(offerList)
 
@@ -37,7 +38,7 @@ class OfertaRepository @Inject constructor(private val ofertaDAO: OfertaDAO) : O
         }
     }
 
-    override suspend fun addOfferToHistory(userUid: String, offer: Oferta) {
+    override suspend fun addOfferToHistory(userUid: String, offer: OfferEntity) {
         validateInsertHistory(userUid, offer)
     }
 
@@ -54,7 +55,7 @@ class OfertaRepository @Inject constructor(private val ofertaDAO: OfertaDAO) : O
         }
     }
 
-    private suspend fun validateInsertHistory(userUid: String, offer: Oferta) {
+    private suspend fun validateInsertHistory(userUid: String, offer: OfferEntity) {
         try {
             val offerHistory = getOfferHistory(userUid)
 
@@ -78,10 +79,10 @@ class OfertaRepository @Inject constructor(private val ofertaDAO: OfertaDAO) : O
         }
     }
 
-    private suspend fun insertHistory(userUid: String, offer: Oferta) {
+    private suspend fun insertHistory(userUid: String, offer: OfferEntity) {
         usuarioCollectionRef.document(userUid)
             .collection(SUBCOLLECTION_HISTORY)
-            .document(offer.id)
+            .document(offer.uid)
             .set(offer)
             .await()
     }
@@ -89,7 +90,7 @@ class OfertaRepository @Inject constructor(private val ofertaDAO: OfertaDAO) : O
     suspend fun deleteOfferFromHistory(userUid: String, offer: Oferta) {
         usuarioCollectionRef.document(userUid)
             .collection(SUBCOLLECTION_HISTORY)
-            .document(offer.id)
+            .document(offer.uid)
             .delete()
             .await()
     }

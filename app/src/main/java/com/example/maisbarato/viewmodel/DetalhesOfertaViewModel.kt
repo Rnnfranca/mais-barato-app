@@ -33,7 +33,7 @@ class DetalhesOfertaViewModel @Inject constructor(
 
     fun saveOrRemoveFavorite(oferta: Oferta) {
         if (isFavorite.value) {
-            removeFavorite(oferta.id)
+            removeFavorite(oferta.uid)
         } else {
             saveFavorite(oferta)
         }
