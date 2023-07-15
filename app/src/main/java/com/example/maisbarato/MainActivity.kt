@@ -18,7 +18,7 @@ import com.example.maisbarato.databinding.ActivityMainBinding
 import com.example.maisbarato.util.telasComIconeMenuHamburguer
 import com.example.maisbarato.util.telasSemMenuDrawer
 import com.example.maisbarato.util.telasSemToolbar
-import com.example.maisbarato.view.BottomSheetMaisInfo
+import com.example.maisbarato.presentation.view.BottomSheetMaisInfo
 import com.example.maisbarato.viewmodel.SharedViewModel
 import dagger.hilt.android.AndroidEntryPoint
 import kotlinx.coroutines.CoroutineDispatcher
@@ -79,8 +79,8 @@ class MainActivity : AppCompatActivity() {
 
     private fun clickListener() {
         headerView.setOnClickListener {
-            val bottomSheetMaisInfo = BottomSheetMaisInfo()
-            bottomSheetMaisInfo.show(supportFragmentManager, BottomSheetMaisInfo.TAG)
+            val bottomSheetMaisInfo = com.example.maisbarato.presentation.view.BottomSheetMaisInfo()
+            bottomSheetMaisInfo.show(supportFragmentManager, com.example.maisbarato.presentation.view.BottomSheetMaisInfo.TAG)
         }
 
         binding.faleConosco.setOnClickListener {

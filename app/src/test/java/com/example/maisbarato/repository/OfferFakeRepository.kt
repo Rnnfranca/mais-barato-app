@@ -1,7 +1,8 @@
 package com.example.maisbarato.repository
 
-import com.example.maisbarato.model.Oferta
-import com.example.maisbarato.repository.local.RepositoryResult
+import com.example.maisbarato.data.repository.OfferDataSource
+import com.example.maisbarato.data.model.Oferta
+import com.example.maisbarato.data.repository.local.RepositoryResult
 
 class OfferRepositoryFake : OfferDataSource {
 

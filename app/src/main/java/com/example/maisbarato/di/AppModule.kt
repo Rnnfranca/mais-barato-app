@@ -2,10 +2,10 @@ package com.example.maisbarato.di
 
 import android.content.Context
 import androidx.room.Room
-import com.example.maisbarato.database.MaisBaratoDatabase
-import com.example.maisbarato.repository.OfferDataSource
-import com.example.maisbarato.repository.auth.AuthenticationRepository
-import com.example.maisbarato.repository.local.OfertaRepository
+import com.example.maisbarato.data.database.MaisBaratoDatabase
+import com.example.maisbarato.data.repository.OfferDataSource
+import com.example.maisbarato.data.repository.auth.AuthenticationRepository
+import com.example.maisbarato.data.repository.local.OfertaRepository
 import dagger.Module
 import dagger.Provides
 import dagger.hilt.InstallIn

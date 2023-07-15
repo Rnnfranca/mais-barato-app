@@ -3,7 +3,7 @@ package com.example.maisbarato.viewmodel
 import androidx.arch.core.executor.testing.InstantTaskExecutorRule
 import androidx.test.ext.junit.runners.AndroidJUnit4
 import com.example.maisbarato.repository.OfferRepositoryFake
-import com.example.maisbarato.repository.auth.AuthenticationRepository
+import com.example.maisbarato.data.repository.auth.AuthenticationRepository
 import com.example.maisbarato.util.getOrAwaitValue
 import com.nhaarman.mockitokotlin2.mock
 import org.hamcrest.CoreMatchers.not
